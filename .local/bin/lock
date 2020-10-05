@@ -1,0 +1,4 @@
+#!/bin/bash
+magick $1 -blur 0x20 -resize 1920x1080 /tmp/screenshotblur.png &&
+magick /tmp/screenshotblur.png /home/utkarsh/.local/bin/banner.png -gravity center -composite -alpha Set /tmp/screenlock.png &&
+betterlockscreen -u /tmp/screenlock.png &>/dev/null

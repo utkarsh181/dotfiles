@@ -1,0 +1,4 @@
+#!/bin/sh
+# This script is use to reactivate caps-lock in place on escape position
+
+xmodmap -e 'keycode 9 = Caps_Lock'
