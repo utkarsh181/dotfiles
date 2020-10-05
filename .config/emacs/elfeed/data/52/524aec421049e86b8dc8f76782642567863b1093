@@ -1,0 +1,25 @@
+
+<p>
+I've decided to reengineer <a target="_blank" href="https://NotRelated.xyz">NotRelated.xyz</a> since I'm not the biggest fan of the slow-loading web page Libsyn generates by default. You can still get to it at the standard Libsyn address (<a target="_blank" href="https://notrelated.libsyn.com">https://notrelated.libsyn.com</a>, but I'd rather keep the main domain to my own making.
+Plus, Libsyn is a pain for dealing with SSL/HTTPS despite charging me an extra $2 a month just to have an external site.
+Thanks, nnnnguys, but I think I'll do it myself now.
+HTTPS is now active on NotRelated.xyz (free of course) thanks to <a target="_blank" href="https://certbot.eff.org/">certbot</a> (fekkin BASTE).
+</p>
+
+<p>
+Only trouble now is I'm still deciding exactly what to do for the new site or how... ;-)
+Right now it's a semi-clone of my website format with relevant links, but that will change soon.
+I think I'll post user questions on a page, responding to them in text, even if I'm unable to respond to them in the podcast.
+I'll want to have a rolling index of podcast episodes, but I'm just racking my brain of how to do it automatically linking to the Libsyn podcast downloads or players.
+</p>
+
+<p>
+<a target="_blank" href="https://notrelated.xyz">Visit the site now</a> and you'll see that I've linked some sites that <em>Not Related!</em> will be automatically syndicated on.
+This might not mean anything for my core subscribers who do everything by RSS and newsboat, but for normalfriends and Pajeets, there are links to Google Play, Soundcloud, the YouTube playlist, etc. where episodes will automatically appear.
+Gloria Deo that I don't have to do any of that manually.
+Syndication on Spotify and iHeartRadio is also underway.
+I'll probably even add it to iTunes next time I: (1) have access to a Mac computer (2) install iTunes (3) open up iTunes (which takes several days itself) and (4) configure it all.
+"It just werks" in action boys.
+If anyone has any clue how to add a podcast to iTunes just via the browser like a normal service, please tell me, but to my understanding, this isn't possible.
+Maccucks will still, unironically and unabashedly defend this.
+</p>

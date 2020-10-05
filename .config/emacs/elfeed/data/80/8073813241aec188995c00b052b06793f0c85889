@@ -1,0 +1,25 @@
+
+<p>Firstly, I haven't actually really been updating my website and blog, maybe I will with some personal stuff that doesn't warrant a Boomer-Rant or two.</p>
+
+<p>Anyway, after literally a year of using it, I've finally got a dwm build that I'm pretty happy with, <a href="https://github.com/LukeSmithxyz/dwm">get it here</a>, and I also have <a href="https://github.com/LukeSmithxyz/dwmblocks">a build of dwmblocks</a> which is a modular status bar which now basically has all the features of i3blocks for i3.</p>
+
+<p>I encourage my blog/RSS-reading elite to check them out first to find any obvious lacunae before I do a video on them.</p>
+
+<p>dwm is a way better experience than i3. I'll do a video on why I've been so happy with it.
+I know I just said I've been playing around with it for <em>a year</em>, but really I've always had a good build, now it's just notable enough to talk about.</p>
+
+<p>Here are some traits/features:</p>
+
+<ul>
+	<li>The LARBS/dwm manual in pdf form is now actually just built into the dwm build. Just press <code>super+F1</code> when in dwm. You'll need zathura installed with a pdf module for it to appear.</li>
+	<li>The statusbar now has color characters/emoji due to the libxft fix out there. Great! I always hated fontawesome...</li>
+	<li>The statusbar is clickable now thanks to a streamlined version of the statuscmd patch by Daniel Bylinka &lt;daniel.bylinka@gmail.com&gt;. He actually contacted me himself suggesting the patch (which I was aware of), but quickly responded to my feedback, producing two new patches for dwm and dwmblocks (<a href="https://gist.github.com/danbyl/54f7c1d57fc6507242a95b71c3d8fdea">here</a>).</li>
+	<li>I'm making the binds both usable and "logical" in a way. Maybe I'll mention this in the video. I'm also trying to add new binds by slimming down unnecessary ones.</li>
+	<li>I've added only those layouts that I actually find most useful. There are a lot of meme-tier layouts on dwm which might be interesting, but I think are so practical. I've settled on 8 (bound to four keys) that I like, but I might slim that down or replace them if I find even better ones. I also have the fullscreen mode as well.</li>
+	<li>Xresources/pywal compatibility</li>
+	<li>A million other little things: gaps, a scrachpad, sticky windows... etc. etc.</li>
+</ul>
+
+<p>Note that you will absolutely want to install <code>libxft-bgra</code> from the AUR to be able to run my build, since it allows color characters. If you aren't using an Arch distro, just install one and then get it from the AUR!</p>
+
+<p>You'll also need the <a href="https://github.com/LukeSmithxyz/voidrice/tree/master/.local/bin/statusbar">my statusbar scripts</a> for them to appear in the bar. These are the same that are used for i3blocks and as I said, they are just as clickable.</p>

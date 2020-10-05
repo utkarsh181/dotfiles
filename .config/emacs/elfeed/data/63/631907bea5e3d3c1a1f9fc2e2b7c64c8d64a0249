@@ -1,0 +1,6 @@
+
+<p>I just released a brief video on <a target="_blank" href="https://www.youtube.com/watch?v=WPvvOEiiF28">how I put special characters into vim.</a>. There is a built in system (with control-k) for inputting special characters, but it's not as manipulatable as I'd like. Instead, I have two little vim files that coin functions to enable/disable deadkeys (for diacritics) or extra shortcuts for characters in the International Phonetic Alphabet.</p>
+
+<p>The deadkey function turns ', ", :, ` and other symbols into deadkeys that place diacritics onto different characters. The IPA function is similar, but allows a sequence of semicolon plus two letters to correspond to an IPA symbol. E.g., if I want to type 'ʃ', I just type ';sh.</p>
+
+<p>The links are in the video description (the files are in the voidrice repository as usual). The system is pretty customizable, and you can easily add whatever characters you need, potentially imitating the toggling commands I have there already.</p>

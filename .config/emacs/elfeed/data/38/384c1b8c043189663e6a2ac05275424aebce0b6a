@@ -1,0 +1,6 @@
+
+<p>I've put up <a target="_blank" href="https://www.youtube.com/watch?v=kJ_TXZB4Gm4">another video on groff/troff</a> where I briefly talk about more basic formatting with the ms macros, but also how to create and implement macros of your own.</p>
+
+<p>
+Since it's hard to get good documentation on groff/troff, I'll also provide some links: check out <a target="_blank" href="https://www.troff.org/">https://www.troff.org/</a> for general information. A user also posted <a target="_blank" href="https://www.oreilly.com/openbook/utp/UnixTextProcessing.pdf">a very useful .pdf</a> which is a general guide to Unix test processing, but contains decent chapters not just on groff/troff, but also on its preprocessor programs like <code>eqn</code> (equivalent of math mode in LaTeX) and <code>pic</code> (equivalent of tikx).
+</p>

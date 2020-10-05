@@ -1,0 +1,17 @@
+
+<p>I get emails about Peertube semi-frequently.
+<a href="https://joinpeertube.org/">Peertube</a> is software you can install on your server to make a kind of a YouTube site.
+This would actually be a goal of mine:
+to be able to host all of my videos, serve them and have a platform truly independent of YouTube (or at least the core of it).
+</p>
+
+<p>I've never bothered to join an instance because I can't necessarily trust individual terms or my bandwidth requirements are too big for most,
+but I figure it's worth figuring out now and I'm fiddling around with a separate VPS for doing it myself.</p>
+
+<p>I will admit that the installation process has been a pain.
+I've come 99% of the way a couple times in the past couple of days, but there's always something missing or out of sync by the time I finish.
+I've even degraded myself by deploying containerized versions of the program (soydev.jpg), but to no avail.
+</p>
+
+<p>Anyway, I was wondering if any body out there is passionate and knowledgeable about Peertube and could either help me set it up or has principled suggestions.
+I'd like to get this done soon.</p>

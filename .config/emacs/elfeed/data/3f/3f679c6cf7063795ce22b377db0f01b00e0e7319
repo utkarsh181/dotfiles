@@ -1,0 +1,146 @@
+<div id="content">
+ <p>
+ <i>This package was originally introduced on  <a href="https://www.reddit.com/r/emacs/comments/8qryri/mu4econversation_single_buffer_fullthread_display/">Reddit</a>.</i>
+</p>
+
+ <div id="outline-container-orgdfc664c" class="outline-2">
+ <h2 id="orgdfc664c">Introduction</h2>
+ <div class="outline-text-2" id="text-orgdfc664c">
+ <p>
+ <a href="https://gitlab.com/ambrevar/mu4e-conversation">mu4e-conversation</a> is a new e-mail interface built on top of  <a href="https://www.djcbsoftware.nl/code/mu/mu4e.html">mu4e</a>.
+</p>
+
+ <p>
+It displays a full thread of e-mails inside one single buffer.  This
+makes for a much more pleasant e-mail experience when reading through threads:
+the transitions are not only smoother, all Emacs functions apply to the entire
+thread instead of just to one message (e.g. searching).
+</p>
+
+ <p>
+As an avid email user, my experience has been night-and-day compared to other
+interfaces: a never-go-back productivity booster!
+</p>
+
+ <p>
+See the homepage for  <a href="https://gitlab.com/ambrevar/mu4e-conversation">screenshots</a>.
+</p>
+
+ <p>
+mu4e-conversation is packaged for MELPA and Guix.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-org335c79d" class="outline-2">
+ <h2 id="org335c79d">Features</h2>
+ <div class="outline-text-2" id="text-org335c79d">
+ <ul class="org-ul"> <li>Dual-view: Seemlessly switch between “linear” and “tree” views.</li>
+
+ <li>The linear view: display the e-mails chronologically in a fashion similar to
+Magit’s diffs (or Gmail, or your favorite messenger).</li>
+
+ <li>The tree view: display the thread as an Org document where the Org nodes
+correspond to the thread nodes.  Thus the view retains the structure while
+displaying all messages at once.</li>
+
+ <li>Highlight the text of new (unread) e-mails with a dedicated face.</li>
+
+ <li>Use all Org features from the “tree” view: fold nodes, open links, highlight
+quotes and code, fold code, etc.</li>
+
+ <li> <p>
+In the tree view, the snippets produced by  <code>message-mark-inserted-region</code>
+</p>
+
+ <pre class="example">
+--8<---------------cut here---------------start------------->8---
+foo
+--8<---------------cut here---------------end--------------->8---
+</pre>
+
+ <p>
+are automatically converted to a  <code>#+begin_src</code> /  <code>#+end_src</code> Org block.
+</p></li>
+
+ <li>Fill long lines with  <code>M-q</code> (mu4e’s original feature).</li>
+
+ <li>Hide cited text with  <code>#</code> (the ending quoted text with the signature): this is
+much smarter than  <code>mu4e-view-toggle-hide-cited</code> since it does not hide quoted
+text in inline answers.</li>
+
+ <li>Search an entire thread at once (think  <code>helm-occur</code> or the Ivy equivalent).</li>
+
+ <li>View several threads at the same time.</li>
+
+ <li>Use sender-specific faces, e.g. Alice is in yellow, Bob is in green, you are
+in white.</li>
+
+ <li>You can color backgrounds instead of fonts if you’d rather have a more
+“smartphone messenger” look.</li>
+
+ <li> <a href="https://github.com/emacs-evil/evil-collection">Evil Collection</a> bindings.</li>
+
+ <li>In-buffer replies: it basically allows you to reply to the thread within the
+buffer itself.  Go to the end of the buffer and start writing, then press  <code>C-c
+  C-c</code> ( <code>mu4e-conversation-send</code>).  You can save the draft with  <code>C-x C-s</code>
+( <code>save-buffer</code>).  It makes for a decent “messenger” experience and saves some
+more window/buffer switches.</li>
+
+ <li>Citations: You can also press  <code>RET</code> ( <code>mu4e-conversation-cite</code>) on an active
+region and it will append the corresponding citation to the composition area.</li>
+</ul></div>
+</div>
+
+ <div id="outline-container-orgc2f2f6c" class="outline-2">
+ <h2 id="orgc2f2f6c">A call for better e-mail interfaces</h2>
+ <div class="outline-text-2" id="text-orgc2f2f6c">
+ <p>
+I believe the reason that e-mails are often looked down upon is mostly due to
+the overwhelming presence of poorly designed user interfaces.
+</p>
+
+ <p>
+The “conversation view” feature is vital to most users.  I think it’s partly
+what keep users tied up so loyally to the social media platform of the moment
+(Facebook, Whatsapp, <insert-the-next-popular-messenger-here>).
+</p>
+
+ <p>
+Gmail is possibly the most popular e-mail interface and that might be thanks to
+its feature of something close to a “conversation” view.  That said, Gmail
+thread view is not as convenient (e.g. messages folded by default, lack of
+controls) and it can’t display a tree view.
+</p>
+
+ <p>
+ <a href="https://notmuchmail.org/screenshots/#index4h3">Notmuch</a> offers a similar tree view but the implementation is different (it does
+not use Org mode).
+</p>
+
+ <p>
+Interestingly, the  <a href="https://www.nabble.com">Nabble mailing list archive</a> offers the same linear and tree
+views.  I don’t think it can be used to display personal mailboxes though.
+</p>
+
+ <p>
+Most other clients cannot display more than an e-mail at once on screen (tabs
+are a poor approach to navigate a thread).
+</p>
+
+ <p>
+The composition area is often
+detached from the thread.
+</p>
+
+ <p>
+A brilliant aspect about e-mails is that it does not brandlock users: they are
+free to save their e-mails anywhere and use the interface of their choice.  If
+we value the freedom to own and control our communication data, I think it’s
+important to steer away from locked-down platforms and use more open protocols.
+Making e-mails more attractive would be an important step forward in that
+direction.
+</p>
+</div>
+</div>
+</div>

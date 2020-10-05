@@ -1,0 +1,6 @@
+
+<p>If you're using LARBS/my dotfiles and noticed that some of the statusbar info pages (accessible on right-click) are not properly parsing markup as bold, and thus are showing tags like &lt;b&gt;, etc., this is because a new update to dunst.</p>
+
+<p>If it annoys you, it can be easily fixed by updating the dotfiles to some changes I just pushed to the <a target="_blank" href="https://github.com/lukesmithxyz/voidrice">voidrice</a> repo.</p>
+
+<p>Both the dunst config file and the statusbar scripts have been adjusted to the new changed.</p>

@@ -1,0 +1,295 @@
+<div id="content">
+ <div id="outline-container-org3c1e254" class="outline-2">
+ <h2 id="org3c1e254">Add hunks selectively</h2>
+ <div class="outline-text-2" id="text-org3c1e254">
+ <p>
+One of Git’s best practice is to limit every commit to an atomic change.  Should
+your contribution require several changes to the code, it should result in just
+as many commits.
+</p>
+
+ <p>
+Sometimes we get carried away, or we simply don’t foresee the extent of our
+current work.  When the time has come to commit, we realize that several,
+independent changes have occurend into the same file.
+</p>
+
+ <p>
+Git has a nice command that lets the user select individual hunks for staging:
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-sh">$ git add --patch
+</pre>
+</div>
+
+ <p>
+This might prove daunting from the command-line.  A UI can be very practical for
+this.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-orgab9bf37" class="outline-2">
+ <h2 id="orgab9bf37">Converting repositories from another VCS</h2>
+ <div class="outline-text-2" id="text-orgab9bf37">
+ <p>
+Want to revamp a project using another VCS? No problem, Git can import many VCS,
+such as Subversion.  See  <code>git-svn(1)</code> for the gory details.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-org9c70dc1" class="outline-2">
+ <h2 id="org9c70dc1">Stashes</h2>
+ <div class="outline-text-2" id="text-org9c70dc1">
+ <pre class="example">
+$ git stash
+</pre>
+
+ <p>
+In the middle of an intense hacking session, stashes allow you to save some
+chunks, revert to a clean workspace, keep on hacking, re-apply the previous
+chunk, revert, etc.  All without commiting anything.
+</p>
+
+ <p>
+It is also possible to stash the current hack and to keep working on it.  A
+temporary save, in a way.
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-sh">$ git stash && git stash apply
+</pre>
+</div>
+</div>
+</div>
+
+ <div id="outline-container-org0890f6e" class="outline-2">
+ <h2 id="org0890f6e">Custom logs</h2>
+ <div class="outline-text-2" id="text-org0890f6e">
+ <p>
+Logs decoration can be heavily customized.  For instance:
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-sh">$ git log --graph --decorate --pretty=format:'%C(yellow)%h %Cgreen%cd%C(bold red)%d%Creset %s' --abbrev-commit --date=short
+</pre>
+</div>
+</div>
+</div>
+
+ <div id="outline-container-org0bb4e45" class="outline-2">
+ <h2 id="org0bb4e45">Diffing</h2>
+ <div class="outline-text-2" id="text-org0bb4e45">
+ <p>
+To highlight differences to the word:
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-sh">$ git diff --color-words
+</pre>
+</div>
+
+ <p>
+Most importantly, use a UI for diff’ing between any commits, it helps a lot.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-orgdf7f4f5" class="outline-2">
+ <h2 id="orgdf7f4f5">Merging with Ediff</h2>
+ <div class="outline-text-2" id="text-orgdf7f4f5">
+ <p>
+Add this to  <code>.gitconfig</code>:
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-conf">[mergetool.ediff]
+cmd = emacs --eval \" (progn (defun ediff-write-merge-buffer () (let ((file ediff-merge-store-file)) (set-buffer ediff-buffer-C) (write-region (point-min) (point-max) file) (message \\\"Merge buffer saved in: %s\\\" file) (set-buffer-modified-p nil) (sit-for 1))) (setq ediff-quit-hook 'kill-emacs ediff-quit-merge-hook 'ediff-write-merge-buffer) (ediff-merge-files-with-ancestor \\\"$LOCAL\\\" \\\"$REMOTE\\\" \\\"$BASE\\\" nil \\\"$MERGED\\\"))\"
+
+[merge]
+tool = ediff
+</pre>
+</div>
+</div>
+</div>
+
+ <div id="outline-container-org03051df" class="outline-2">
+ <h2 id="org03051df">Attributes</h2>
+ <div class="outline-text-2" id="text-org03051df">
+ <p>
+Some text files may not be “versionable” in that they are hardly human-readable,
+it not at all (e.g. generated content).  A few good examples include  <code>.ps</code>,
+ <code>.svg</code>, and most XML-based files.
+</p>
+
+ <p>
+Git will treat all text files as such and store the diffs when necessary.  This
+will increase disk-space consumption (and bandwidth) and slow down the
+repository.
+</p>
+
+ <p>
+You can tell Git to ignore the diff’s for specific extensions:
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-sh">$ cat .gitattributes
+*.pdf -diff
+*.ps -diff
+*.svg -diff
+*.xml -diff
+</pre>
+</div>
+
+ <p>
+With such a setting, a Git repository can serve as a powerful cloud-based
+storage service.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-org16d8eef" class="outline-2">
+ <h2 id="org16d8eef">Maintenance</h2>
+ <div class="outline-text-2" id="text-org16d8eef">
+ <p>
+Run
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-sh">$ git gc
+</pre>
+</div>
+
+ <p>
+and be surprised by how much your repository just shrank!
+</p>
+</div>
+</div>
+
+ <div id="outline-container-orgf1cf257" class="outline-2">
+ <h2 id="orgf1cf257">Rebase interactively</h2>
+ <div class="outline-text-2" id="text-orgf1cf257">
+ <p>
+Rebasing can be a hassle.  Thankfully Git comes with the very handy
+ <code>--interactive</code> option to overview the whole operation from your favorite text
+editor:
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-sh">$ git rebase -i
+</pre>
+</div>
+</div>
+</div>
+
+ <div id="outline-container-org86e7be6" class="outline-2">
+ <h2 id="org86e7be6">Delete file from history</h2>
+ <div class="outline-text-2" id="text-org86e7be6">
+ <p>
+Sometimes we need to carry a big binary blob with us.  And more often than not we
+regret our decision!
+</p>
+
+ <p>
+It is never too late, and assuming the history is not public, you can rewrite
+it, alleviating it from its binary burden.
+</p>
+
+ <p>
+A few initial checks are in order:
+</p>
+
+ <ul class="org-ul"> <li> <p>
+Check for the largest files:
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-sh">$ git verify-pack -v .git/objects/pack/${pack-name}.idx | sort -k 3 -n | tail -5
+</pre>
+</div></li>
+
+ <li> <p>
+Check what files those are:
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-sh">$ git rev-list --objects --all | grep ${object}
+</pre>
+</div></li>
+</ul> <p>
+Time to remove the file  <code>${FILENAME}</code> from the revision: Action!
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-sh">$ git filter-branch --index-filter 'git rm --cached --ignore-unmatch ${FILENAME}'
+</pre>
+</div>
+
+ <p>
+Next, some clean-up might be necessary:
+</p>
+
+ <ul class="org-ul"> <li> <p>
+Remove Git’s backup
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-sh">$ rm -rf .git/refs/original/
+</pre>
+</div></li>
+
+ <li> <p>
+Expire all the loose objects:
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-sh">$ git reflog expire --all --expire='0 days'
+</pre>
+</div></li>
+
+ <li> <p>
+Check if there are any loose objects:
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-sh">$ git fsck --full --unreachable
+</pre>
+</div></li>
+
+ <li> <p>
+Repack everything, leaving loose objects behind:
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-sh">git repack -A -d
+</pre>
+</div></li>
+
+ <li> <p>
+At last, remove the loose objects:
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-sh">$ git prune
+</pre>
+</div></li>
+</ul></div>
+</div>
+
+ <div id="outline-container-orga8b03e0" class="outline-2">
+ <h2 id="orga8b03e0">UI</h2>
+ <div class="outline-text-2" id="text-orga8b03e0">
+ <p>
+While the  <code>git</code> CLI is great and will get you far, I recommend using a dedicated
+UI such as the excellent  <a href="https://magit.vc/">Magit</a>. It will ease many operations:
+</p>
+
+ <ul class="org-ul"> <li>Adding hunks of code.</li>
+ <li>Choosing commits for diffing, etc.</li>
+ <li>Displaying commit contents interactively.</li>
+ <li>And much more.  (See the website.)</li>
+</ul></div>
+</div>
+</div>

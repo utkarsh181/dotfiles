@@ -1,0 +1,13 @@
+
+<p>This actually isn't a mutt-wizard-specific problem, but I've been getting a lot of questions about it since mutt-wizard relies on offlineimap and ergo OpenSSL. Long story short, if you have updated Arch Linux recently, your new version of offlineimap/OpenSSL might give you a certificate error when attempting to sync with a Gmail account.</p>
+
+<p>To solve this, do one of the following:</p>
+
+<ul>
+	<li>Downgrade to an earlier version of offlineimap/OpenSSL</li>
+	<li>Add <code>ssl_version=tls1_2</code> to the remote Gmail repository in <code>~/.offlineimaprc</code>.</li>
+	<li>Sit and wait for a fix.</li>
+	<li>Stop using Gmail :varg: (my favorite ;-))</li>
+</ul>
+
+<p>See the <a target="_blank" href="https://github.com/LukeSmithxyz/mutt-wizard/issues/85">Github Issue</a> that GrimKriegor opened on the mutt-wizard repo about this, with links to the relevant sources.</p>

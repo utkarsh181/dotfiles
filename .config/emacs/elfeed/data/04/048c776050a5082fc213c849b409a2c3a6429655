@@ -1,0 +1,12 @@
+
+<p>I've put up two more videos in the past two days:</p>
+
+<ul>
+	<li><a href="https://www.youtube.com/watch?v=hMSByvFHOro">Terminal vs. Bash vs. Command line vs. Prompt</a></li>
+	<li><a href="https://www.youtube.com/watch?v=3NJIj47Tusw">"Keep Politics out of Technology!" t. Boomer</a></li>
+</ul>
+
+<p>Also, I've been unable to fix LARBS installs in the past several days for general business reasons and I need to test some things with respect to fonts.
+The main emoji font used by LARBS, ttf-symbola, has had its license changed and that is an upstream problem I need to find an alternative for.
+This is especially a problem because if unicode characters aren't rendering correctly, st especially has a tendency to crash when rendering them.
+If you install LARBS, run into this kind of problem and want to fix it, you'll have to find an alternative font yourself until I get the chance to find a permanent solution.</p>

@@ -1,0 +1,881 @@
+<div id="content">
+ <div id="outline-container-org509c3a7" class="outline-2">
+ <h2 id="org509c3a7">A quick look at the history of operating systems</h2>
+ <div class="outline-text-2" id="text-org509c3a7">
+ <p>
+Operating systems (OSes) represent a very large topic and for decades they have
+been dominated by a single approach: Unix.  Indeed, most of modern systems
+including the majority of GNU/Linux distributions, the *BSDs, and macOS follow
+the Unix design.  (Windows does not, but it does not have many interesting
+features for the matter at hand.)
+</p>
+
+ <p>
+In 2000, Rob Pike gave a talk on why  <a href="http://doc.cat-v.org/bell_labs/utah2000/utah2000.html">Systems Software Research is Irrelevant</a>.
+Whether out of pessimism or disregard for the community, it seems to completely
+discard the far cries that many Unix users had compiled in 1994 in  <a href="https://web.mit.edu/~simsong/www/ugh.pdf">The
+Unix-Haters Handbook</a>.  While purposefully sarcastic, this book pointed out some
+critical issues with Unix systems that still today haven’t really been
+addressed.
+</p>
+
+ <p>
+In 2006, Eelco Dosltra published his thesis,  <a href="https://nixos.org/~eelco/pubs/phd-thesis.pdf">The Purely Functional Software
+Deployment Model</a>, which introduces Nix, a functional package manager.  In 2008,
+he published  <a href="https://nixos.org/~eelco/pubs/nixos-icfp2008-final.pdf">NixOS: A Purely Functional Linux Distribution</a>.  While NixOS reuses
+a lot of free software that were traditionally meant for Unix-style systems, it
+departs so much from the Unix design and philosophy that it can hardly be
+referred to as a “Unix” system anymore.
+</p>
+
+ <p>
+Nix is a giant step forward in operating system research.  Not only does it
+address most of the criticism of Unix (including those found in the Unix Haters
+Handbook), it also paves the way for many more features and research
+explorations that could be critical in this day and age where topics like
+reliability and trust are at the center of many scientific, but also social and
+political debates.
+</p>
+
+ <p>
+Pike was wrong.  And this proves another more general point: it’s probably wiser
+to refrain from claiming that any research has become irrelevant, unless you can
+prove that no further development is possible.  And the Utah talk was hardly a
+mathematical proof.  It only served to further entrench the idea that Unix is
+“good enough” and that we’ve got to live on with its idiosyncrasies and issues.
+</p>
+
+ <p>
+This unnecessary pessimism was thankfully short-sighted and would not live long
+before Nix proved it wrong only a couple of years later.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-org2494fab" class="outline-2">
+ <h2 id="org2494fab">Enters Guix</h2>
+ <div class="outline-text-2" id="text-org2494fab">
+ <p>
+ <a href="https://guix.gnu.org">Guix</a> is a package manager inspired by Nix and Guix System is the operating system
+equivalent of NixOS.  Guix System strives to be the “fully-programmable OS”.  Indeed,
+mostly everything from package management (with Guix) to the init system ( <a href="https://www.gnu.org/software/shepherd/">GNU
+shepherd</a>) is written and customizable in  <a href="https://gnu.org/software/guile/">Guile Scheme</a>.
+</p>
+
+ <p>
+It departs significantly from Unix-style operating systems and you might want to
+read some more before you get a good grasp of the extent of the changes:
+</p>
+
+ <ul class="org-ul"> <li>Have a look at  <a href="https://www.gnu.org/software/guix/manual/">the offical manual</a> (see  <a href="https://www.gnu.org/software/guix/manual/en/html_node/Features.html">the list of features</a> to wet your appetite).</li>
+ <li> <a href="https://www.gnu.org/software/guix/blog/2018/a-packaging-tutorial-for-guix/">The packaging tutorial for Guix</a> gives a technical introduction (also available
+ <a href="../guix-packaging/index.html">here</a>).</li>
+</ul></div>
+</div>
+
+ <div id="outline-container-orgd5bfbf4" class="outline-2">
+ <h2 id="orgd5bfbf4">The perks of Guix</h2>
+ <div class="outline-text-2" id="text-orgd5bfbf4">
+ <p>
+Guix’ advance is not to underestimate as it is a real game changer to the point
+that it obsoletes most other operating systems.
+</p>
+
+ <p>
+My personal favourite features:
+</p>
+
+ <ul class="org-ul"> <li>Unbreakable systems: Guix maintains the history of all changes both at the
+system and user level.  Should an update break anything, it’s always possible
+to roll back.  This effectively makes the system  <i>unbreakable</i>.</li>
+
+ <li>System integrity: Because the system configuration is declarative, this gives
+the user or the system administrator a complete guarantee of what’s going on.
+On other Unices, it’s much harder to tell when some random configuration file
+has been modified.</li>
+
+ <li>Fully programmable operating system: Program your system configurations and
+keep them under version control.  Many system services can be configured in
+Guile Scheme, from udev rules to Xorg, PAM, etc.  Thanks to Guile, the
+configuration can be made conditional to the hardware or even the hostname!</li>
+
+ <li>Drop-in replacement of other (not as good) package managers: No need to manage
+Emacs, Python or TeXlive packages separately, you can use one uniform
+interface to manage them all!  (See  <a href="#orgb772f2e">below</a>.)  It makes user-profile
+declarations far easier to write and maintain.</li>
+
+ <li>Package definitions using Guile: it’s much more efficient to work out package
+(re)definitions  <i>en masse</i>.  It advantageously replaces concepts such as
+Portage’s USE flags (see  <a href="#org46fa69a">below</a>).</li>
+
+ <li>Multiple package outputs: A Guix package can have multiple “outputs” that
+serves as a mean to separate various component of a program (libraries, extra
+tools, documentation, etc.).  On other operating systems, (most typically Debian),
+it can be harder to guess which Debian packages belong together.</li>
+
+ <li>Non-propagated inputs: “Inputs,” in Guix parlance, are the package
+dependencies.  The user profile and environment only contains the packages the
+user explicitly installed and not necessarily the dependencies of those
+packages.  See  <a href="https://smxi.org/docs/inxi.htm">inxi</a> for instance, a system information reporting tool: if I
+only care about inxi system/hardware reports, I don’t necessarily
+want 2 or 3 dozens of additional commandline tools added to my  <code>PATH</code>.  Guix
+makes it possible to only expose what the user really wants into the user
+profile.</li>
+
+ <li>Guix environments: When running  <code>guix environment SOME-PACKAGES</code>, Guix sets up
+a temporary environment where all the requirements for  <code>SOME-PACKAGES</code> are
+exposed.  This can be used to easily set up a build environment for a project,
+but it can also be used in multiple ways (see below).  One neat property is
+that it allows to run programs without installing them to the user profile.</li>
+
+ <li>Partial upgrades: They are 100% supported.  This is possibly the main cause of
+breakages on  <a href="https://en.wikipedia.org/wiki/Rolling_release">rolling-release</a> systems like Arch Linux and Gentoo: because only
+a few versions are supported at a time (mostly just one), the whole system has
+to be updated together.  Which means more bandwidth usage on every upgrade.
+With Guix, it’s perfectly possible to update any package individually.</li>
+
+ <li> <p>
+“Continuous integration” or “Why Guix can work without package maintainers”:
+Thanks to  <a href="https://reproducible-builds.org/">reproducible builds</a> and partial upgrade support, once a package
+works in Guix it works “forever”, it won’t break on the next upgrade of some
+dependency.  (More precisely, if a dependency breaks a package, it’s trivial
+to fix it to use the right library version.)  This means that the packaging
+workload can be transferred to build farms (one running  <a href="https://hydra.gnu.org/jobset/gnu/master">Hydra</a> –from the Nix
+project–, another running  <a href="https://ci.guix.gnu.org">Cuirass</a>).  Contrast this to most other GNU/Linux
+communities which need a couple dozen maintainers to keep thousands of packages
+up to date.  This does not scale: eventually those operating systems stagnate
+at a couple thousand packages.  With Guix, the package count can safely keep
+growing without fear of bankruptcy.  In the meantime, the contributors’ time
+can be put to better use.
+</p>
+
+ <p>
+With Guix, it’s just as straightforward to build from source and to install a
+pre-built package directly.  In fact, the distinction is not so important to
+the end-user: Guix can transparently fall back on building from source if no
+pre-built package is available.
+</p></li>
+
+ <li> <code>guix import</code> and  <code>guix refresh</code>: Generate or update package definitions
+automatically and recursively.  Hundreds of package definitions can be
+processed all at once.  Features like these highlight the benefits of having a
+real programming language at hand.  What is a hard problem on most
+operating systems becomes relatively easy to implement with Guix.</li>
+
+ <li>Guix channels: One of my favourite features!  On Arch Linux or Gentoo, one
+would have to set up a local repository.  Because they don’t support partial
+upgrades, it means that the user has to do some maintenance once in a while
+(i.e. make sure dependency upgrades don’t break the user’s packages.)  Package
+inheritance makes it very easy to customize packages with a patch, for
+instance.  Guix channels advantageously replace Arch Linux’ AUR and Gentoo’s
+overlays, allowing anyone to distribute their package definitions from, for
+instance, Git repositories.  Again, this guarantees full transparency (roll
+backs, history, etc.).</li>
+
+ <li> <a href="https://emacs-guix.gitlab.io/website/">Emacs-Guix</a>: Guix is the only distribution I know which comes with a most
+powerful Emacs user interface!</li>
+
+ <li> <a href="https://www.gnu.org/software/guix/blog/2018/tarballs-the-ultimate-container-image-format/">Guix packs</a>: They allow for an actual viable alternative to containers like
+Docker.  Most container systems suffer from crucial issues: they are not
+reproducible and are indeed opaque binaries, which is a  <a href="https://lwn.net/Articles/752982/">big no-no</a> for users
+who cares about trust, security and privacy.  On the contrary, Guix packs are
+fully specified, reproducible and transparent.</li>
+
+ <li> <code>guix system vm</code> and  <code>guix system disk-image</code>: Guix makes it trivial to
+reproduce itself (the whole current system) as a live USB, inside a virtual
+machine or on a remote machine.</li>
+</ul></div>
+</div>
+
+ <div id="outline-container-orgc30137f" class="outline-2">
+ <h2 id="orgc30137f">Guix compared to the competition</h2>
+ <div class="outline-text-2" id="text-orgc30137f">
+</div>
+ <div id="outline-container-org4fe6251" class="outline-3">
+ <h3 id="org4fe6251">Debian, Arch Linux, and most others GNU/Linux distributions</h3>
+ <div class="outline-text-3" id="text-org4fe6251">
+ <p>
+GNU/Linux distributions in general lack the aforementioned perks of Guix.
+Some of the most critical points include:
+</p>
+
+ <ul class="org-ul"> <li>Lack of support for multiple package versions, or “dependency hell.”  Say, when
+the latest mpv requires a new ffmpeg, but upgrading ffmpeg breaks most other
+programs relying on it, we are stuck we dilemma: either we break some packages
+or we stick to older versions of other packages.  Worse, a program could end
+up not being packaged or supported by the OS at all.  This issue is inherent to
+most distributions which can not provide the guarantee to fulfill their
+primary objective: package  <i>any</i> program.</li>
+
+ <li>Critical need for maintainers.  Non-functional package management means that
+all package must be tested together at all times.  This represents a lot of
+hard work that relies on a committed team of maintainers.  In practice, it
+means that the quality of package management heavily depends on the work
+force.  A distribution without enough maintainers will inevitably suffer, and
+possibly die.  This work force requirement does not scale well and induces a
+growing complexity (both for the code base and in terms of management) as the
+number of packages increases.</li>
+</ul></div>
+</div>
+
+ <div id="outline-container-org46fa69a" class="outline-3">
+ <h3 id="org46fa69a">Gentoo, *BSD</h3>
+ <div class="outline-text-3" id="text-org46fa69a">
+ <p>
+ <a href="https://www.gentoo.org/">Gentoo</a> together with all distributions using the  <a href="https://wiki.gentoo.org/wiki/Project:Portage">Portage</a> package manager are
+source-based distributions with an iconic feature: the  <a href="https://wiki.gentoo.org/wiki/Project:Portage">USE flags</a>, which lets the
+user enable features across the whole system (for instance disable sound, enable
+graphical interface support, etc.).
+</p>
+
+ <p>
+USE flags make it trivial to toggle features that were exposed by the packagers
+(and they have the benefit of being tested).  On the other hand, Portage does
+not let you configure features that were not thought of in advance by the
+packager.  For instance, if a package has optional audio but the packager didn’t
+expose the corresponding USE flag, the user cannot do anything about it (beside
+creating a new package definition).
+</p>
+
+ <p>
+Conversely, Guix gives you full customization for everything, albeit with a bit
+more Scheme code. Roughly, in pseudo-code:
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-lisp">(loop-over (TARGET-PACKAGES)
+  (package
+    (inherit TARGET)
+    (changes-here... including patches, build options, etc.))
+</pre>
+</div>
+
+ <p>
+will batch-define  <code>TARGET-PACKAGES</code> with your changes.  None of the changes have
+to be carved into the package definition.  At any time, the user retains full
+control over the changes that can be made to the packages.
+</p>
+
+ <p>
+I’ve loved Gentoo while I was using it, but after moving to Guix it became
+apparent that Portage’s approach to package customization is more limited.
+</p>
+
+ <ul class="org-ul"> <li>The USE flag system does not let you customize unplanned, arbitrary features.</li>
+
+ <li>USE flags add a whole class of complexity (see the rather complex  <a href="https://dev.gentoo.org/~zmedico/portage/doc/man/ebuild.5.html">atom
+semantic</a>) to describe and manage feature relationships across packages.  Guix
+completely nullifies this complexity layer by using Guile Scheme to program
+the relationships between packages.</li>
+</ul> <p>
+Moreover, Portage suffer from the same aforementioned issue with the lack of
+proper support for multiple versions.  Indeed, USE flags significantly increase
+the magnitude of the issue (a frequent complaint about Portage): when
+incompatible USE flags propagate to some dependencies, the user must find a
+resolution manually.  Sometimes, it means that the desired feature won’t be
+applicable (at least not without significant work on the package definitions).
+</p>
+
+ <p>
+On the practical level, Guix provides pre-compiled packages which can be a huge
+time-saver compared to Gentoo which does not (but Portage support binary package
+distribution).
+</p>
+
+ <p>
+The *BSD systems (e.g. FreeBSD) suffer from similar issues with the  <code>make
+config</code> customization interface.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-org7519a3c" class="outline-3">
+ <h3 id="org7519a3c">Nix</h3>
+ <div class="outline-text-3" id="text-org7519a3c">
+ <p>
+Nix was a historical breakthrough in operating system research and Guix owes it
+almost all its ideas.  Today, Nix still remains one of the finest operating
+systems in activity and Guix would probably not exist if it weren’t for one flaw.
+</p>
+
+ <p>
+Guix, heavily inspired by Nix, borrows most of its ideas and addresses the main
+issue that, in my opinion, Nix didn’t get right: instead of coming up with a
+homebrewed  <a href="https://en.wikipedia.org/wiki/Domain-specific_language">domain-specific language</a> (DSL), Guix uses a full-fledged programming
+language.  And a good one at that, since it’s Guile Scheme, a Lisp-based
+language.
+</p>
+
+ <p>
+“Rolling out one’s own programming language” is a very common fallacy in
+software development.  It struck hard many projects where the configuration or
+programming language was:
+</p>
+
+ <ul class="org-ul"> <li>limited in expressiveness and features;</li>
+ <li>yet another language to learn (but not something very useful and reusable)
+which requires some effort on the user end and thus creates an entry barrier;</li>
+ <li>harder to read (at least at the beginning);</li>
+ <li>and often with poor performance.</li>
+</ul> <p>
+Such projects using self-rolled DSLs or too-limiting programming
+languages are legions:
+</p>
+
+ <ul class="org-ul"> <li>XML, HTML (better idea:  <a href="https://en.wikipedia.org/wiki/SXML">S-XML</a>)</li>
+ <li>Make, Autoconf, Automake, CMake, etc.</li>
+ <li>Bash, Zsh, Fish (better ideas:  <a href="../emacs-eshell/index.html">Eshell</a> or  <a href="https://github.com/scheme/scsh">scsh</a>)</li>
+ <li>JSON, TOML, YAML</li>
+ <li>Nix language, Portage’s  <a href="https://wiki.gentoo.org/wiki/Ebuild">Ebuild</a> and many other OS package definition syntax rules.</li>
+ <li>Firefox when it used XUL (but since then Mozilla has moved on) and most other homebrewed extensibility languages</li>
+ <li>SQL</li>
+ <li>Octave, R, PARI/GP, most scientific programs (better ideas: Common Lisp, Racket and other Schemes)</li>
+ <li>Regular expressions (better ideas:  <a href="http://francismurillo.github.io/2017-03-30-Exploring-Emacs-rx-Macro/">Emacs’ rx</a>,  <a href="https://docs.racket-lang.org/peg/index.html">Racket’s PEG</a>, etc.)</li>
+ <li>sed, AWK, etc.</li>
+ <li>Most init system configurations, including systemd (better idea:  <a href="https://www.gnu.org/software/shepherd/">GNU Shepherd</a>)</li>
+ <li>cron (better idea:  <a href="https://www.gnu.org/software/mcron/">mcron</a>)</li>
+ <li>conky (not fully programmable while this is probably the main feature you would
+expect from such a program)</li>
+ <li>TeX, LaTeX (and all the derivatives), Asymptote (better ideas:  <a href="https://docs.racket-lang.org/scribble/index.html">scribble</a>,
+ <a href="http://www.nongnu.org/skribilo/">skribilo</a> – still in development and as of January 2019 TeX/LaTeX are still
+used as an intermediary step for PDF output)</li>
+ <li>Most programs with configurations that don’t use a general-purpose programming language.</li>
+</ul> <p>
+Re-inventing the wheel is generally not a good idea and when it comes to tools
+as central as programming languages, it has rather dramatic consequences.  It
+creates unnecessary friction and bugs.  It scatters communities around.  More
+consolidated communities can be more efficient and make better use of their time
+improving existing, well designed programming languages.
+</p>
+</div>
+</div>
+</div>
+
+ <div id="outline-container-org4d2dcef" class="outline-2">
+ <h2 id="org4d2dcef">Not just for the desktop</h2>
+ <div class="outline-text-2" id="text-org4d2dcef">
+ <p>
+Guix supports multiple architectures (i686, x86 <sub>64</sub>, ARMv7, and AArch64 as of
+January 2019) and there are plans to support more kernels beyond Linux.  (Say
+the *BSDs,  <a href="https://www.gnu.org/software/hurd/index.html">GNU Hurd</a>, or maybe your own!)
+</p>
+
+ <p>
+This makes Guix an excellent tool to deploy (reproducible) servers, but also
+other highly specific systems.  I’m thinking embedded systems here in
+particular, where it could very well compete with  <a href="https://openwrt.org/">OpenWRT</a>.  (Although this might
+require some work before getting there.)
+</p>
+</div>
+</div>
+
+ <div id="outline-container-org4413408" class="outline-2">
+ <h2 id="org4413408">The self-reproducing live USB</h2>
+ <div class="outline-text-2" id="text-org4413408">
+ <p>
+I mentioned  <code>guix system disk-image</code> above: It allows for regenerating the
+current system on a USB pendrive, for instance.
+</p>
+
+ <p>
+This makes it rather easy to create a take-away clone of my current system which
+can be plugged anywhere and replicate my exact computing environment (minus the
+hardware).
+</p>
+
+ <p>
+I can include custom data such as my PGP keys and have everything, emails
+included, readily available straight from boot.
+</p>
+
+ <p>
+Besides, it’s obviously possible to further clone-install the system on the
+machine on which I’ve plugged the USB pendrive: instead of being a bare-bones
+Guix install, it deploys my complete custom operating system.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-orgb772f2e" class="outline-2">
+ <h2 id="orgb772f2e">Replacing other package managers</h2>
+ <div class="outline-text-2" id="text-orgb772f2e">
+</div>
+ <div id="outline-container-org81e38ae" class="outline-3">
+ <h3 id="org81e38ae">Emacs, Python, Ruby… And the power of  <code>guix environment</code></h3>
+ <div class="outline-text-3" id="text-org81e38ae">
+ <p>
+Guix can replace any package manager, in particular the package managers of
+programming languages.  It has several benefits:
+</p>
+
+ <ul class="org-ul"> <li>It brings reproducibility everywhere.</li>
+ <li>It allows for rollbacks everywhere.</li>
+ <li>It saves you from learning yet another package manager.</li>
+</ul> <p>
+At this point I cannot forget to mention  <code>guix environment</code>.  This command sets
+up a temporary environment with just a specific set of packages, like that of
+ <code>virtualenv</code>.  The killer-feature is that it’s universally available for every
+language, or even better, for every language combination, should your project
+mix several languages together.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-org61be6e1" class="outline-3">
+ <h3 id="org61be6e1">TeXlive</h3>
+ <div class="outline-text-3" id="text-org61be6e1">
+ <p>
+(Disclaimer: As of January 2019, the TeXlive build system of Guix is being
+revamped.)
+</p>
+
+ <p>
+I’m honoring TeXlive with a dedicated section since, while also a package
+manager like the above, it’s exceptionally horrendous :) Which further confirms
+Guix into its position of a lifesaver!
+</p>
+
+ <p>
+Most Unix-based operating systems typically package TeXlive as a bunch of
+bundles, for instance Arch Linux has a dozen of them.  Should you need a couple
+of TeX packages dispatched across different bundles, Arch Linux leaves you
+little choice but to install the bundles which include thousand of (probably
+unnecessary) packages.  And TeXlive is  <i>big</i>, which means that it asks for
+several hundred megabytes.
+</p>
+
+ <p>
+An alternative is to install TeXlive manually, but let’s face it,  <code>tlmgr</code> is a
+poor package manager and it requires tiresome extra work.
+</p>
+
+ <p>
+With Guix, it’s possible to install TeXlive packages individually the same way
+as everything else, which makes it very easy to save your own favourite set of
+TeXlive packages, or even to create virtual environment specifications to
+compile some specific documents.
+</p>
+</div>
+</div>
+</div>
+
+ <div id="outline-container-orgbac0820" class="outline-2">
+ <h2 id="orgbac0820">Kernel</h2>
+ <div class="outline-text-2" id="text-orgbac0820">
+ <p>
+Many operating systems offer only limited support for custom kernels.  If the
+users wish to steer away from the default kernel, the custom kernel has to be
+maintained manually, which can be a pain.
+</p>
+
+ <p>
+Gentoo famously “requires” a custom kernel as a recommended (mandatory?)
+installation step.  This is hardly declarative however, and the users have to
+maintain the kernel’s configuration themselves.
+</p>
+
+ <p>
+With Guix, the kernel is a fully customizable package like any other.  It’s
+possible to customize everything and pass a custom kernel configuration file to
+the package definition.
+</p>
+
+ <p>
+For instance, here follows the definitions of a non-free Linux kernel with the
+ <code>iwlwifi</code> driver ( <i>Warning: I strongly recommend against using non-free drivers
+since they pose a serious threat to your privacy and freedom</i>):
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-scheme">(define-module (ambrevar linux-custom)
+  #:use-module (guix gexp)
+  #:use-module (guix packages)
+  #:use-module (guix download)
+  #:use-module (guix git-download)
+  #:use-module (guix build-system trivial)
+  #:use-module ((guix licenses) #:prefix license:)
+  #:use-module (gnu packages linux)
+  #:use-module (srfi srfi-1))
+
+(define-public linux-nonfree
+  (package
+    (inherit linux-libre)
+    (name "linux-nonfree")
+    (version (package-version linux-libre))
+    (source
+     (origin
+      (method url-fetch)
+      (uri
+       (string-append
+	"https://www.kernel.org/pub/linux/kernel/v4.x/"
+	"linux-" version ".tar.xz"))
+      (sha256
+       (base32
+	"1lm2s9yhzyqra1f16jrjwd66m3jl43n5k7av2r9hns8hdr1smmw4"))))
+    (native-inputs
+     `(("kconfig" ,(local-file "./linux-custom.conf"))
+       ,@(alist-delete "kconfig" (package-native-inputs linux-libre))))))
+
+(define (linux-firmware-version) "9d40a17beaf271e6ad47a5e714a296100eef4692")
+(define (linux-firmware-source version)
+  (origin
+    (method git-fetch)
+    (uri (git-reference
+	  (url (string-append "https://git.kernel.org/pub/scm/linux/kernel"
+			      "/git/firmware/linux-firmware.git"))
+	  (commit version)))
+    (file-name (string-append "linux-firmware-" version "-checkout"))
+    (sha256
+     (base32
+      "099kll2n1zvps5qawnbm6c75khgn81j8ns0widiw0lnwm8s9q6ch"))))
+
+(define-public linux-firmware-iwlwifi
+  (package
+    (name "linux-firmware-iwlwifi")
+    (version (linux-firmware-version))
+    (source (linux-firmware-source version))
+    (build-system trivial-build-system)
+    (arguments
+     `(#:modules ((guix build utils))
+       #:builder (begin
+		   (use-modules (guix build utils))
+		   (let ((source (assoc-ref %build-inputs "source"))
+			 (fw-dir (string-append %output "/lib/firmware/")))
+		     (mkdir-p fw-dir)
+		     (for-each (lambda (file)
+				 (copy-file file
+					    (string-append fw-dir (basename file))))
+			       (find-files source
+					   "iwlwifi-.*\\.ucode$|LICENSE\\.iwlwifi_firmware$"))
+		     #t))))
+    (home-page "https://wireless.wiki.kernel.org/en/users/drivers/iwlwifi")
+    (synopsis "Non-free firmware for Intel wifi chips")
+    (description "Non-free iwlwifi firmware")
+    (license (license:non-copyleft
+	      "https://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git/tree/LICENCE.iwlwifi_firmware?id=HEAD"))))
+</pre>
+</div>
+
+ <p>
+The custom kernel and the firmware can be  <i>conditionally</i> included in your
+current system configuration (some  <code>config.scm</code> file):
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-scheme">(define *lspci*
+  (let* ((port (open-pipe* OPEN_READ "lspci"))
+	 (str (get-string-all port)))
+    (close-pipe port)
+    str))
+
+(operating-system
+ (host-name "...")
+ ;;...
+
+ (kernel (cond
+	   ((string-match "Network controller: Intel Corporation Wireless 8888"
+			  *lspci*)
+	    linux-nonfree)
+	   (#t linux-libre)))
+ (firmware (append (list linux-firmware-iwlwifi)
+		    %base-firmware))
+</pre>
+</div>
+
+ <p>
+Then run the following to install your new system configuration:
+</p>
+ <div class="org-src-container">
+ <pre class="src src-sh">sudo -E guix system reconfigure config.scm
+</pre>
+</div>
+
+ <p>
+Without even installing the new kernel, you can also directly generate an image
+ready to be booted from a USB pendrive.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-org31b7399" class="outline-2">
+ <h2 id="org31b7399">Gaming</h2>
+ <div class="outline-text-2" id="text-org31b7399">
+ <p>
+Since Guix packages are cutting edge (e.g. the latest versions of Mesa are
+readily available) while it allows for complete kernel customization, it can be
+an ideal platform for gaming and, in particular,  <i>packaging</i> games!
+</p>
+
+ <p>
+Sadly, the video game industry is still far from going along the free software
+philosophy and very few games are eligible to be packaged as part of the
+official Guix project.
+</p>
+
+ <p>
+While Guix stands for free software and won’t accept anything non-free in its
+repository, quite ironically many advanced features of Guix make it one of the
+most ideal package managers for proprietary software.
+</p>
+
+ <p>
+Some of the perks:
+</p>
+
+ <ul class="org-ul"> <li> <code>guix environment</code> allows you to run any application in an isolated container
+that restricts network access, hides the filesystem (no risk that the
+closed-source program steals any of your files, say your Bitcoin wallet or your
+PGP keys) and even system-level information such as your user name.  This is
+essential to run any non-trusted, closed-source program.</li>
+
+ <li>Functional package management: closed-source programs usually don’t stand the
+test of time and break when a library dependency changes its API.  Since Guix
+can define packages over any version of any dependency (without risk of
+conflict with the current system), Guix makes it possible to create
+closed-source packages of games that will work forever.</li>
+
+ <li>Reproducible environment: closed-source programs are usually bad at portability
+and might behave differently on different systems with slightly different
+dependencies.  The reproducibility trait of Guix implies that if we get the
+Guix package to work once, it will work forever (minus hardware
+change/breakage).</li>
+</ul> <p>
+For all those reasons, Guix would be an ideal tool to package and distribute
+closed source games.
+</p>
+
+ <p>
+This a long topic however and we will keep it for another article.  In the
+meantime, check out the  <a href="https://gitlab.com/guix-gaming-channels">Guix Gaming Channels</a>.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-org3219383" class="outline-2">
+ <h2 id="org3219383">Tips and tricks</h2>
+ <div class="outline-text-2" id="text-org3219383">
+</div>
+ <div id="outline-container-org7f21c67" class="outline-3">
+ <h3 id="org7f21c67">Emacs-Guix</h3>
+ <div class="outline-text-3" id="text-org7f21c67">
+ <p>
+One amazing perk of Guix is its Emacs interface:  <a href="https://emacs-guix.gitlab.io/website/">Emacs-Guix</a> lets you install
+and remove packages, selectively upgrade, search, go to the package definition,
+manage generations, print the “diff” between them, and much more.
+</p>
+
+ <p>
+It also has development modes for building and programming, as well as a
+dedicated Scheme  <a href="https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop">REPL</a>.
+</p>
+
+ <p>
+It’s a very unique power-user interface to the operating system.
+</p>
+
+ <p>
+There is also  <a href="https://github.com/emacs-helm/helm-system-packages">Helm System Packages</a> which somewhat overlaps with Emacs-Guix, but
+I find the interface nicer for quick package lookups and quick operations.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-orgcda272f" class="outline-3">
+ <h3 id="orgcda272f">Storage management</h3>
+ <div class="outline-text-3" id="text-orgcda272f">
+ <p>
+Since Guix allows you to keep several generations of your system configurations
+(including all of your package history), it can be more demanding on disk usage than
+other operating systems.
+</p>
+
+ <p>
+In my experience, in 2018, a 25GB partition for the store forced me to do some
+clean up about once a month (considering I have heavy packaging requirements),
+while a 50GB partition would leave me comfortable for a year.
+</p>
+
+ <p>
+To clean up the store,  <code>guix gc</code> comes in handy, but it can also remove “too
+many packages,” that is to say, packages that you would need right away on next
+update.
+</p>
+
+ <p>
+With Emacs-Guix, there is  <code>M-x guix-store-dead-item</code> which lets you sort
+dead packages by size and you can delete them individually.
+</p>
+
+ <p>
+If you need to analyze dependencies, have a look at  <code>guix gc --references</code> and
+ <code>guix gc --requisites</code>.  It can be combined with the result of  <code>guix build ...</code>
+to get access to the various elements of the dependency graph.
+</p>
+
+ <p>
+For instance, to view the code of one of the build scripts, open the file
+returned by:
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-sh">$ guix gc --references $(guix build -d coreutils) | grep builder
+/gnu/store/v02xky6f5rvjywd7ficzi5pyibbmk6cq-coreutils-8.29-guile-builder
+</pre>
+</div>
+</div>
+</div>
+
+ <div id="outline-container-org6e172dd" class="outline-3">
+ <h3 id="org6e172dd">Generate a manifest</h3>
+ <div class="outline-text-3" id="text-org6e172dd">
+ <p>
+It is often useful to generate a  <i>manifest</i> of all packages installed in some
+ <i>ad-hoc profile</i>.
+</p>
+
+ <p>
+This can be done with the following Guile script:
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-scheme">;; Run with:
+;;     guile -s FILE ~/.guix-profile
+
+(use-modules (guix profiles)
+	     (ice-9 match)
+	     (ice-9 pretty-print))
+
+(define (guix-manifest where)
+  (sort (map (lambda (entry)
+		     (let ((out (manifest-entry-output entry)))
+		       (if (string= out "out")
+			   (manifest-entry-name entry)
+			   (format #f "~a:~a"
+				   (manifest-entry-name entry)
+				   (manifest-entry-output entry)))))
+		   (manifest-entries (profile-manifest where)))
+	string<?))
+
+;; Thanks to Ivan Vilata-i-Balaguer for this:
+(define (guix-commit)
+  (let ((guix-manifest (profile-manifest (string-append (getenv "HOME") "/.config/guix/current"))))
+    (match (assq 'source (manifest-entry-properties (car (manifest-entries guix-manifest))))
+      (('source ('repository ('version 0) _ _
+			     ('commit commit) _ ...))
+       commit)
+      (_ #f))))
+
+(match (command-line)
+  ((_ where)
+   (format #t ";; commit: ~a\n" (guix-commit))
+   (pretty-print
+    `(specifications->manifest
+      ',(guix-manifest where))))
+  (_ (error "Please provide the path to a Guix profile.")))
+</pre>
+</div>
+
+ <p>
+Then call it over  <code>~/.guix-profile</code> for instance:
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-sh">$ guile -s manifest-to-manifest.scm ~/.guix-profile
+</pre>
+</div>
+
+ <p>
+I like to keep the result under version control in my  <a href="https://gitlab.com/ambrevar/dotfiles">dotfiles</a> so that I keep
+track of the history of my installed packages.  Since I also store along the
+version of Guix, I can revert to the exact state of my system as it was at any
+point in the past.
+</p>
+
+ <p>
+All this said, a better approach might be to avoid using  <i>ad-hoc profiles</i>
+altogether and prefer  <a href="../guix-profiles/index.html">manifests</a>.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-org832f9e4" class="outline-3">
+ <h3 id="org832f9e4">Service graph for a given OS configuration</h3>
+ <div class="outline-text-3" id="text-org832f9e4">
+ <p>
+Run
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-sh">guix system extension-graph /path/to/your/config.scm | dot -Tpdf > t.pdf
+</pre>
+</div>
+
+ <p>
+to view the “service extension graph” for your OS configuration.  This is useful
+to show how the interaction details between services.
+</p>
+
+ <p>
+Thanks to Ludovic Courtès for this one.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-orgb984c51" class="outline-3">
+ <h3 id="orgb984c51">Build a package from the REPL</h3>
+ <div class="outline-text-3" id="text-orgb984c51">
+ <div class="org-src-container">
+ <pre class="src src-scheme">$ guix repl
+GNU Guile 3.0.4
+Copyright (C) 1995-2020 Free Software Foundation, Inc.
+
+Guile comes with ABSOLUTELY NO WARRANTY; for details type `,show w'.
+This program is free software, and you are welcome to redistribute it
+under certain conditions; type `,show c' for details.
+
+Enter `,help' for help.
+scheme@(guix-user)> ,use(guix)
+scheme@(guix-user)> ,use(guix scripts)
+scheme@(guix-user)> ,use(gnu packages base)
+scheme@(guix-user)> (build-package coreutils)
+$1 = #<procedure 7f2170c05540 at guix/scripts.scm:122:2 (state)>
+scheme@(guix-user)> ,run-in-store (build-package coreutils)
+/gnu/store/yvsd53rkbvy9q8ak6681hai62nm6rf31-coreutils-8.32-debug
+/gnu/store/n8awazyldv9hbzb7pjcw76hiifmvrpvd-coreutils-8.32
+$2 = #t
+</pre>
+</div>
+
+ <p>
+Thanks to Ludovic Courtès for this one.
+</p>
+</div>
+</div>
+</div>
+
+ <div id="outline-container-orgf3d2a32" class="outline-2">
+ <h2 id="orgf3d2a32">Links and references</h2>
+ <div class="outline-text-2" id="text-orgf3d2a32">
+ <p>
+Some web interfaces:
+</p>
+ <ul class="org-ul"> <li> <a href="https://guix-hpc.bordeaux.inria.fr/browse?">Browse Guix packages</a></li>
+ <li> <a href="https://issues.guix.gnu.org">Issue tracker</a></li>
+ <li> <a href="https://libreplanet.org/wiki/Group:Guix/Wishlist">Wishlist</a></li>
+</ul> <p>
+Some papers:
+</p>
+ <ul class="org-ul"> <li> <a href="https://arxiv.org/abs/1709.00833">Code Staging in GNU Guix</a> (Why Lisp was instrumental in the development of Guix)</li>
+ <li> <a href="https://github.com/pjotrp/guix-notes/blob/master/WORKFLOW.org">Pjotr’s notes</a></li>
+</ul> <p>
+Some non-official packages:
+</p>
+ <ul class="org-ul"> <li> <a href="https://gitlab.com/nonguix/nonguix">Nonguix channel</a></li>
+ <li> <a href="https://gitlab.com/guix-gaming-channels">Guix Gaming Channels</a></li>
+ <li> <a href="https://gitlab.com/mbakke/guix-chromium">Chromium package channel</a></li>
+ <li> <a href="https://notabug.org/wigust/guix-wigust/">Oleg Pykhalov’s packages</a></li>
+ <li> <a href="https://notabug.org/jlicht/guix-pkgs">Jelle Licht’s packages</a></li>
+ <li> <a href="https://gitlab.com/pkill-9/guix-packages-free">pkill-9’s packages</a></li>
+</ul></div>
+</div>
+</div>

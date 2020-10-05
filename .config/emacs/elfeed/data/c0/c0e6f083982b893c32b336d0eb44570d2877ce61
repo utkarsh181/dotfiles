@@ -1,0 +1,11 @@
+
+<p>
+I've had a lot of people ask if mutt-wizard can work with ProtonMail's encypted mail.
+The old answer was "No", but as <a target="_blank" href="https://protonmail.com/bridge/">ProtonMail Bridge</a> has become a thing, it's now possible to have your mail from ProtonMail offline, including in mutt.
+</p>
+
+<p>
+<em>ProtonMail Bridge</em> requires a paid account to use, but if you have one, I encourage you to try it with mutt.
+I've just push a commit that <em>should</em> give mutt-wizard compatibility with ProtonMail and PM Bridge.
+Since I don't have an account with them, I can't test it, but I invite everyone who does to try it once you have Bridge set up and tell me if it works as expected ;-)
+</p>

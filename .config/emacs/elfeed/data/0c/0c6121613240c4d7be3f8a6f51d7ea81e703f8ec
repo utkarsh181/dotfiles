@@ -1,0 +1,14 @@
+
+<p>I've just pushed updates to the voidrice and LARBS repos that officially change the default file browser from ranger to vifm.</p>
+
+<p>If you update via git, you might also need to manually run <code>yay -S python-ueberzug</code> to install &uuml;berzug from the AUR, otherwise image previews may stall and (obviously) not work.</p>
+
+<p>
+I mentioned &uuml;berzug's ability to preview images <a target="_blank" href="https://www.youtube.com/watch?v=Bocb8diNJA8">in this video</a>, but I've found a solution to getting them to work in vifm and it is now default in LARBS.
+</p>
+
+<p>
+I'll probably be doing a video on vifm sometime soon now, but if you want an explanation of the script which was written by the developer of &uuml;berzug, I believe, Distrotube has talked about it <a target="_blank" href="https://www.youtube.com/watch?v=qgxsduCO1pE">in this video last week</a>.
+</p>
+
+<p>My video will probably cover this, basic info, colorschemes and more. It might be a somewhat long video, but people have been asking for it for a while.</p>

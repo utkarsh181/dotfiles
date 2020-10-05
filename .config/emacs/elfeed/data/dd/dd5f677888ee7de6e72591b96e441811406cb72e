@@ -1,0 +1,14 @@
+
+<p>
+New video up on how to automatically format references in groff/troff, using <code>refer</code>. <a target="_blank" href="https://youtu.be/yTQbi_E_Gys">Check it out here!</a>
+You now should be able to get your term papers done in groff pretty easily! 😉
+</p>
+
+<p>As we talked about <a target="_blank" href="https://www.youtube.com/watch?v=XfOwRYmb5bQ">in the last video</a>, <code>refer</code> is considerably faster than formatting your references with biber in LaTeX.
+<code>refer</code> is pretty well customizeable on the command line and in-text, but there's a lot more to the program than is just in the man; feel free to share what things you run across.
+</p>
+
+<p>
+I don't think I said so in the video, but <code>refer</code> is mostly intended to work with the <code>ms</code> and <code>me</code> macro set.
+I haven't tried it on others, but it may have some level of functionality, despite being intended for papers and such.
+</p>

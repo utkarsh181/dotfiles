@@ -1,0 +1,32 @@
+
+<p>I occasionally get asked why I use my <a target="_blank" href="https://www.youtube.com/watch?v=gKumet6b-WY">"ugly" status bar</a> which is a simple i3blocks with gaudy emojis rather than the more elegant polybar which I used in earlier videos, like say, <a target="_blank" href="https://www.youtube.com/watch?v=-BOW61luzF4">this one</a>, or bumblebee-status, which I used even earlier <a target="_blank" href="https://www.youtube.com/watch?v=2U3vRbF7v5A">here</a>.</p>
+
+<p>First, right off the bat, I know a lot of people think of me as a desktop "ricer", i.e. someone who makes substantial changes to their computers for aesthetic purposes, but this really isn't the case. The only sense in which I care about my computer's appearance is its ability to present important things very obviously and the speed with which I can do whatever thing I'm doing on a computer. "Ricing" a term that comes from the automobile-modification world meaning "Race-Inspired Cosmetic Enhancement". A true ricer is all about making his computer elegant. I'm not. I care about efficiency and do have some minor aesthetic things (like transparency), but these are only to keep me from getting bored out of my mind. I even used solarized colors for a while which shows obviously I don't care <em>that much</em> about how a computer looks.</p>
+
+<p>If you want a very good example of real ricing, I recommend you check out <a target="_blank" href="https://www.youtube.com/watch?v=9vQCiSOcYrI">this recent video by iBSD</a>, where he shows a AwesomeWM configuration theming it to Game of Thrones. That might sound absurd and pure flex, but check it out; it's very impressive.</p>
+
+<p>But anyway, there are a couple specific reasons I don't use "the pretty" polybar:</p>
+
+<ul>
+	<li>On Arch Linux, there is no polybar binary and you must compile it from the AUR. No big deal for a user, but since I maintain <a target="_blank" href="https://larbs.xyz">LARBS</a> and have hundreds of people weekly (sometimes daily) installing my system, this constant compiling of a system basic component on many different computers leads to <em>a lot</em> of problems, many of which I can't troubleshoot.</li>
+	<li>Related to the above, polybar has a bad tendency to break on the updating/renaming of a library. It's the only package I know of that does this regularly.</li>
+	<li>Polybar is <em>different</em> from and independent from the typical i3bar and lacks some of its abilities. Honestly one of the things that was the straw that broke the camel's back for me was the fact that you can't easily run a command to toggle/hide polybar. Additionally, you have to get use to restarting polybar on screen refresh and having an extra script for generating in the way you want on multiple monitors. Some of that is <em>good</em> in that it means customizeability on different monitors, but since I'm not a big fan of multi-monitor setups, it doesn't mean much to me.</li>
+	<li>I do sort of enjoy the "ugliness" of </li>
+</ul>
+
+<p>My reasons for bumblebee-status anymore are somewhat similar (with the additional fact that it's written in Python and tended to eat up system resources).</p>
+
+<p>Anyway. I only write all this because I am sort of thinking of configuring a "prettier" statusbar, but since people ask about my previous choices I want to make it clear what I care about in system configuration.
+If you have any suggestions of a status bar that...
+</p>
+
+<ul>
+	<li>...exists in the main Arch repos,</li>
+	<li>is configurable,</li>
+	<li>light on system resources,</li>
+	<li>has few (or no) dependencies,</li>
+	<li>can be easily togged,</li>
+	<li>and still can be made very pretty...</li>
+</ul>
+
+<p>Please tell me.</p>

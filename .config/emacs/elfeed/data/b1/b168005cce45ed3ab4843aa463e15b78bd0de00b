@@ -1,0 +1,8 @@
+
+<p>The podcast now has its own domain at <a target="_blank" href="http://notrelated.xyz">notrelated.xyz</a>, which is a bit easier to remember than the libsyn subdomain for those who aren't familiar with libsyn.
+</p>
+
+<p>
+For people who care, <a target="_blank" href="http://notrelated.xyz">notrelated.xyz</a> does <em>not</em> have SSL/https and I probably won't set it up because, frankly, I don't see it as necessary (I mean I have it for my main domain, but I don't even see <em>that</em> as very necessary). If I change my mind on this, I'll tell you.
+Of course if you just have to have SSL/https, you can still use the libsyn address to access either the podcast webpage at <a target="_blank" href="https://notrelated.libsyn.com">https://notrelated.libsyn.com</a> or the RSS feed at <a target="_blank" href="https://notrelated.libsyn.com/rss">https://notrelated.libsyn.com/rss</a>.
+</p>

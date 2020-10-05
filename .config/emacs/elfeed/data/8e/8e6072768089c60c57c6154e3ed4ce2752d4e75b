@@ -1,0 +1,7 @@
+<p>A little bit ago I talked about how I've been using suckless <a href="https://tools.suckless.org/sent/">sent</a>, which is a minimalist presentation format. It lacks features aside from the basics: text on slides (which is automatically sized for each one) and the ability to have images (only one per slide, again, autosized).</p>
+
+<p>I've always looked for a more effective way to make meme videos, by which I mean the videos like my distro-hopping or Mac videos, where I more or less narrate a stream of memes and some text. Traditionally I did this in Blender, but that could be very time consuming, taking several days of constant work to put out a 10 minute video.</p>
+
+<p>It actually hit me that sent would be a very good replacement for Blender (strangely enough), in that I can just write a presentation, put in images, etc., load it in sent, and record my screen while narrating. I.e., no video editing/tweaking/compiling or work time other than assembling my "script" for the video, in the different memes and text I'll be talking about.</p>
+
+<p>I think I'll try this out pretty soon. Hopefully I can get in a place where I can put videos like that out relatively commonly.</p>

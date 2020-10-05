@@ -1,0 +1,200 @@
+<div id="content">
+ <p>
+I’m happy to let your know that my application to the NLNet  <i>Next
+Generation Internet – Search & Discovery</i> grant for Guix has been
+accepted!
+</p>
+
+ <p>
+You’ll find official grant entry here:  <a href="https://nlnet.nl/project/GUIX/">https://nlnet.nl/project/GUIX/</a> (the
+description is misleading, read on for the actual plan).
+</p>
+
+ <p>
+See also the  <a href="https://www.ngi.eu/">European Union NGI website</a> behind this initiative.
+</p>
+
+ <p>
+This grant will allow me to work on Guix for a flexible period of time, probably
+between 6 months and 1 year.
+</p>
+
+ <p>
+Here follows the current plan which is still subject to change.  Ideas,
+suggestions and criticism are welcome!
+</p>
+
+ <pre class="example">
+The main goal is to enhance search and discovery of Guix packages and services
+via a catalogue. The subgoal is to refine the meaning of “packages” and
+“services” within the context of Guix by completing them and broadening their
+domain.
+
+</pre>
+
+ <p>
+While I’ll be financially supported by the grant for these specific tasks, I
+also commit significant work into the development and promotion of Guix and
+related projects on my limited free time.  (See my  <a href="../projects/index.html">other projects</a>).  If you like
+what I do and would like help me spend more time on Guix and make free software
+greater every day, consider supporting me financially, I’d be tremendously
+grateful for every little bit of help :)
+</p>
+
+ <center> <script src="https://liberapay.com/Ambrevar/widgets/button.js"></script></center>
+ <center> <noscript> <a href="https://liberapay.com/Ambrevar/donate"> <img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></img></a></noscript></center>
+
+ <p>
+Thank you!
+</p>
+
+ <p>
+Next follows the list of tasks I aim to tackle.
+</p>
+
+ <div id="outline-container-org18683b5" class="outline-2">
+ <h2 id="org18683b5">Parameterized packages</h2>
+ <div class="outline-text-2" id="text-org18683b5">
+ <p>
+Gentoo’s package manager, Portage, exposes a “USE flags” feature which allows
+users to customize packages in a way that composes (e.g. “disable the GUI
+elements of all packages” for a headless server).  This essentially subdivides
+packages into smaller “components.”  Since those components form the smallest
+atoms a user could search for, this is a prerequisite for the rest of the
+searchability improvements.
+</p>
+
+ <p>
+The goal of this task is to implement some form of easy-to-use, composable
+package parameterization.
+</p>
+
+ <p>
+References:
+</p>
+ <ul class="org-ul"> <li> <a href="https://lists.gnu.org/archive/html/guix-devel/2019-05/msg00285.html">https://lists.gnu.org/archive/html/guix-devel/2019-05/msg00285.html</a></li>
+ <li> <a href="https://lists.gnu.org/archive/html/guix-devel/2020-01/msg00026.html">https://lists.gnu.org/archive/html/guix-devel/2020-01/msg00026.html</a></li>
+</ul></div>
+</div>
+
+ <div id="outline-container-org61a8eb0" class="outline-2">
+ <h2 id="org61a8eb0">File search</h2>
+ <div class="outline-text-2" id="text-org61a8eb0">
+ <p>
+Many package managers support looking up packages by the file paths they
+include.  This feature is missing in Guix while being crucial for search,
+e.g. when the user knows the executable name which happens to be different from
+the package name.
+</p>
+
+ <p>
+The goal of this task is to allow the user to search for any packaged file,
+installed or not.
+</p>
+
+ <p>
+References:
+</p>
+ <ul class="org-ul"> <li> <a href="https://lists.gnu.org/archive/html/guix-devel/2019-03/msg00236.html">https://lists.gnu.org/archive/html/guix-devel/2019-03/msg00236.html</a></li>
+ <li> <a href="https://lists.gnu.org/archive/html/guix-devel/2020-01/msg00019.html">https://lists.gnu.org/archive/html/guix-devel/2020-01/msg00019.html</a></li>
+</ul></div>
+</div>
+
+ <div id="outline-container-org81364a8" class="outline-2">
+ <h2 id="org81364a8">User services</h2>
+ <div class="outline-text-2" id="text-org81364a8">
+ <p>
+Guix provides excellent integration with GNU Shepherd for system services (all
+configurations are programmable and composable using Guile).  But it lacks
+integration for user services.  User services can be used to replace much of the
+traditional “dotfiles” which are often ad-hoc hacks (e.g. environment variables,
+scripts, various program configurations such as GnuPG).  The benefit is as for
+packages: the work of one can be redistributed to many.  Finally, services are
+not searchable with Guix.  We could fix this issue.
+</p>
+
+ <p>
+The goal of this task is to integrate Guix with GNU Shepherd to support user
+services.  A user service should then automatically require the necessary
+packages, just like a system service does.  For instance if the user sets up a
+GnuPG service, they don’t have to install GnuPG explicitly, Guix+Shepherd will
+take care of that.
+</p>
+
+ <p>
+References:
+</p>
+ <ul class="org-ul"> <li>Guix shepherd user services:
+ <a href="https://lists.gnu.org/archive/html/guix-devel/2019-02/msg00128.html">https://lists.gnu.org/archive/html/guix-devel/2019-02/msg00128.html</a></li>
+ <li>Julien’s home manager:
+ <a href="https://lists.gnu.org/archive/html/guix-devel/2019-09/msg00185.html">https://lists.gnu.org/archive/html/guix-devel/2019-09/msg00185.html</a></li>
+ <li>Nix Home Manager:  <a href="https://nixos.wiki/wiki/Home_Manager">https://nixos.wiki/wiki/Home_Manager</a></li>
+ <li>…?  I believe there were many more discussion on user services on the
+mailing list, feel free to share them!</li>
+</ul></div>
+</div>
+
+ <div id="outline-container-orgd3208cd" class="outline-2">
+ <h2 id="orgd3208cd">Graphical user interface (GUI)</h2>
+ <div class="outline-text-2" id="text-orgd3208cd">
+ <p>
+Guix comes with a command line interface and some Emacs interfaces.  None of
+them are particularly newcomer-friendly.  Besides, much of the configuration is
+done by editing Guile files.
+</p>
+
+ <p>
+The goal of this task is to make Guix more accessible to non-tech users by
+providing an intuitive user interface to most of Guix actions, in particular:
+</p>
+
+ <ul class="org-ul"> <li>manage channels,</li>
+ <li>manage profiles,</li>
+ <li>live fuzzy-search everything (packages, files, services),</li>
+ <li>edit the (system) configuration.</li>
+</ul></div>
+</div>
+
+ <div id="outline-container-orga2f4e6c" class="outline-2">
+ <h2 id="orga2f4e6c">Social integration with the Guix catalogue</h2>
+ <div class="outline-text-2" id="text-orga2f4e6c">
+ <p>
+Guix packages can be searched from the package name, the synopsis (a one-liner)
+and the description (a paragraph).  The goal here is to extend the
+discoverability of both packages and services thanks to a  <i>catalogue</i>.  If
+possible, we would like to enable a wide audience to contribute to such a
+catalogue.
+</p>
+
+ <p>
+Ideas:
+</p>
+
+ <ul class="org-ul"> <li>Discuss with Guix, Nix, Debian and other distributions about the
+possibility to centralize the catalogue.  What about using  <a href="https://www.wikidata.org/">Wikidata</a>?</li>
+ <li>List of possible social traits for a package:
+ <ul class="org-ul"> <li>Recommendation suggestions.</li>
+ <li>(Optionally anonymous) statistics (e.g. number of downloads).</li>
+ <li>(Optionally anonymous) ratings.</li>
+ <li>Tags.  Tags are not objective but are fashionable (some tag meaningful one
+day may not ring a bell in 2 years).  Thus they should not be part of the
+package definition; they really belong to the (external) social traits of
+the package.</li>
+</ul></li>
+</ul> <p>
+References:
+</p>
+ <ul class="org-ul"> <li>Adding wikidata, wikipedia & screenshot-url fields to package-recipes:
+ <a href="https://lists.gnu.org/archive/html/guix-devel/2018-11/msg00007.html">https://lists.gnu.org/archive/html/guix-devel/2018-11/msg00007.html</a></li>
+ <li>Re-approaching package tagging:
+ <a href="https://lists.gnu.org/archive/html/guix-devel/2018-12/msg00385.html">https://lists.gnu.org/archive/html/guix-devel/2018-12/msg00385.html</a></li>
+ <li>New library: guile-wikidata:
+ <a href="https://lists.gnu.org/archive/html/guix-devel/2018-12/msg00107.html">https://lists.gnu.org/archive/html/guix-devel/2018-12/msg00107.html</a></li>
+ <li>Guix <-> Wikidata:  <a href="https://lists.gnu.org/archive/html/guix-devel/2019-05/msg00017.html">https://lists.gnu.org/archive/html/guix-devel/2019-05/msg00017.html</a></li>
+ <li>Guix Wikidata module - next steps:
+ <a href="https://lists.gnu.org/archive/html/guix-devel/2019-01/msg00089.html">https://lists.gnu.org/archive/html/guix-devel/2019-01/msg00089.html</a></li>
+ <li>…?  I recall there were more discussions, feel free to share them if you can
+find them!</li>
+</ul></div>
+</div>
+</div>

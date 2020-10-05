@@ -1,0 +1,18 @@
+
+<p>I was playing around with my server today, you know, the one where I host <a href="https://lukesmith.xyz">my website</a> the <a href="https://larbs.xyz">LARBS website</a> <em>and</em> <a href="https://notrelated.xyz">the <em>Not Related!</em></a> website.</p>
+
+<p>I ended up "accidentally" install a nginx server which obviously interferred with my preexisting apache server (well, at least because I was running a hand-holding distro that automatically turns everything on when you install something!). This caused a general crash of everything a couple hours ago.</p>
+
+<p>It <em>would've</em> been an easy fix, but I decided instead to just wipe the whole thing and restart on a clean server, so that's what I'm doing. This time, I'm just running nginx.</p>
+
+<p>Anyway, some things are still down and I'm going to dinner tonight, so it might be until tomorrow that I fix everything:</p>
+
+<ul>
+	<li>The LARBS link at <code>larbs.xyz/larbs.sh</code> is offline until I figure out how to link stuff on nginx the way I did with <code>htaccess</code> on apache.</li>
+	<li>Some old links might not rewrite properly, similar to above. I think I have it removing .html at least on my personal site.</li>
+	<li>My personal files on my website are down since again they were Apache based.</li>
+	<li>My git server is down. I might just remake it on video because people always ask about it.</li>
+	<li>If you have the <em>Not Related!</em> link at the notrelated.xyz address, it might be down too: <code>https://notrelated.libsyn.com/rss</code> will work instead; the one at notrelated.xyz was just a link to that one.</li>
+</ul>
+
+<p>Thanks to <a href="https://github.com/LukeSmithxyz/emailwiz">that email script</a> I made a while ago I can receive emails, but it looks like I have to tinker with it a little more for isync. I guess that's for the best since I'll update the script for other people.</p>

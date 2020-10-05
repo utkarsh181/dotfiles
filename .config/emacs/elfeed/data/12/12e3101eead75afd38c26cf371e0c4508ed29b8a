@@ -1,0 +1,10 @@
+
+<p>
+After a recent commit, <a target="_blank" href="https://github.com/LukeSmithxyz/mutt-wizard">mutt-wizard</a> will now also generate an msmtprc file based on your settings. While mutt-wizard has had partial, expandable msmtp compatibility, it now all comes by default. This will increase some compatibility with some accounts and will give you more options in sending mail if you want to set personal msmtp settings. Remember to install the relevant msmtp package on your distro before sending mail!
+</p>
+
+<p>
+Obviously the wizard will safely store your password and decrypt it only when necessary, just like with offlineimap.
+If you want msmtp compatibility but you've already run mutt-wizard, I recommend removing your old accounts in the dialog menu and readding them (this <em>won't</em> delete you offline email so you won't have to redownload it so long as you keep the email's account name the same).
+I encourage you to try it, partially because if there are errors, I'd like to find out soon! ;-)
+</p>

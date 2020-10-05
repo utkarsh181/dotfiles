@@ -1,0 +1,37 @@
+
+<p>I'll probably record a video on this tomorrow, but I might as well ask my blog audience first, <b>What should be the default web browser in LARBS?</b></p>
+
+<p>Right now it's Brave, since that's what I do and it comes with a lot of features I consider basic already built in.
+The problem with nearly all web browsers is that it's pretty hard and annoying to put together "dotfiles" for them, a default profile that has sensible defaults.
+</p>
+
+<p>
+Brave is especially nice because it comes with add-ons that block adds, redirect to HTTPS and add Tor and torrenting capabilities.
+But while sometimes Brave will prompt the user on first run for their preferred start engine, on some systems after running LARBS, it will just assume Google, which I absolutely want to avoid.
+</p>
+
+<p>I'm sure you all have the agency to change your search engine to something more sensible, most use DuckduckGo (I prefer Searx), but when it comes to the default, the sileny majority is going to continue with the default idly, and I don't want to set them on the wrong path.
+Why even use Linux if you're just going to send everything straight to Google anyways?
+</p>
+
+<h2>Possible browsers</h2>
+
+<ul>
+<li>Brave &ndash; Again, great defaults, but Google might end up as the default search engine.</li>
+<li>Ungoogled-chromium &ndash; Possibly the safest bet, no cringe branding or bad policies, but it doesn't look like it has any search engine by default... That will be a big annoyance to novices.</li>
+<li>Palemoon &ndash; Manjaro i3 uses it, fast, good-looking, but it has an incestuous development team which has made... odd choices (`~/.moonchild productions/` makes me want to kms whenever I `ls -a`), but okay on privacy (weird startup screen, but could be worse). Bad/limited add-ons/extensions.</li>
+<li>Icecat &ndash; I'll admit it, two years, Icecat was absolutely unusable on pretty much all sites, but it looks like it's evened most everything out. Probably the best browser for raw privacy, but still probably the least usable since users have to keep in mind if they need to turn some script blocker off for a site, etc.</li>
+<li>qutebrowser &ndash; I haven't used it in years and I don't know if I want to get back into figuring it out for the third time, lol. I don't know where it is nowadays, but if I'm making normies use it, it's going to have to be able to play YouTube videos and without 400% CPU usage. qutebrowser does have the _massive_ advantage of __actually having dotfiles__ so I can easily change defaults.</li>
+<li>Waterfox &ndash; Well, a better form of Firefox on most fronts, but Bing is the default search engine.</li>
+</ul>
+
+<h2>Premptive 'no' to the following</h2>
+<ul>
+<li>surf &ndash; Too much work for an individual, let alone managing one build to rule them all. There are cool suckless things you can do with it, but it's also just slow.</li>
+<li>Browsers I'm not familiar with (uzbl, luakit). I hear they're really cool, but for me to install it on other peoples' computers, I need to be organicly familiar with it. You'd have to convince me to use them individually first.</li>
+</ul>
+
+<p>I'll also say, and I had never heard this take until I did my video on Brave, I obviously have no qualms about using a chromium-based browser. Apparently there are people out there who have the idea that source code is just magically evil if it was written by Google, even if it is 100% free and open source and well-audited.
+Anyway, share your opinions! What did I miss?</p>
+
+<p>Email me what you think at <a href="mailto:luke@lukesmith.xyz">luke@lukesmith.xyz</a> and you might influence me before I record the video tomorrow morning.</p>

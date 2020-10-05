@@ -1,0 +1,45 @@
+
+<p>The YouTube premiere for <a href="https://www.youtube.com/watch?v=d8XtNXutVto">the Vimtutor Let's Play</a> just ended successfully.
+It's a long vid, so if you want to see something specific, I made timecodes which I'll put here, but if you go to the video above, they'll be clickable in the description.</p>
+
+<pre><code>0:00 Vim Diesel Let's Play Introduction
+0:46 Playing stupid in movement/WASD for gamers!
+1:46 Soydevs learn to exit vim with ZZ and ZQ.
+3:44 Noob way to delete stuff and move around
+4:34 zz, zt and zb to move the screen
+5:25 i for insertion
+6:07 Insert mode vs. Normal mode: The Magic of Vim
+7:01 Most important tip of mapping caps lock as escape
+7:49 How to go SANIC fast in vim with xset hacking! 🏃
+9:33 Moving by paragraphs with {}
+10:12 a, A and I for inserting text in different ways
+12:22 Saving and exiting
+14:20 Literally sorting every line in vimtutor alphabetically for no reasons (based!)
+15:36 Deleting by text objects; operators and motions
+20:48 Counts for motions
+25:17 Deleting around and inside and () {} [], etc.
+28:28 LITERALLY TIME-TRAVELING IN VIM 😮
+31:45 put or paste deleted text
+33:26 Using the system clipboard in vim or really neovim to copy and paste with other programs
+34:40 Replace command (mostly useless, lol)
+35:34 c to actually replace things the right way
+39:18 File status, using percentages to jump through the file, and gg and G
+40:45 Searching for text with / and ? (for it backwards)
+42:31 Using % to jump from parenthis and bracket pairs
+44:00 Substitute strings like with sed
+48:44 External commands and I learned vim on Windows lol
+49:54 Captain Kirk and learning visual mode
+52:52 THE MOST USEFUL VIM COMMAND: .!!! (PERIOD)
+55:40 NO WAIT, THIS ONE IS THE MOST USEFUL
+56:40 Replace mode
+58:30 vim does have a spellchecker!
+1:00:29 Now we learn copying and yanking
+1:01:54 Setting variables
+1:04:30 How a vimrc works and how to configure vim on startup, tab completion?
+1:05:38 WE DID IT REDDIT!
+
+DONATE NOW: https://lukesmith.xyz/donate 💰😎👌💯
+WEBSITE: https://lukesmith.xyz 🌐❓🔎</code></pre>
+
+<p>Enjoy! And thank you Kenneth for the Vim Diesel thumbnail!
+He said it cost him a C- in art class, lol.</p>

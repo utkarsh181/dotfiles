@@ -1,0 +1,27 @@
+
+<p>I'm <b>not</b> deleting any of the i3-related config files, I'll just be doing the following:</p>
+
+<ul>
+	<li>Removing i3, i3blocks and other i3-only programs from the install list.</li>
+	<li>Removing the visual i3 option on the LARBS script that changed <code>~/.xinitrc</code> for you.</li>
+	<li>Consolidating the config files, mainly profile files to make things a little more elegant. I am also adding in a custom <code>dwm.desktop</code> file so GUI-cucks can log into dwm with their log-in screens.</li>
+</ul>
+
+<p>That last point might cause breakage in i3 builds that people keep up to date with git.
+In case it hasn't been clear for the past year, I really want to move past i3. I haven't used it in months and am not reliable to troubleshoot problems on it.
+</p>
+
+
+<p>If you still want to use my i3 setup, you can still:</p>
+
+<ol>
+	<li>Run LARBS.</li>
+	<li>Manually install i3/i3blocks afterwards.</li>
+	<li>Manually change what WM <code>~/.xinitrc</code> starts (if you don't use a login screen/display manager).</li>
+</ol>
+
+<p>I have basically not been maintaining i3 for months.
+I accept PRs and fixes if offered, but not much more.</p>
+
+<p>I might add a little extra i3 script to be run after LARBS that makes the changes necessary for i3... maybe.
+I really recommend moving on to dwm though.</p>

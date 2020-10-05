@@ -1,0 +1,23 @@
+
+<p>After a full month of doing videos pretty much every day, I decided to take a two week break early July.
+In case you're new here, it's pretty normal for me to go weeks or months without a public appearance only to end that hiatus with a long video series.</p>
+
+<p>I hope all of you have enjoyed making your own website: <strong>it will be probably the best technology investment you will make</strong>. You get a lot of freedom and knowledge in doing it. I'll be doing more videos about having your own website/server pretty soon, along with other videos.
+If you haven't jumped on the bandwagon:</p>
+
+<ul>
+	<li>I have <a href="https://www.youtube.com/playlist?list=PL-p5XmQHB_JRRnoQyjOfioJdDmu87DIJc">a playlist on all the basics</a> and I'll do more on how I manage my website soon.</li>
+	<li>I put out affiliate links to the registrar/VPS provider I use/recommend:</li>
+	<ul>
+		<li>Use <a href="https://www.epik.com/?affid=we2ro7sa6">Epik</a> as a registrar, prices are as cheap as they get and they have made sacrifices in the past to avoid suppressing political speech. In a day when registrars have started dropping domain names at the minor calls of the media, this is essential.</li>
+		<li>Use <a href="https://www.vultr.com/?ref=8384069-6G">Vultr</a> as a VPS provider. That link gives you a $100 one-month credit to play around with and if you stay with Vultr, your first $25 spent goes to me instead of them.</li>
+	</ul>
+</ul>
+
+<p>Additionally, I encourage you to check out <a href="https://videos.lukesmith.xyz">my new self-hosted Peertube instance at https://videos.lukesmith.xyz</a> .
+I want to see what kind of bandwidth I need.
+If you want to watch the videos above on Peertube instead of YouTube: <a href="https://videos.lukesmith.xyz/videos/watch/playlist/e279cb01-cccf-44d6-b017-38cc6b5bbcf7?videoId=9aadaf2f-a8e7-4579-913d-b250fd1aaaa9">check it out here</a> 👈 instead of on YouTube.
+
+<p>Now one important key to internet independence is what's called <em>federation</em>, i.e. "social media sites" that can be run on your own or your friend's server and can interact with other instances of that site. I'll talk about this in videos soon, but you might want to look it up if you don't know. Peertube is an example of a federated site. While you will only see my videos on my site now, I can "follow" other instances to make their content visible from my site. You can also join as a user on my instance for the time being&mdash;that might have to change in the future, so you might want to do it if you want.</p>
+
+<p>Obviously if you're running a Peertube instance, come follow mine and back up/mirror videos if you want! I might follow some instances soon myself.</p>

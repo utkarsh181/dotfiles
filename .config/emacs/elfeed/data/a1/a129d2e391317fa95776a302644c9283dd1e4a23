@@ -1,0 +1,12 @@
+
+<p>Suckless software has long been burdened by a peculiar error that causes crashes whenever trying to load a colored emoji.
+This has meant extreme annoyance for me and confusion for people who use my dotfiles.
+The only band-aid for this error has been just installing a font with good unicode coverage and hoping that monospace fonts dare not to print out colored emojis, and making a fontconfig that keeps it that way.</p>
+
+<p>Recently, however, a fix has been posted to the AUR in the <code>libxft-bgra</code> package, which will hopefully become part of the Xft upstream soon.
+This will avoid the error, and allows unpatched st to view colored emojis without a problem.</p>
+
+<p>I do a video on this <a href="https://www.youtube.com/watch?v=f9qNXV01yzg">here</a>.</p>
+
+<p>For those who use my dotfiles, update <em>everything</em>: the st build, the dwmblocks build if you use it, the dotfiles, etc. and install <code>libxft-bgra</code>.
+I had variously patched software to avoid these problems, but those patches have now been reverted to allow color emojis if you want them.</p>

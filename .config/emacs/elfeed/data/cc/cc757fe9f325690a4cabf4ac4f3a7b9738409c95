@@ -1,0 +1,26 @@
+
+<p>As I say in <a href="https://videos.lukesmith.xyz/videos/watch/bd0ebff8-245c-4092-a1fa-b604086a460e">this video</a> (exclusively on Peertube 😉),
+I did <a href="https://www.youtube.com/watch?v=zrEwHn7XmRU">a video yesterday</a> about my new video site at <a href="https://videos.lukesmith.xyz">videos.lukesmith.xyz</a>, which is a Peertube instance.</p>
+
+<p>As I predicted, I wouldn't be able to tolerate the bandwidth needed on my puny Vultr server, so after the suggestions of many subscribers, I've decided on another company to host the Peertube instance (I'll still be using Vultr for all of my other VPS's for their other advantages).
+</p>
+
+<p>
+A subscriber, Harambe (I'll just assume that's his real name) has agreed to fund the instance for the first few months, so thanks a lot to him.
+Thankfully, it offers infinite bandwidth, (nearly) infinitely expandable space and is much cheaper than I anticipated.
+It also has a beefier processor, which actually does make a difference when Peertube is trying to transcode your most recent upload all while serving a thousand people.
+</p>
+
+<p>Peertube does have <a href="https://docs.joinpeertube.org/#/maintain-migration">some documentation on migrating your instance</a>, but my new server is currently also running Debian (the original Peertube server runs Arch). In the worse case scenario, I won't be able to migrate and that means people will have to reregister and comments will be deleted. Hopefully that won't be the case though.</p>
+
+<p>
+I'll need to set everything up again, but hopefully it will be done in a couple days before we meet the 1TB bandwidth cap.
+If you want to donate to the maintain the instance and my management of it in the meantime (or well, all the other stuff I do online), you can always <a href="https://lukesmith.xyz/donate">donate!</a>
+I'm going to feel like a shill for asking, but I'm starting to take bigger financial investments with my channel and hope to be able to be fully YouTube-independent very soon.</p>
+
+<p>I also may be able to mirror other people's videos, with a focus on people who have been recently banned or are in the threat of being banned on YouTube.
+I was sad to hear that <a href="https://rooshv.com">Roosh Valizadeh</a> was banned from YouTube yesterday and while he is on D.live was <a href="https://nitter.net/rooshv/status/1282768776468078593#m">looking for a new platform to stream on</a>.
+I've also noticed that Ryan Faulk (<a href="https://www.bitchute.com/thealthype/">the Alternative Hypothesis</a>) has privated his videos.
+I don't have Ryan's email, but if anyone has his contact information, I might be able to offer some space.
+(Actually both of these guys make long videos/streams, but it might be possible.)
+</p>

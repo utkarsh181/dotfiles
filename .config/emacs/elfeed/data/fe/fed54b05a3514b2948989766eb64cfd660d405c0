@@ -1,0 +1,6 @@
+
+<p>dwm has a somewhat unique patch called <a href+"https://dwm.suckless.org/patches/swallow/">swallow</a> which automatically positions a window opened from a terminal over that terminal that would otherwise be non-responsive, uncloseable and thus a big annoyance.</p>
+
+<p>I show this patch and why it's needed <a href="https://www.youtube.com/watch?v=92uo5OBOKfY">in a new video I just released</a>: "Does your Window Manager Swallow?"</p>
+
+<p>I'm also going to start putting my dwm videos into <a href="https://www.youtube.com/playlist?list=PL-p5XmQHB_JSrWHdm-Fb5khZpw2JXLImj">a playlist here</a> so if you want to keep up with them individually you can.</p>

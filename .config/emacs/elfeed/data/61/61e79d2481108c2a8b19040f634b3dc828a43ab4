@@ -1,0 +1,141 @@
+<div id="content">
+ <p>
+Evil Collection is a set of  <a href="https://github.com/emacs-evil/evil">Evil</a> bindings (a Vim emulation layer for  <a href="https://www.gnu.org/software/emacs/">Emacs</a>)
+targeting all the modes (e.g.  <code>help-mode</code>,  <code>M-x calendar</code>, Eshell and many more)
+that are not covered by default.
+</p>
+
+ <p>
+The incomplete coverage of Evil was the main critique that discouraged many Vim
+fans from using Emacs.  Hopefully this complaint now belongs to the past.
+</p>
+
+ <div id="outline-container-org0796b69" class="outline-2">
+ <h2 id="org0796b69">Installation and development</h2>
+ <div class="outline-text-2" id="text-org0796b69">
+ <p>
+See  <a href="https://github.com/emacs-evil/evil-collection">https://github.com/emacs-evil/evil-collection</a>.
+</p>
+
+ <p>
+Although more than 100 modes and counting are supported, our work is not over
+yet: some points in the rationale still need to be worked out, some modes are
+missing.  Development has gained significant traction and will probably remain
+active for a while.  More improvements are to be expected in the future.
+</p>
+
+ <p>
+Should you run into any issue or miss a mode in particular, check the  <a href="https://github.com/jojojames/evil-collection/issues">issue
+tracker</a> and let us know.  All contributions are welcome!
+</p>
+</div>
+</div>
+
+ <div id="outline-container-org6b55da0" class="outline-2">
+ <h2 id="org6b55da0">Motivation</h2>
+ <div class="outline-text-2" id="text-org6b55da0">
+ <p>
+The Evil mode is widely considered the best Vim emulation layer out there to the
+extent that “Evil is Emacs true editor” has become a recurring joke.
+</p>
+
+ <p>
+And yet, despite its tremendous success, many Vim users and other modal-editing
+enthusiasts refrain from switching to Emacs/Evil for the sake of one major
+hindrance: that Evil bindings are not ubiquitous within Emacs and that too many
+special modes require a “binding context switch” that can be disconcerting, if
+not a frustrating cognitive burden.
+</p>
+
+ <p>
+The solution is obvious: write bindings for all the modes that require it.
+That is, all the Emacs vanilla modes, but also all the third-party, community
+supported packages.
+</p>
+
+ <p>
+Facing the Herculean proportions of this task, no wonder that we haven’t seen it
+happening in years.  And yet this is too bad.
+</p>
+
+ <p>
+For too many of us, Evil users, the “binding context switch” is a daily pain in
+the hands.  If you’ve felt among the brave ones, maybe you’ve rolled up your
+sleeves and derived some approximate, mildly inconsistent bindings of your own.
+For countless hours of frustration.
+</p>
+
+ <p>
+Writings bindings, at least consistent ones,  <i>is hard</i>.
+</p>
+
+ <p>
+Last but not least, this might be the last milestone before many Vim
+wannabe-converts actually make the final move to join the ranks of the Emacs
+community :)
+</p>
+
+ <p>
+Enter Evil Collection:
+</p>
+
+ <ul class="org-ul"> <li>Defined guidelines to enforce bindings as consistent as possible across a wide
+variety of modes.</li>
+
+ <li>Bindings for the “rest of vanilla Emacs” that is not covered yet.  Since
+Emacs, despite its huge size, features a limited number (understand “finite”)
+of special modes and that most of those are rather simple (think
+`package-menu`), this is very feasible.  This would also be a good starting
+point as a reference for the guidelines.</li>
+
+ <li>Binding sets for all the popular third-party packages out there.  (I know,
+that’s crazy.)</li>
+</ul> <p>
+Note that Evil Collection does not step on the territory that is already covered
+by other independent packages, namely:
+</p>
+
+ <ul class="org-ul"> <li> <a href="https://github.com/emacs-evil/evil-magit">evil-magit</a></li>
+ <li> <a href="https://github.com/noctuid/lispyville">lispyville</a></li>
+ <li>Org-mode:  <a href="https://github.com/GuiltyDolphin/org-evil">https://github.com/GuiltyDolphin/org-evil</a> or  <a href="https://github.com/Somelauw/evil-org-mode">https://github.com/Somelauw/evil-org-mode</a></li>
+</ul> <p>
+You’ll have to install those separately for a complete Evil experience.
+</p>
+
+ <p>
+Two previously separate packages have been integrated in Evil Collection:
+</p>
+
+ <ul class="org-ul"> <li> <a href="https://github.com/emacs-evil/evil-ediff">evil-ediff</a></li>
+ <li> <a href="https://github.com/JorisE/evil-mu4e">evil-mu4e</a></li>
+</ul></div>
+</div>
+
+ <div id="outline-container-org69b8981" class="outline-2">
+ <h2 id="org69b8981">History</h2>
+ <div class="outline-text-2" id="text-org69b8981">
+ <p>
+ <i>The above article is mostly taken from the following conversations:</i>
+</p>
+ <ul class="org-ul"> <li> <a href="https://www.reddit.com/r/emacs/comments/7akqy3/evil_everywhere_the_rest_of_emacs/">https://www.reddit.com/r/emacs/comments/7akqy3/evil_everywhere_the_rest_of_emacs/</a></li>
+ <li> <a href="https://www.reddit.com/r/emacs/comments/7loyln/evil_collection_has_hit_melpa_enjoy_the_full_vim/">https://www.reddit.com/r/emacs/comments/7loyln/evil_collection_has_hit_melpa_enjoy_the_full_vim/</a></li>
+</ul> <p>
+I started working independently on this initiative around the time I first
+posted the aforementioned articles.  A commenter pointed out that another fellow
+developer,  <a href="https://github.com/jojojames/">James N</a> (whom I didn’t know at the time) had been working on a
+similar binding set.  After a brief discussion, we decided to join forces into
+what was going to become Evil Collection.
+</p>
+
+ <p>
+Hadn’t we had the luck to get to meet, it’s most certain that the project would
+not have grown so fast while maintaining such a high quality standard.
+</p>
+
+ <p>
+This story is, I believe, a great show off of the productive and efficient
+dynamics inherent to free software development.
+</p>
+</div>
+</div>
+</div>

@@ -1,0 +1,14 @@
+
+<p>As you may know, when I screencast, I record the entrety of my screen and when I have my face in the bottom right, it is a literal floating mpv window on my desktop.
+I don't use either video editing or OBS to produce this effect.
+</p>
+
+<p>
+There is a little feature I've been thinking to add to this though, and that is using a green screen and chroma keying out the background, leaving only me.
+I don't know of a way to do this in mpv (or the commonly used alternative vlc), but I was curious if anyone had any experience automatically keying out some color in a video stream as that's sort of what I want to do.
+</p>
+
+<p>
+This isn't necessary, and if I <em>really</em> wanted it, I could just use OBS, but I'm curious if there's an established way to do this.
+Email me at <a href="mailto:luke@lukesmith.xyz">luke@lukesmith.xyz</a> if you have a solution for this.
+</p>

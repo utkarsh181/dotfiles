@@ -1,0 +1,10 @@
+
+<p> <a href="https://www.youtube.com/watch?v=ksAfmJfdub0" target="_blank">New video out on how I autocreate bibliographic citations.</a>
+I like to abstrain from writing out references, not just for fear of error, but because with some multi-author papers, it can take forever.
+In this video, I show how to use an article's DOI to get its full citation perfectly from an online database.
+</p>
+
+<p>
+I'll also link <a href="https://www.youtube.com/watch?v=nO4T8JDNYG0" target="_blank">this video</a> that I mention (by Conner McDaniel) from which I lifted the idea of using Crossref's APIs to get bibtex citations.
+The links to the script in question are in the video description (too lazy to paste here :-)).
+</p>

@@ -1,0 +1,10 @@
+
+<p>I want to have a way to stream from my home internet, which is beyond bad.
+It is certainly at least good enough to upload audio: I've used some VOIP services perfectly,
+but the issue is that <strong>YouTube and most other sites specifically require a video stream</strong> as well.</p>
+
+<p>Probably the best solution would be something like streaming an audio feed to a server of mine, which is doable given my bandwidth, and on that server, combining it with a video feed which can then be fed to YouTube or other streaming sites.</p>
+
+<p>If anyone can give me good specifics on this it would be highly appreciated. My eyes still glaze over when I hear about sockets and such, but there might be a more streamlined (bloated) solution as well...<p>
+
+<p>I made a previous request for how to do a simple audiostream on my own server: most people recommended Icecast, which I've been playing around with. I might just go with that platform-independent solution despite the fact that it will probably lessen the viewership by a good bit! (Maybe that's a good thing?)</p>

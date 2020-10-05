@@ -1,0 +1,381 @@
+<div id="content">
+ <p>
+ <i>This article was initially posted on  <a href="https://www.reddit.com/r/emacs/comments/6y3q4k/yes_eshell_is_my_main_shell/">Reddit</a>.  I’ve revised some arguments by
+taking the community feedback into account.</i>
+</p>
+
+ <p>
+Since its inception, Eshell has suffered from an arguably low popularity. See
+what the community says:
+</p>
+
+ <ul class="org-ul"> <li> <a href="https://www.reddit.com/r/emacs/comments/492edz/is%5C_anybody%5C_using%5C_eshell%5C_as%5C_the%5C_default%5C_shell%5C_any/">https://www.reddit.com/r/emacs/comments/492edz/is\_anybody\_using\_eshell\_as\_the\_default\_shell\_any/</a></li>
+ <li> <a href="https://www.reddit.com/r/emacs/comments/48opk1/eshell%5C_and%5C_why%5C_cant%5C_i%5C_convert%5C_to%5C_you/">https://www.reddit.com/r/emacs/comments/48opk1/eshell\_and\_why\_cant\_i\_convert\_to\_you/</a></li>
+</ul> <p>
+Hell, even the official manual gives a fair warning against its use:
+</p>
+
+ <ul class="org-ul"> <li> <a href="https://www.gnu.org/software/emacs/manual/html%5C_mono/eshell.html#Introduction">https://www.gnu.org/software/emacs/manual/html\_mono/eshell.html#Introduction</a></li>
+</ul> <p>
+I’m not arguing that those arguments are not valid.  (To most extent, they are.)
+</p>
+
+ <p>
+I want to argue that the issue is not so much that Eshell is not a proper  <i>Unix
+shell</i> (in the sense of POSIX  <code>sh</code> and derivatives), but rather perhaps we do
+not need a  <i>Unix shell</i> and all its historical limitations.
+</p>
+
+ <p>
+In other words: the non-Unix-ness of Eshell is more of a step forward than a
+hindrance.  Let’s review the situation.
+</p>
+
+ <div id="outline-container-org946e830" class="outline-2">
+ <h2 id="org946e830">“State of the art”</h2>
+ <div class="outline-text-2" id="text-org946e830">
+ <p>
+Take this typical scenario: I’ve got a long running process which finally
+outputs pages of relevant information.  Only then I realize that it would have
+been smart saving that somewhere.  Now I want to copy it to the clipboard.  How do
+I do that?
+</p>
+
+ <p>
+ <i>By clumsily mouse-selecting pages of terminal output, assuming my terminal can
+handle it.</i>
+</p>
+
+ <blockquote>
+ <p>
+Why can’t I (fuzzy-)search the shell output?
+</p>
+
+ <p>
+Why can’t I browse the different prompts of my shell session?
+</p>
+
+ <p>
+Why can’t I copy/paste without a mouse?
+</p>
+</blockquote>
+
+ <p>
+Back in the days, VT-like terminals were our main mean of communicating with a
+machine.  Decades went by, our desktop computers can now handle gigabytes of
+buffering and display in 24-bit colors, and yet we still stick to terminal
+ <i>emulators</i>, that is, programs that emulate the  <i>restrictions</i> of those ancient
+machines.
+</p>
+
+ <ul class="org-ul"> <li>Cannot move the cursor around.</li>
+
+ <li>Limited colors.</li>
+
+ <li>Terminal capabilities are neither simple nor portable.  See termcap(5).</li>
+
+ <li>Formatting (e.g. colors) needs ugly escape codes that are not even portable.</li>
+
+ <li>More hacks than computer science history would have ever hoped for.</li>
+</ul> <p>
+Say I run this command:
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-sh">$ cat file-list.txt
+/path/to/foo
+/other/path/to/bar
+</pre>
+</div>
+
+ <p>
+Now I want to see what’s in  <i>foo</i>.  How do I do that?
+</p>
+
+ <ol class="org-ol"> <li>Either I mouse-select the file, hoping I’ll not be off-by-one on one side.
+Then I paste to the prompt.</li>
+
+ <li>Or I type the path myself, with a bit of luck completion will bring me there
+soon enough.</li>
+
+ <li>Or I resort to re-call the command from a subcommand and program some output
+manipulation to extract the filename and then open it with my editor.  This
+is not nearly universal nor even convenient.</li>
+</ol> <p>
+All this is terribly backwards and it is high time we moved on.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-org028bdc6" class="outline-2">
+ <h2 id="org028bdc6">Terminals vs. shells</h2>
+ <div class="outline-text-2" id="text-org028bdc6">
+ <p>
+It’s important to understand that shells are not (or should not be) semantically
+bound to terminal emulator restrictions.  Shells are a textual interface to the
+machine.  They just need  <i>input, evaluation, execution, output</i>.  GTK/Qt/Tk/etc.
+are absolutely capable of handling such a task.  Not mentioning Emacs…
+</p>
+
+ <p>
+So why do shells  <i>de facto</i> need a terminal? One thing: curses-like interfaces.
+Those libraries need terminal capabilities to render.  Do we still really need
+that?
+</p>
+
+ <ul class="org-ul"> <li>It’s most limited in terms of user experience.  Mouse selection simply won’t
+do.</li>
+
+ <li>It’s not beautiful.</li>
+
+ <li>It cannot render anything beside text.  (Without clumsy hacks at least.)</li>
+
+ <li>“It works on low-end systems”: there is not much hardware out there that
+cannot take Wayland or X.  Anyways, my case is about desktop computers.</li>
+
+ <li>It’s not even fast: in fact terminals can be pretty slow at rendering.
+(Emulators also emulate the baud-rate, etc.)</li>
+
+ <li>Since it’s character-based, it cannot render fonts of different sizes nor,
+say, thin lines.</li>
+
+ <li>“Efficiency on remote systems”: that’s almost a fair statement.  But then…
+TRAMP! ;)</li>
+</ul></div>
+</div>
+
+ <div id="outline-container-orgbb0b51a" class="outline-2">
+ <h2 id="orgbb0b51a">Enter Eshell</h2>
+ <div class="outline-text-2" id="text-orgbb0b51a">
+ <p>
+Back to my initial example of the long-running process: want to copy that output
+somewhere?  3 key-strokes with Eshell.  And better: could be even 1 if you want
+to program it your way.  The  <i>interface</i> is extensible.  (Terminals usually
+aren’t, URxvt and its Perl scripts are not a proud example of  <i>extensibility</i>.)
+</p>
+
+ <p>
+Eshell breaks up with the “terminal-interface” paradigm: the user interface of
+the Eshell  <i>commandline-interface</i> is Emacs itself.  The pager is the Emacs
+buffer.  The input is Emacs keystrokes.  The extension language is Elisp.
+Consequences:
+</p>
+
+ <ul class="org-ul"> <li>No need for pagers like less.  You won’t ever re-run a long-output command by
+appending  <code>| less</code> to it.</li>
+
+ <li>Little need for output ad-hoc minipulations (e.g.  <code>grep</code> trial-and-error
+queries-- <code>grep</code> is not a search tool): output the result to an Emacs buffer,
+use some Lisp functions, use Evil ex commands, iedit, swiper, helm-moccur or
+multiple-cursors…</li>
+
+ <li>Eshell supports TRAMP!  Which means you don’t have to put aside your powerful
+environment when switching to root or connecting to a remote host: all the
+power of  <i>your</i> Emacs can be used anywhere, the shell included.</li>
+
+ <li>Find file/URL at point.  Or list them all with Ivy/Helm and fuzzy-search them!</li>
+
+ <li>No need for  <a href="http://github.com/junegunn/fzf">fzf</a>. “Hey!   <code>fzf</code> is awesome!”  I know, but even  <code>fzf</code> cannot
+compete with Emacs.</li>
+
+ <li>At last, done with the clumsy Bash and sh-inspired shell languages! No more
+nasty word-splitting, no more unexpected expansion.  You don’t even need
+ <code>calc</code> or  <code>bc</code> when you have Elisp or Emacs’ calc at hand.</li>
+
+ <li>No need for half-implemented vi-bindings when you can have Evil to edit your
+command-line.  (Some shells like  <a href="http://fishshell.com">fish</a> can call an editor to edit the
+commandline.  Well, with Eshell it’s one step less.)</li>
+
+ <li>You can even edit the output directly!</li>
+
+ <li>You can redirect output to several buffers(!), they don’t even need to be
+existing files.</li>
+
+ <li>Eshell has loads of  <a href="https://www.masteringemacs.org/article/complete-guide-mastering-eshell">fancy features</a> for globbing, filtering, and editing.</li>
+
+ <li>Programmable completion with  <code>pcomplete</code>, which is arguably easier and yet
+more powerful than its Bash/Zsh/fish counterparts.</li>
+</ul> <p>
+Finally, some Helm niceties:
+</p>
+
+ <ul class="org-ul"> <li> <code>helm-find-files</code> has  <code>M-e</code> to switch to Eshell in the currently browsed
+folder.  Bye-bye  <code>cd</code>, hello fuzzy-browsing!</li>
+
+ <li>The previous technique makes it very convenient to go up the hierarchy to some
+parent folder ( <code>C-l</code> by default).  Seriously, farewell, annoying little  <code>cd ..</code>.</li>
+
+ <li>Still with  <code>helm-find-files</code>,  <code>M-p</code> will trigger the “cd history”, so you can
+fuzzy-find the history of your shell paths.  Make it persistent with
+ <code>(add-to-list 'desktop-globals-to-save 'helm-ff-history))</code>.</li>
+
+ <li>Use Helm as a menu for completion.  Awesome for completing big file names or
+packages!</li>
+
+ <li> <code>helm-find-files</code> has  <code>C-c i</code> (and  <code>C-u C-c i</code>, etc.) to insert the selected
+relative/absolute file names at point, that is, in the commandline.  This
+sometimes proves more convenient than file completion.</li>
+</ul> <p>
+In terms of extensibility, it’s key to understand that (as of  <a href="https://debbugs.gnu.org/cgi/bugreport.cgi?bug=27405">Emacs 26</a>) all
+prompts are properly  <i>identified</i> by Emacs.  This opens the door to infinite
+programmability of the shell interface:
+</p>
+
+ <ul class="org-ul"> <li>Browse all prompts with  <code>C-c C-n=/=C-c C-p</code>.  (Or simpler bindings…)</li>
+
+ <li>Copy the output of a command with one keystroke.</li>
+
+ <li>Collect all the prompts in an Ivy/Helm list.</li>
+
+ <li>Use hs-minor-mode to fold the outputs.</li>
+</ul></div>
+</div>
+
+ <div id="outline-container-org447dc40" class="outline-2">
+ <h2 id="org447dc40">There is more to come</h2>
+ <div class="outline-text-2" id="text-org447dc40">
+ <p>
+It’s undeniable however that, as of Emacs 25.2, Eshell has numerous rough edges.
+Quite a few bug reports have been sent on debbugs and it’s getting better.
+</p>
+
+ <p>
+Native completion is limited considering very little effort was ever made.  The
+community can help changing that.  In the meantime, I’ve implemented  <a href="https://github.com/Ambrevar/emacs-fish-completion">a fallback
+to Bash/fish completion</a> so that I can keep completing just as much as I could
+with Bash or fish.
+</p>
+
+ <p>
+Need that curses-based program? Get a (much more) powerful Emacs alternative:
+</p>
+
+ <ul class="org-ul"> <li>git (CLI), gitk, tig, etc. -> magit</li>
+
+ <li>htop -> symon, proced, helm-top, etc.</li>
+
+ <li>abook -> org-contacts</li>
+
+ <li>mutt -> mu4e, gnus, notmuch</li>
+
+ <li>ncdu -> dired-du</li>
+
+ <li>cmus/moc -> EMMS</li>
+
+ <li>newsbeuter -> Elfeed, gnus</li>
+
+ <li>weechat, irssi -> ERC, etc.</li>
+
+ <li>rtorrent, transmission-cli -> transmission.el</li>
+</ul> <p>
+As opposed to their curses-like counterparts, Emacs alternatives share all those
+features:
+</p>
+
+ <ul class="org-ul"> <li>Configure/extend in Lisp.</li>
+
+ <li>(Fuzzy-)search the buffer.  Copy anything to the clipboard.</li>
+
+ <li>No need to change the color theme, it’s already using your Emacs theme.  No
+need for dircolors, lesspipe, Xresources…</li>
+
+ <li>Emacs bindings (Evil?).  All configurable. No more painful context-switch
+between Emacs-based and vi-based bindings.</li>
+</ul> <p>
+In the meantime, there might still be that annoying curses-based program you
+cannot replace.  Eshell allows you to run those programs by transparently
+switching to a  <code>*term*</code> buffer.  See  <code>eshell-visual-commands</code>.
+</p>
+
+ <p>
+Curses-based programs are not the only ones that won’t run well on Eshell:  <a href="https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop">REPL</a>
+are known for working poorly too.  REPLs are poorly designed though: from a
+Unix-philosophy standpoint, only the  <code>E</code> is required for every language, while
+re-implementing the  <code>R</code>,  <code>P</code>, and  <code>L</code>, i.e. the user interface, for each one of
+them is simply re-inventing the wheel.  Instead of that, Emacs has  <code>comint-mode</code>,
+an REPL-lie user interface that can be plugged to any language.  With all the
+powerful features of Emacs that all those specialized REPLs are lacking.  For a
+start, you can write code in Emacs and execute any piece of code from a single
+keystroke.  It’s configurable and extensible in a consistent manner across all
+languages.
+</p>
+
+ <p>
+Similarly, “environment setups”, as commonly used by programming language tools
+such as Python’s  <code>virtualenv</code> or Ruby  <code>rvm</code>, expect the user to be running a
+specific shell.  This is broken by design.  Let me quote  <a href="https://reddit.com/u/rpdillon/"> <i>u/rpdillon</i></a> as I could
+not have said better:
+</p>
+
+ <blockquote>
+ <p>
+To OP’s point, though, yes, these environments do make assumptions that you’ll
+be using some kind of bash-compatible shell, which tells you a little bit about
+how sub-optimal the state-of-the-art is.  I suppose the only alternative I can
+think of is to have the language itself manage many versions of itself so that
+every developer’s environment wouldn’t have to be customized/extended to
+negotiate the maze.
+</p>
+</blockquote>
+
+ <p>
+The  <a href="https://golang.org/">Go</a> programming language for instance does not have such a tool as I know of.
+</p>
+
+ <p>
+A long-standing critique of Eshell is that it does not support input
+redirection.  This is hardly a major hindrance since you can always use a
+work-around such as
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-sh">cat file | command
+</pre>
+</div>
+
+ <p>
+Another common argument against Eshell is that it cannot run the widely popular
+Tmux.  The latter is used for many things, out of which:
+</p>
+
+ <ul class="org-ul"> <li>Window management, tabs, etc.: you don’t need that if you have Emacs.</li>
+
+ <li>Leave long-running processes in the background after the user has logged out:
+this feature is easily provided with  <code>nohup</code> or  <code>dtach</code>.</li>
+</ul> <p>
+All that being said, should Eshell not do the job for you, then maybe give  <code>M-x
+shell</code> a try.  It has a similar design: it is a shell emancipated from any
+terminal; instead of being Lisp based, it runs an existing shell as an
+interpreter.   <code>Bash</code> and  <code>zsh</code> are known to work.  It has all the advantages an
+Emacs buffer has over terminal emulators.  The main difference then lies in the
+language:  <a href="https://www.gnu.org/software/emacs/emacs-paper.html">Emacs</a>  <a href="http://paulgraham.com/avg.html">Lisp</a> vs.   <a href="http://mywiki.wooledge.org/BashPitfalls">Bash and related languages</a>.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-orgcd852fe" class="outline-2">
+ <h2 id="orgcd852fe">An open door to Emacs-Everywhere</h2>
+ <div class="outline-text-2" id="text-orgcd852fe">
+ <p>
+Switching to Eshell marked a milestone for me: from then on I dropped all my
+crufty curses-based programs and switched to much more powerful Emacs
+alternatives.  I now use  <a href="../emacs-everywhere">Emacs everywhere</a> to the point that it even is  <a href="https://github.com/ch11ng/exwm">my window
+manager</a>.  Having a consistent environment well glued together really empowers
+you.
+</p>
+
+ <p>
+Ironically, the environment is so powerful that I ended up not using any shell
+so much anymore, only for a few commands here and there.  For which I use Eshell,
+obviously.
+</p>
+
+ <p>
+Eshell might not be perfect (yet), a little beta perhaps, but this can only be
+helped by a growing community: the more people join, the more feedback
+developers get, the better it will become.  Hopefully this pamphlet will help
+raise your curiosity, if not more esteem for this brilliant project.
+</p>
+</div>
+</div>
+</div>

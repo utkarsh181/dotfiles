@@ -1,0 +1,10 @@
+
+<p>If you check my website regularly, you may've noticed that I added a "Recent blog entries" subheading on the main page. Each time I add a new blog entry, it'll be updated to show only the most recent five. I was asked how I do this, given that my site is static, but honestly it's the easiest thing in the world, but I'll give you a hint in case it isn't obvious.</p>
+
+<p>
+As background, I edit my website by keeping a mirror offline on my computer, then I use rsync commands (via scripts or bash aliases) to either update individually changed files, or all files. The script that updates all files also checks for other things. For example, if my CV which is in another folder has been updated, it will copy the new udpate to the website directory before uploading everything.
+</p>
+
+<p>The "Recent blog entries" part is also handled by this "update all script". Using a <code>grep</code> command, I search my blog list file for the first five blog headers, which will be the most recent entries, and I change the formatting into a list (which is actually a single line of HTML for ease) with a <code>sed</code> command. Then, with <code>sed</code> again, I search for the previously created line, delete it and replace it with the new five entries.</p>
+
+<p>As for the specific commands, you can figure them out yourself ;-). Point is, a lot of people have this domain-dependent thinking when approaching web-based file management as if core utils are unusable and we have to rely on server-side scripts even to do basic things. This is a bad mindset that causes incalculable harm on the web. Obviously core utils aren't going to get you true dynamically generated sites, but you can get most use cases out of plain HTML and should try to do so whenever possible.</p>

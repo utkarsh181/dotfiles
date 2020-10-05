@@ -1,0 +1,10 @@
+
+<p>New video up on <a target="_blank" href="https://www.youtube.com/watch?v=QaGhpqRll_k">sed and regular expressions</a>.</p>
+<p>
+To introduce people or get them a little deeper into sed,
+I showcase a use case of my own: a simple sed command to trim a document instantly of all comments and blanklines for further processing.
+</p>
+<p>
+I also show my i3 status torrent module, which is just a sed command writ a little larger, replacing matches with emojis.
+If you want more basic Unix commands/bash videos, smash that MF like button and say so, because people have been asking for this kind of stuff and I'm curious how wanted it is!
+</p>

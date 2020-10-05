@@ -1,0 +1,10 @@
+
+<p>I've actually just revised the mutt-wizard in another important respect; this isn't much on the backend, but actually makes it a lot easier to use and install.</p>
+
+<p>Instead of being a script you just have to keep in your mutt folder along with companion files, you can now just clone the repo and permanently <code>sudo make install</code> it.</p>
+
+<p>Instead of being an interactive loop, it's now a command you run like this: <code>mw init</code> once to initialize the files, then <code>mw add</code> to add an email account, etc. etc. That official mutt-wizard script, <code>mw</code>, is installed in your path now, along with <code>mailsync</code> allowing you to easily run them wherever and treat them like noraml programs.</p>
+
+<p>Also, the template muttrc, mailcap and the domains.csv are held in <code>/usr/share/mutt-wizard</code> so you don't have to worry about them cluttering your personal mutt folder proper.</p>
+
+<p>Not quite sure why I didn't do this before, but now it should be even easier.</p>

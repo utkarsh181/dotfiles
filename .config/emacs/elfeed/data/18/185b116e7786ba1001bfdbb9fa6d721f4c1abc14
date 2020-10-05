@@ -1,0 +1,9 @@
+
+<p>Check out <a href="https://www.youtube.com/watch?v=5E9bO5ZURcs" target="_blank">this new video</a>. It could change everything ;-).</p>
+
+<p>Jaywalker suggested adding a new ability to my st build: let the user choose a previously run command via dmenu and copy its output to the clipboard.
+This is something that you often want to do, but I never thought could be easily added to a terminal. He suggested using <a href="https://st.suckless.org/patches/externalpipe/" target="_blank">externalpipe</a>, which outputs all the visible text, which I already use to follow url links on the command line.</p>
+
+<p>We worked on it a bit last night and this morning and came up with a little script that when run from st, will give you a dmenu prompt of all commands run, and once you choose one, xclip will copy that command and all its output to your clipboard to easily paste anywhere else for troubleshooting, sharing or for anything else.</p>
+
+<p><a href="https://github.com/LukeSmithxyz/st">Get my st build here.</a> It has all this built into it.</p>

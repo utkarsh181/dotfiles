@@ -1,0 +1,58 @@
+
+<p>I've just released a
+<a href="https://www.youtube.com/watch?v=hMH9w6pyzvU">video on RSS</a>, more or less talking about the basics.</p>
+
+<p>RSS (Really Simple Syndication) is the best way to keep tabs on things online. While social media sites have tried to replace it, it is still the best way to consoooome content, even on social media sites.</p>
+
+<p>For all basic blogs and smart websites, RSS feeds will be obvious and sometimes your browser will automatically detect them, but here is how to get RSS for some common social media sites.</p>
+
+<h3>YouTube</h3>
+
+<p>Thankfully, YouTube still has RSS feeds, albeit very hidden ones:
+for example, mine is <code>https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA</code>, where my channel ID (starting with <code>U</code>).
+</p>
+
+<p>
+All YouTube channels have channel IDs that you can either see in their channel page URL, or which you can find by looking at their page source and looking for something like <code>channel_id</code>.
+</p>
+
+<p>To "subscribe" to a channel via RSS, just take that channel ID and put it in the format of mine I gave above. The main link goes directly to the video page and I usually stream/download them directly with mpv and youtube-dl.</p>
+
+<h3>Twitter</h3>
+
+<p><a href="https://nitter.net">Nitter.net</a> is a Twitter proxy that mirrors Twitter, but without Javascript soyware and spying.
+Importantly, Nitter also openly displays links to RSS feeds they generate for accounts in the upper right-hand corner.</p>
+
+<h3>Github/Gitlab</h3>
+
+<p>Github and Gitlab offer RSS for repositories so you can watch activity.</p>
+
+<p>Want to watch development of my dotfiles?
+Just use
+<code>https://github.com/lukesmithxyz/voidrice/commits/master.atom</code>.</p>
+
+<p>As you can guess, replace my username and repo name with whatever you want to get a feed for that.</p>
+
+<p>Note also that there is an option to get a "private feed" which lists even more things (who follows you and repository events you watch).</p>
+
+<h3>Facebook (and basically every other site)</h3>
+
+<p><a href="https://github.com/RSS-Bridge/rss-bridge">RSS-bridge</a> is the ultimate RSS feed helper and will not just give you RSS feeds for Facebook pages, but basically anything else.</p>
+
+<p>This is software that can run on a server. You can just do an internet search for instances, then feed them a link you want an RSS for and RSS-bridge will autogenerate a feed.</p>
+
+<h3>Podcasts</h3>
+
+<p>Podcasts literally just are RSS feeds! That's why it's so easy to view them anywhere.</p>
+
+<p>For example, my podcast <em>Not Related!</em> is syndicated by Libsyn and its RSS feed url is <code>https://notrelated.libsyn.com/rss</code>.
+If you want another Libsyn podcast, just replace "notrelated" with the podcast name on the site.</p>
+
+<h3>My RSS feeds:</h3>
+
+<p>This blog, a link to my youtube RSS and my podcast RSS.</p>
+
+<pre><code>https://lukesmith.xyz/rss.xml
+https://lukesmith.xyz/youtube.xml
+https://notrelated.xyz/rss
+</code></pre>

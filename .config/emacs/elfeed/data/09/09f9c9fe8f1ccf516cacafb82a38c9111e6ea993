@@ -1,0 +1,20 @@
+
+<p>I'm making significant changes to my dotfiles repos and LARBS, so I wanted to give people a heads up about it.
+It's possible (probable?) that there will be some breakage (now and soon) because there are a lot of moving pieces that have moved around.
+Here are the changes coming soon:</p>
+
+<ul>
+	<li>There will be a new version of LARBS, which will eventually be the default if everything works smoothly.
+		I will maintain the current version for Arch Linux using i3-gaps, but I will be adding another version for <strong>Void Linux that runs dwm</strong>.
+	</li>
+	<li>Reflecting some of the movements to mutal compatibility I moved keybinds from the main i3 config to <code>~/.config/sxhkd/sxhkdrc</code> (<a href="https://www.youtube.com/watch?v=2ClckQzJTlk">as I discussed in my video today</a>) and moved some startup scripts to <code>~/.xinitrc</code>.</li>
+	<li><code>~/.scripts/</code> in the repo is now <code>~/.local/bin/</code> to be XDG compliant and save you one extra element in your home directory.</li>
+	<li>I've moved things around in <a href="https://github.com/lukesmithxyz/larbs">the LARBS repository</a> as well, and this could interfere with the <a href="https://larbs.xyz">LARBS website</a> and how it redirects requests, but everything seems to be in order.</li>
+</ul>
+
+<p>So every one of these developments bode well, but all can cause temporary breakage!
+If you run into a problem install LARBS, you will not be bothering me to email it to me.
+I would appreciate people to test it if you have a spare machine/VM as well, but I'm a little burdened right now.
+I'll be testing in a bit.</p>
+
+<p>Note that the Void Linux/dwm version of LARBS is not supposed to be working yet. I'm still on the basic level with that. The Arch/i3 version hopefully should be still fine though.</p>

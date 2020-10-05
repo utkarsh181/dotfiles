@@ -1,0 +1,269 @@
+<div id="content">
+ <div id="outline-container-org0fe05ec" class="outline-2">
+ <h2 id="org0fe05ec">About</h2>
+ <div class="outline-text-2" id="text-org0fe05ec">
+ <p>
+Demlo organizes your music library automatically and dynamically.  It runs a
+chain of user-defined Lua scripts using variables such as tags and file
+properties.  This way it yields virtually unlimited customization power to the
+user.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-org0e7833c" class="outline-2">
+ <h2 id="org0e7833c">Preview</h2>
+ <div class="outline-text-2" id="text-org0e7833c">
+ <p>
+Here follows a sample output showing the “before-after” differences.
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-sh">$ demlo fantasie_impromptu.flac
+:: Load config: /home/johndoe/.config/demlo/demlorc
+:: Load script: /usr/share/demlo/scripts/tag.lua
+:: Load script: /usr/share/demlo/scripts/sub.lua
+:: Load script: /usr/share/demlo/scripts/case.lua
+:: Load script: /usr/share/demlo/scripts/punctuation.lua
+:: Load script: /usr/share/demlo/scripts/encoding.lua
+:: Load script: /usr/share/demlo/scripts/path.lua
+:: Load script: /usr/share/demlo/scripts/cover.lua
+:: Load script: /home/johndoe/.config/demlo/scripts/lossy.lua
+==> fantasie_impromptu.flac
+
+					       === FILE         ===
+	 [/home/johndoe/fantasie_impromptu.flac] | path         | [/home/johndoe/music/Chopin/The Best Ever Piano ]
+						 |              | [Classics (John Doe, 2014)/Fantasie-Impromptu in]
+						 |              | [ C Sharp Minor, Op. 66.ogg]
+					  [flac] | format       | [ogg]
+				[bitrate=320000] | parameters   | [[-c:a libvorbis -q:a 10]]
+					       === TAGS         ===
+	    [john doe's classical collection II] | album        | [John Doe's Classical Collection II]
+					      [] | album_artist | [Chopin]
+					      [] | artist       | [Chopin]
+					[chopin] | composer     | []
+				    [02/13/2014] | date         | [2014]
+				      [Classics] | genre        | [Classical]
+				     [John_Doe ] | performer    | [John Doe]
+   [Fantasie-Impromptu in c sharp MInor , Op.66] | title        | [Fantasie-Impromptu in C Sharp Minor, Op. 66]
+					       === COVERS       ===
+		  ['cover.jpg' [500x500] <jpeg>] | external     | [/home/johndoe/music/Chopin/The Best Ever Piano ]
+						 |              | [Classics (John Doe, 2014)/Cover.jpg]
+</pre>
+</div>
+</div>
+</div>
+
+ <div id="outline-container-orge1c0903" class="outline-2">
+ <h2 id="orge1c0903">Scenario</h2>
+ <div class="outline-text-2" id="text-orge1c0903">
+ <p>
+Demlo can address any of these recurring music library issues (and much more):
+</p>
+
+ <ul class="org-ul"> <li>Lack of folder structure.</li>
+ <li>Tags are not homogeneous, case is wrong, some entries are filled and other
+not.</li>
+ <li>Bad audio quality.</li>
+ <li>Audio codecs are not always consistent. (Lossless/lossy…)</li>
+ <li>mp3’s id3tags hell…</li>
+ <li>Multiple covers, embedded and/or external, bad quality, etc.</li>
+</ul></div>
+</div>
+
+ <div id="outline-container-org247c6dd" class="outline-2">
+ <h2 id="org247c6dd">Features</h2>
+ <div class="outline-text-2" id="text-org247c6dd">
+ <p>
+A few scripts are provided by default.  They give a good example of the
+possibilities offered by Demlo.  Pick which one to load by default, rewrite some
+of them, or write new ones from scratch.  You can preview changes to make sure
+everything looks satisfactory.
+</p>
+
+ <p>
+Call Demlo over a complete music library and it will process everything in one
+single run.
+</p>
+
+ <p>
+Scripts can be chained: this feature makes Demlo extremely flexible and
+powerful.
+</p>
+
+ <ul class="org-ul"> <li> <p>
+Move all files according to a unique, yet dynamic folder hierarchy.  For
+instance, setting
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-lua">output.path = table.concat {library, '/', o.artist, '/',
+    o.album ~= nil and (o.date ~= nil and o.album .. '/' or o.date .. ' - ' .. o.album .. '/') or '',
+    track_padded ~= nil and '' or track_padded .. ' - ',
+    o.title}
+</pre>
+</div>
+
+ <p>
+will move  <code>john doe - 1. intro.ogg</code> to
+</p>
+
+ <ul class="org-ul"> <li> <code>~/music/John Doe/2013 - Great Album/01 - Intro.ogg</code> if there is an album
+and a date,</li>
+ <li> <code>~/music/John Doe/Great Album/01 - Intro.ogg</code> if there is an album but no
+date,</li>
+ <li> <code>~/music/John Doe/01 - Intro.ogg</code> if there is no album.</li>
+</ul></li>
+
+ <li>Case checking: the default script  <code>case.lua</code> will turn everything to title
+case or sentence case.  It supports special cases such as Roman numerals,
+McDonald, etc.  It also supports a list of exceptions, e.g. “DJ” and “feat”.</li>
+
+ <li>Encoding: the file format and codec is exposed to user scripts so that you can
+conditionally re-encode any file.  The encoding is performed by FFmpeg.  The
+encoding parameters can be fully customized.  (Format, codec, bitrate, etc.)</li>
+
+ <li>Covers: Demlo makes it possible to automatically remove embedded covers, skip
+duplicates, skip covers below a quality threshold, resize big covers down,
+etc.</li>
+
+ <li>Different kinds of music: classical, soundtrack, and band music usually have
+different types of tags and different folder structures.  It is possible to
+manage different music libraries easily by setting the desired root folder
+from command-line.</li>
+
+ <li>Demlo supports both external and embedded cuesheets.  It is also able to parse
+“non-standard” sheets, which are not so uncommon.</li>
+
+ <li>Demlo can be interfaced with any other program, both ways.  (X calls Demlo or
+Demlo calls X.)  For instance you can edit tags with your favorite text editor.</li>
+
+ <li>Demlo has MusicBrainz and Cover Archive support for online tagging and cover
+fetching.</li>
+</ul></div>
+</div>
+
+ <div id="outline-container-org5eba925" class="outline-2">
+ <h2 id="org5eba925">Installation</h2>
+ <div class="outline-text-2" id="text-org5eba925">
+ <p>
+See  <a href="https://gitlab.com/ambrevar/demlo">the development page</a>.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-orga6cf520" class="outline-2">
+ <h2 id="orga6cf520">Usage</h2>
+ <div class="outline-text-2" id="text-orga6cf520">
+ <p>
+See  <code>demlo -h</code> and the  <a href="http://godoc.org/gitlab.com/ambrevar/demlo">manual</a>.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-org7351301" class="outline-2">
+ <h2 id="org7351301">License</h2>
+ <div class="outline-text-2" id="text-org7351301">
+ <p>
+See the  <code>LICENSE</code> file in  <a href="https://gitlab.com/ambrevar/demlo">the source code</a>.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-org3d8b897" class="outline-2">
+ <h2 id="org3d8b897">The Go rewrite</h2>
+ <div class="outline-text-2" id="text-org3d8b897">
+ <p>
+Demlo used to be written in pure Lua. This has led to numerous issues, such as
+poor parallelism, slow processing, unreliable dependencies, race conditions,
+clunky network support and broken unicode support.
+</p>
+
+ <p>
+Starting from version 2 onward, the core has been rewritten in Go to address all
+these issues. Many changes have been undertaken in the process:
+</p>
+
+ <ul class="org-ul"> <li>Performance: Faster JSON (un)marshaling, faster checksums (no subprocess,
+partial checksums), better parallelization.</li>
+
+ <li>CLI flags: Reduced the number of flags and made them simpler. Some flags can
+be used more than once, which makes it possible to call scripts with spaces in
+their names.</li>
+
+ <li>Portability: Core detection now works on all OSes.</li>
+
+ <li>Race conditions: Remove all race conditions (cache, screen output, file
+access, temp files).</li>
+
+ <li> <code>tags</code> are no longer stripped away from  <code>input.streams[i].tags</code> nor
+ <code>input.format.tags</code>.</li>
+
+ <li>Cuesheet: Multi-file support.</li>
+
+ <li>Preview: Changes in path, format, parameters and covers are displayed using
+the same formatting than tags. Long lines are wrapped. Formatted preview is
+off when stdout is redirected, JSON formatting is used instead.</li>
+
+ <li>Full unicode support in scripts ( <code>string.len</code>,  <code>string.gsub</code>, etc.). Fix
+issues with  <code>[XY]</code> regexps where X and Y are non-ASCII.</li>
+
+ <li>Scripts can be parameterized through global variables.</li>
+
+ <li>Config file is defined from the  <code>DEMLORC</code> environment variable or default
+path, no more from a CLI flag. It greatly alleviates the complexity of flag
+parsing.</li>
+
+ <li>Sandboxes accept more functions from the Lua standard library, such as
+ <code>os.getenv</code>.</li>
+
+ <li> <code>input</code> and  <code>output</code> structures have changed. (See compatibility notice.)</li>
+
+ <li>Lua patterns have been replaced by Go regexps. (See compatibility notice.)</li>
+
+ <li>Extra audio streams and non-cover streams are stripped out.</li>
+
+ <li>Misc. fixes: Index creation for multi-track files, non-integer cover
+resolution, etc.</li>
+
+ <li>MusicBrainz: Clean queries, improved heuristic. The official artist name is
+used instead of the official album artist name. (It enforces homogeneity.)</li>
+
+ <li>The  <code>titlecase</code> function has been moved to the script side and split into
+’setcase’ and ’punctuation’.</li>
+
+ <li>Support for in-place tagging. This dramatically speeds up the process when the
+ <code>-rmsrc</code> option is active.</li>
+</ul></div>
+
+ <div id="outline-container-org2d62f96" class="outline-3">
+ <h3 id="org2d62f96">Compatibility notice</h3>
+ <div class="outline-text-3" id="text-org2d62f96">
+ <p>
+User scripts still rely on  <code>input</code> and  <code>output</code> only. These structures have
+remained identical but for a few elements:
+</p>
+
+ <ul class="org-ul"> <li> <code>filename</code> has been renamed to  <code>path</code>.</li>
+ <li> <code>output.bitrate</code> has been replaced by the  <code>output.parameters</code> array. Use it to
+pass arbitrary arguments to FFmpeg (codec, bitrate, etc.).</li>
+ <li>Cover options have been fully ravamped.</li>
+</ul> <p>
+The Lua patterns of the string library have been replaced by
+ <a href="https://github.com/google/re2/wiki/Syntax">Go regexps</a>.
+</p>
+</div>
+</div>
+</div>
+
+ <div id="outline-container-org234f92a" class="outline-2">
+ <h2 id="org234f92a">Links</h2>
+ <div class="outline-text-2" id="text-org234f92a">
+ <ul class="org-ul"> <li> <a href="https://gitlab.com/ambrevar/demlo">Development page</a></li>
+ <li> <a href="https://gitlab.com/ambrevar/demlo/issues">Issue tracker</a></li>
+ <li> <a href="https://gitlab.com/ambrevar/demlo/releases">Source code</a></li>
+ <li> <a href="http://godoc.org/gitlab.com/ambrevar/demlo">Manual</a></li>
+ <li> <a href="https://aur.archlinux.org/packages/demlo-git/">Arch Linux package (AUR)</a></li>
+</ul></div>
+</div>
+</div>

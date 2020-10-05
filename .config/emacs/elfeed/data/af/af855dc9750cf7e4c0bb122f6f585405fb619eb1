@@ -1,0 +1,955 @@
+<div id="content">
+ <p>
+Common Lisp is a great language.  Of course, it cannot be the best at
+everything, it comes with its load of historical idiosyncrasies and it might not
+be the language of the future.
+</p>
+
+ <p>
+But there is one aspect of programming in which Common Lisp keeps it first
+position after so many years: “interactive programming.”  Only few languages
+come close (maybe Racket is one of them).  Interactive programming boosts your
+productivity so much that I believe it should always be part of the decision
+process when it comes to choosing a language to work with.  Hopefully this
+advance in the practice of programming will be remembered when we design the
+language of the future.
+</p>
+
+ <p>
+I believe that for this reason alone Common Lisp is worth learning (and using).
+</p>
+
+ <p>
+In the following article, I’m not going to proselytize the language: it’s not
+perfect and it won’t suit everyone.  I simply want to give a depiction more
+accurate than the common misconceptions about the language, and hopefully help
+the curious as well as the experienced user enhance their experience of
+programming.
+</p>
+
+ <ul class="org-ul"> <li>You might be deterred from using Common Lisp for the wrong reasons.  I’m going
+to highlight a few of those common “wrong reasons” and if those match yours,
+then I believe you ought to give it a try.</li>
+
+ <li>Should you want to use Common Lisp, you might be exposed to aged practices or
+bad tooling.  In the following I’ll try to catalogue as decent amount of the
+most modern advances made in the Common Lisp ecosystem.</li>
+</ul> <p>
+I believe that many negative misconceptions about the language stem from myths
+of forgotten times which bear little relevance today.
+</p>
+
+ <p>
+Some common myths include:
+</p>
+
+ <ul class="org-ul"> <li>Common Lisp does not have compile-time type checking.</li>
+ <li>Common Lisp is for imperative, object-oriented programming.</li>
+ <li>Common Lisp is too specialized, it’s not for general-purpose development.</li>
+ <li>Common Lisp applications are hard to deploy.</li>
+</ul> <p>
+Some of these myths subsist today even among Common Lisp developers, simply
+because the news of the recent developments in the ecosystem haven’t reached
+them.  Indeed, Common Lisp, as an extensible language, has modernized
+tremendously over the last decades.
+</p>
+
+ <p>
+Common Lisp is a gigantic programming language and ecosystem.  As such, this
+article is in no way exhaustive!  I invite the community to reach out and share
+their recommendations, corrections and other discussions!
+</p>
+
+ <p>
+If you enjoy this article and would like to help me keep writing, consider
+chipping in, every little bit helps to keep me going :)
+</p>
+
+ <center> <script src="https://liberapay.com/Ambrevar/widgets/button.js"></script></center>
+ <center> <noscript> <a href="https://liberapay.com/Ambrevar/donate"> <img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></img></a></noscript></center>
+
+ <p>
+Thank you!
+</p>
+
+ <div id="outline-container-orgf22dbf6" class="outline-2">
+ <h2 id="orgf22dbf6">Getting started with the right tools and learning resources</h2>
+ <div class="outline-text-2" id="text-orgf22dbf6">
+</div>
+ <div id="outline-container-org8e1ecc5" class="outline-3">
+ <h3 id="org8e1ecc5">Tools</h3>
+ <div class="outline-text-3" id="text-org8e1ecc5">
+ <p>
+Common Lisp has earned the reputation of being difficult to set up.
+Today, some good solutions exist to help newcomers:
+</p>
+
+ <ul class="org-ul"> <li> <a href="https://portacle.github.io">Portacle</a> is an all-in-one bundle that includes  <a href="http://www.sbcl.org/">SBCL</a>,  <a href="https://www.gnu.org/software/emacs/">Emacs</a>,  <a href="https://github.com/slime/slime">SLIME</a> and more.
+While the user must learn the basics of Emacs, Portacle is known to be
+relatively friction-less.</li>
+
+ <li> <p>
+The  <a href="https://guix.gnu.org">Guix</a> package manager can set up a Common Lisp development environment in
+one go:
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-sh">guix install sbcl git emacs emacs-slime emacs-helm-slime emacs-company emacs-magit emacs-paredit emacs-rainbow-delimiters
+</pre>
+</div>
+
+ <p>
+Replace  <code>guix install</code> with  <code>guix environment --ad-hoc</code> if you don’t want to
+persist a profile.
+</p>
+
+ <p>
+If you prefer VI-style bindings:
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-sh">guix install sbcl git emacs emacs-slime emacs-helm-slime emacs-company emacs-magit emacs-paredit emacs-rainbow-delimiters emacs-evil emacs-evil-collection
+</pre>
+</div>
+
+ <p>
+If you prefer  <a href="https://github.com/abo-abo/lispy/issues/481">Lispy</a> over paredit to automate s-expression manipulation (such
+as automatically balancing parentheses):
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-sh">guix install sbcl git emacs emacs-slime emacs-helm-slime emacs-company emacs-magit emacs-lispy emacs-rainbow-delimiters
+</pre>
+</div>
+
+ <p>
+Should you need Common Lisp libraries, you can also install many of them with
+Guix.  For the rest, you’ll have to resort to Quicklisp which is not provided
+by Guix, so you’ll have to install it manually:
+ <a href="https://www.quicklisp.org/beta/">https://www.quicklisp.org/beta/</a>
+</p></li>
+</ul></div>
+</div>
+
+ <div id="outline-container-org8c59a17" class="outline-3">
+ <h3 id="org8c59a17">Learning resources</h3>
+ <div class="outline-text-3" id="text-org8c59a17">
+ <p>
+The community-maintained  <a href="https://lispcookbook.github.io/cl-cookbook/">Common Lisp cookbook</a> is probably the best starting
+point with excellent references to everything from string manipulation to
+continuous integration.
+</p>
+
+ <p>
+It’s also a good portal to other resources such as:
+</p>
+
+ <ul class="org-ul"> <li> <a href="https://awesome-cl.com/">awesome-cl</a>: A curated list of Common Lisp frameworks and libraries.</li>
+ <li> <a href="http://www.gigamonkeys.com/book/">Practical Common Lisp</a>: A free online book to learn Common Lisp.</li>
+</ul> <p>
+That said, the introductory documentation can be rather overwhelming in my
+opinion and I’ve invited the community to work on a gentle, modern primer for
+the complete beginner:
+</p>
+
+ <p>
+ <a href="https://github.com/LispCookbook/cl-cookbook/issues/270">https://github.com/LispCookbook/cl-cookbook/issues/270</a>
+</p>
+
+ <p>
+Feedback welcome!
+</p>
+</div>
+</div>
+</div>
+
+ <div id="outline-container-org4bb3014" class="outline-2">
+ <h2 id="org4bb3014">Editor and offline documentation</h2>
+ <div class="outline-text-2" id="text-org4bb3014">
+</div>
+ <div id="outline-container-org0fb6978" class="outline-3">
+ <h3 id="org0fb6978">Emacs setup</h3>
+ <div class="outline-text-3" id="text-org0fb6978">
+ <p>
+Many Common Lisp developers use Emacs.  You don’t have to, many other editors
+support Common Lisp as well, such as Atom and  <a href="https://github.com/neil-lindquist/SLIMA">SLIMA</a>.
+</p>
+
+ <p>
+ <a href="https://github.com/slime/slime">SLIME</a> and  <a href="https://github.com/joaotavora/sly">SLY</a> are famous for providing a stellar interactive development
+experience.
+</p>
+
+ <p>
+On top of this, there are  <a href="https://emacs-helm.github.io/helm/">Helm</a> packages to enhance your SLIME / SLY experience
+with live, narrowing fuzzy-search and completion for about everything:
+</p>
+
+ <ul class="org-ul"> <li> <a href="https://github.com/emacs-helm/helm-slime">https://github.com/emacs-helm/helm-slime</a></li>
+ <li> <a href="https://github.com/emacs-helm/helm-sly">https://github.com/emacs-helm/helm-sly</a></li>
+</ul></div>
+</div>
+
+ <div id="outline-container-org3f68c0a" class="outline-3">
+ <h3 id="org3f68c0a">Local Common Lisp HyperSpec</h3>
+ <div class="outline-text-3" id="text-org3f68c0a">
+ <p>
+The HyperSpec is the Common Lisp reference available here:
+ <a href="http://www.lispworks.com/documentation/HyperSpec/Front/index.htm">http://www.lispworks.com/documentation/HyperSpec/Front/index.htm</a>.
+</p>
+
+ <p>
+While the website look is rather dated, SLY and SLIME will interface with it so
+that you can browse the specifications directly from Emacs without having to
+open a browser.
+</p>
+
+ <p>
+Moreover, the HyperSpec can be installed locally, to be consulted
+offline.  See  <a href="http://quickdocs.org/clhs/">http://quickdocs.org/clhs/</a>.
+</p>
+
+ <p>
+There is also a Guix package for it available from the  <a href="https://gitlab.com/nonguix/nonguix">Nonguix</a> channel, and it’s
+also available in  <a href="https://zealdocs.org/">Zeal</a>.  (Thanks to /u/dzecniv for sharing this one.)
+</p>
+</div>
+</div>
+
+ <div id="outline-container-orgb015b5c" class="outline-3">
+ <h3 id="orgb015b5c">SLIME vs. SLY</h3>
+ <div class="outline-text-3" id="text-orgb015b5c">
+ <p>
+SLY is a fork of SLIME.  SLIME tends to be more conservative while SLY is slightly
+more featureful.
+</p>
+
+ <p>
+A few benefits of SLY over SLIME:
+</p>
+
+ <ul class="org-ul"> <li>It has more consistent, cleaner code and reuses more of Emacs facilities (like
+ <code>comint-mode</code> for the REPL).</li>
+ <li>It has a better color theme in my opinion.</li>
+ <li>It offers better fuzzy completion.</li>
+ <li>A feature unique to SLY: stickers allow the user to “stick” non-persistent
+code to help with debugging by annotating it.
+See  <a href="https://github.com/joaotavora/sly#stickers">https://github.com/joaotavora/sly#stickers</a>.</li>
+ <li>The setup is essentially zero-config with sane defaults, with all the features like mrepl,
+stickers, etc. enabled by default.  Of course you can disable the features you
+don’t like.</li>
+ <li>It compiles with ASDF which makes it easier to package, bundle or deploy.</li>
+</ul> <p>
+SLIME does include some features that are only available in SLY as plugins, such
+as ASDF management.  I recommend the following plugins for SLY:
+</p>
+
+ <ul class="org-ul"> <li> <a href="https://github.com/mmgeorge/sly-asdf">sly-asdf</a></li>
+ <li> <a href="https://github.com/joaotavora/sly-quicklisp">sly-quicklisp</a></li>
+ <li> <a href="https://github.com/joaotavora/sly-macrostep">sly-macrostep</a></li>
+</ul></div>
+</div>
+
+ <div id="outline-container-org222e1ec" class="outline-3">
+ <h3 id="org222e1ec">SLIME / SLY tips and tricks</h3>
+ <div class="outline-text-3" id="text-org222e1ec">
+ <p>
+Check out the following not-so-well-known commands, they could dramatically
+improve your workflow!  (Most of them have a SLY equivalent.)
+</p>
+
+ <ul class="org-ul"> <li> <code>slime-who-*</code></li>
+ <li> <code>slime-eval-last-expression-in-repl</code> ( <code>C-c C-j</code>)</li>
+ <li> <code>slime-list-compiler-notes</code></li>
+ <li> <code>slime-export-symbol-at-point</code> ( <code>C-c x</code>)</li>
+ <li> <code>slime-export-class</code>,  <code>slime-export-structure</code></li>
+ <li> <code>slime-trace-dialog-toggle-trace</code> ( <code>C-c M-t</code>)</li>
+ <li> <code>slime-inspect-definition</code></li>
+ <li> <code>slime-delete-system-fasls</code> (Useful when .fasls are out-of-sync)</li>
+ <li> <code>slime-repl-clear-buffer</code> ( <code>C-c M-o</code>: useful when  <code>lispy</code> or  <code>paredit</code> goes berserk)</li>
+ <li> <code>slime-profile-package</code>, then run the desired functions, then
+ <code>slime-profile-report</code>.</li>
+ <li> <code>hyperspec-lookup-format</code> and  <code>hyperspec-lookup-reader-macro</code>.</li>
+</ul> <p>
+In particular, note that  <code>slime-who-specializes</code> lists the methods of a given
+class, which answers a common complaint coming from people used to languages
+from the Algol family: the ability to complete the methods of the  <code>foo</code> class by
+typing  <code>foo.<TAB></code>.
+</p>
+</div>
+</div>
+</div>
+
+ <div id="outline-container-org2d35b29" class="outline-2">
+ <h2 id="org2d35b29">ASDF</h2>
+ <div class="outline-text-2" id="text-org2d35b29">
+ <p>
+ <a href="https://common-lisp.net/project/asdf/">ASDF</a> is the de-facto standard build system for Common Lisp.
+</p>
+
+ <p>
+To use a  <code>FOO</code> system, place it in in  <code>~/common-lisp</code> and call
+ <code>(asdf:load-system :FOO)</code>.
+</p>
+
+ <p>
+Better: from the SLIME or SLY REPL, press  <code>,load-system</code> and you’ll be provided
+with a list of systems that can be loaded.
+</p>
+</div>
+
+ <div id="outline-container-orgbeb7602" class="outline-3">
+ <h3 id="orgbeb7602">Best practices</h3>
+ <div class="outline-text-3" id="text-orgbeb7602">
+ <p>
+See  <a href="https://gitlab.common-lisp.net/asdf/asdf/blob/master/doc/best_practices.md">https://gitlab.common-lisp.net/asdf/asdf/blob/master/doc/best_practices.md</a>.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-org7375ef5" class="outline-3">
+ <h3 id="org7375ef5">Inferred systems</h3>
+ <div class="outline-text-3" id="text-org7375ef5">
+ <p>
+Historically ASDF required you to explicitly list the files to compile.  This
+was cumbersome and error-prone, but thankfully it has been fixed some time ago
+with the  <code>package-inferred-system</code> extension which I highly recommend:
+</p>
+
+ <p>
+ <a href="https://common-lisp.net/project/asdf/asdf/The-package_002dinferred_002dsystem-extension.html#The-package_002dinferred_002dsystem-extension">https://common-lisp.net/project/asdf/asdf/The-package_002dinferred_002dsystem-extension.html#The-package_002dinferred_002dsystem-extension</a>
+</p>
+
+ <p>
+Benefits:
+</p>
+
+ <ul class="org-ul"> <li>No need to list files.</li>
+ <li>No need to list dependencies.
+With non-inferred-systems, the dependency list can be wrong, e.g. include too
+many of them or miss some.  In that sense inferred-systems are more robust.</li>
+ <li>Enforces that every file must be a package.</li>
+</ul> <p>
+Trick:
+</p>
+
+ <ul class="org-ul"> <li>If your system has many files, and thus that many packages, it can get quickly
+cumbersome for the user to load all those packages one by one.  Instead, you
+can create a “meta package” which imports all the other packages of your
+system, so that the user only has to load this one to access the whole system.</li>
+
+ <li> <p>
+How can we get the list of dependencies since we don’t list them explicitly in
+the  <code>.asd</code> anymore?  Thankfully the snippet below will retrieve them
+programmatically for us:
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-lisp">(declaim (ftype (function (string) list) package-dependencies))
+(defun package-dependencies (pkg-name)
+  (let (depends)
+    (labels ((iter (openlist)
+	       (if (null openlist) depends
+		   ;; is this a subsystem of foo?
+		   (let ((find (search  pkg-name (first openlist))))
+		     (if (and find (zerop find))
+			 (iter (append (asdf:system-depends-on (asdf:find-system (first openlist))) (rest openlist)))
+			 ;; if not, it's a direct dependency: collect it
+			 (progn
+			  (pushnew (first openlist) depends :test 'equalp)
+			  (iter (rest openlist))))))))
+      (iter (list pkg-name)))))
+</pre>
+</div>
+
+ <p>
+Then:
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-lisp">(package-dependencies "dbus")
+; => ("ironclad cl-xmlspam split-sequence flexi-streams ieee-floats iolib babel trivial-garbage alexandria
+</pre>
+</div></li>
+</ul></div>
+</div>
+</div>
+
+ <div id="outline-container-org4983065" class="outline-2">
+ <h2 id="org4983065">Modernizing the language with packages</h2>
+ <div class="outline-text-2" id="text-org4983065">
+ <p>
+Myth: Common Lisp is old and does not enjoy the features of modern languages
+from recent years.
+</p>
+
+ <p>
+Truth: While the Common Lisp standard is from the 1990s, many modern libraries
+have continuously updated the language.
+</p>
+
+ <p>
+One of the biggest selling points of Common Lisp (and Lisp languages in general)
+is that the language itself is extensible.  This means that if new paradigms
+become fashionable, they can easily be added to the language.
+</p>
+
+ <p>
+In particular, Common Lisp has the reputation among functional programmers of
+being very imperative and object-oriented.  While these styles were popular
+in the past, nothing prevents us from programming functionally in Common Lisp.
+</p>
+
+ <p>
+As with many languages, Common Lisp packages can be  <code>use</code>-d, which means all
+symbols will be merged in the current name space, or  <code>import</code>-ed, which means
+all symbols will be accessible only via the package prefix.
+</p>
+
+ <p>
+The benefit of  <code>use</code> is that importing a language-enhancing package gives us a
+feel that the enhancements are first class.
+</p>
+
+ <p>
+ <code>Use</code>-ing packages has a few drawbacks however, so be mindful of them.  If you
+prefer the safe way, stick to package imports.
+</p>
+
+ <ul class="org-ul"> <li> <p>
+The drawback however is that if you change your mind and decide to  <code>import</code> the
+package instead, you’ll have to add the package prefix to all the related
+symbols manually.
+</p>
+
+ <p>
+This issue could be eliminated with sufficient editor support to refactor
+symbols by their packages.
+See  <a href="https://github.com/slime/slime/issues/532">https://github.com/slime/slime/issues/532</a> for a discussion.
+</p></li>
+
+ <li>It’s harder to see from just a glance which symbols comes from which package.</li>
+
+ <li> <code>Use</code>-ing a package without pinning its version (or even commit) is exposes
+your project to breakage if the package upstream adds a new symbols that would
+conflict with one of your symbols.  As a minimum requirement to  <code>use</code>-ing
+packages, make sure you pin their exact version.
+(Thanks to  <a href="https://old.reddit.com/user/flaming_bird">flaming <sub>bird</sub></a> for the  <a href="https://old.reddit.com/r/lisp/comments/f98d1h/modern_functional_common_lisp_myths_and_best/fipyf7u/">detailed explanation</a>.)</li>
+</ul></div>
+
+ <div id="outline-container-orgc98d459" class="outline-3">
+ <h3 id="orgc98d459">Local package nicknames</h3>
+ <div class="outline-text-3" id="text-orgc98d459">
+ <p>
+Since you should (almost always)  <code>import</code> packages, you’ll have to prefix their
+symbols with the package name.  Sometimes this package name can be lengthy to
+write: in this case, you should know that you can assign a local nickname to any
+package.
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-lisp">(defpackage my-package
+  (:use #:cl)
+  (:local-nicknames (#:a #:alexandria.dev.0)))
+</pre>
+</div>
+
+ <p>
+So now you can call the much shorter  <code>a:compose</code> from your package!
+</p>
+
+ <p>
+See  <a href="https://github.com/phoe/trivial-package-local-nicknames">package-local-nicknames</a>.
+</p>
+
+ <p>
+This approach is preferred over using the  <code>rename-package</code> procedure which is
+global.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-orgab1e47e" class="outline-3">
+ <h3 id="orgab1e47e">Recommended language-enhancing packages</h3>
+ <div class="outline-text-3" id="text-orgab1e47e">
+ <p>
+The following packages are widespread and useful enough that can be  <code>import</code>-ed
+without hesitation:
+</p>
+
+ <ul class="org-ul"> <li> <a href="https://common-lisp.net/project/alexandria/">Alexandria</a>: various language and functional programming procedures.</li>
+ <li>UIOP: Macros and operating-system-level procedures.  Included with ASDF in
+most Common Lisp compilers.</li>
+ <li> <a href="https://github.com/guicho271828/trivia">Trivia</a>: Pattern matching.</li>
+</ul> <p>
+The following libraries are also extremely useful, although not to everyone’s taste:
+</p>
+
+ <ul class="org-ul"> <li> <a href="https://github.com/m2ym/trivial-types">Trivial-types</a>: More common type definitions.</li>
+ <li> <a href="https://github.com/ruricolist/serapeum">Serapeum</a>: a huge collection of utilities (named let, local definitions, hooks,
+file “human” size, string manipulation, etc.), built as a complement to
+Alexandria and UIOP.  It greatly extends the language.</li>
+ <li> <a href="http://series.sourceforge.net/">Series</a>: Lazy sequences and supporting higher-order functions.</li>
+ <li> <a href="https://github.com/EuAndreh/defclass-std">defclass-std</a>: Saner and more robust defaults for class definitions.  In
+particular, this prevents accidental typos in the accessor or the initarg, and
+it sets a default value (the  <code>initform</code>) automatically by default.</li>
+ <li> <a href="https://github.com/ndantam/sycamore">Sycamore</a>: Functional data structure library</li>
+</ul> <p>
+Other language-enhancing libraries:
+</p>
+
+ <ul class="org-ul"> <li> <a href="https://github.com/fukamachi/rove">Rove</a>: The (only?) testing framework with coverage support.</li>
+ <li> <a href="https://edicl.github.io/cl-ppcre/">ppcre</a>: Advanced string manipulation with unicode support.</li>
+ <li> <a href="https://github.com/melisgl/named-readtables/">named-readtables</a>: First class name space for readtables.</li>
+ <li> <a href="https://alex-gutev.github.io/generic-cl/">generic-cl</a>: Generic function wrapper over various functions in the Common Lisp
+standard, such as equality predicates and sequence operations.  Includes a
+few  <a href="https://alex-gutev.github.io/generic-cl/#lazy_sequence_utilities">lazy sequence utilities</a>.</li>
+</ul></div>
+</div>
+</div>
+
+ <div id="outline-container-orgbde0f6d" class="outline-2">
+ <h2 id="orgbde0f6d">Functional programming</h2>
+ <div class="outline-text-2" id="text-orgbde0f6d">
+ <p>
+Myth: Common Lisp is a procedural, object-oriented language.
+Truth: Many functional programming paradigms are available in Common Lisp.
+</p>
+
+ <p>
+Scheme developers in particular will be happy to find:
+</p>
+
+ <ul class="org-ul"> <li> <code>compose</code>,  <code>curry</code> in Alexandria.</li>
+ <li>named  <code>let</code>, local definitions,  <code>flip</code> and more in Serapeum.</li>
+ <li> <code>match</code> in Trivia.</li>
+ <li>Lazy sequences in Series.</li>
+ <li>Functional, immutable data structures in  <a href="https://common-lisp.net/project/fset/">FSet</a>,  <a href="https://github.com/danshapero/cl-hamt/">cl-hamt</a>,  <a href="https://github.com/ndantam/sycamore">Sycamore</a>
+(thanks to  <a href="https://news.ycombinator.com/user?id=Jach">Jach</a> for pointing it out),  <a href="https://github.com/mikelevins/folio2/">folio2</a> (thanks to  <a href="https://news.ycombinator.com/user?id=mikelevins">mikelevins</a> for sharing
+this one),  <a href="https://github.com/smithzvk/modf">modf</a> (thanks to dzecniv for sharing).</li>
+</ul> <p>
+The availability of the Series package means in particular that you don’t have
+to use the (in)famous  <code>LOOP</code> macros if you don’t like them.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-orgfd07758" class="outline-2">
+ <h2 id="orgfd07758">Static, parametric and algebraic typing</h2>
+ <div class="outline-text-2" id="text-orgfd07758">
+ <p>
+Myth: Common Lisp does not support static typing.
+</p>
+
+ <p>
+Truth: ECL, CCL and SBCL at least support compile-time type-checking.
+</p>
+
+ <p>
+While not exactly static typing since it’s optional, the technical term for it
+is “gradual typing.”
+</p>
+
+ <p>
+Note that types defined with a  <code>satisfies</code> predicate are not checked at
+compile-time unless at the top-level (this is true for SBCL 2.0 at least).
+</p>
+
+ <p>
+Classes are a whole different beast and there type checking can currently be
+done with a separate library:  <a href="https://github.com/fisxoj/sanity-clause">https://github.com/fisxoj/sanity-clause</a>.  Also see
+ <a href="https://lisp-journey.gitlab.io/blog/how-to-check-slots-types-at-make-instance/">https://lisp-journey.gitlab.io/blog/how-to-check-slots-types-at-make-instance/</a>.
+</p>
+
+ <p>
+Serapeum provides helpers for type manipulation:
+ <a href="https://github.com/ruricolist/serapeum/blob/master/REFERENCE.md#types">https://github.com/ruricolist/serapeum/blob/master/REFERENCE.md#types</a>.   <a href="https://bitbucket.org/eeeickythump/defstar.git">defstar</a>
+also provides syntactic sugar for type declaration (it also comes with a named
+let).
+</p>
+
+ <p>
+Algebraic types are supported out of the box, but notations can be improved with
+ <a href="https://github.com/stylewarning/cl-algebraic-data-type">https://github.com/stylewarning/cl-algebraic-data-type</a>.
+</p>
+
+ <p>
+There is even an ML-style library for Common Lisp:  <a href="https://github.com/stylewarning/coalton">Coalton</a>.
+</p>
+
+ <p>
+More on the topic:
+</p>
+
+ <ul class="org-ul"> <li> <a href="https://medium.com/@MartinCracauer/static-type-checking-in-the-programmable-programming-language-lisp-79bb79eb068a">https://medium.com/@MartinCracauer/static-type-checking-in-the-programmable-programming-language-lisp-79bb79eb068a</a></li>
+ <li> <a href="https://alhassy.github.io/TypedLisp/">https://alhassy.github.io/TypedLisp/</a></li>
+ <li> <a href="https://news.ycombinator.com/item?id=20788855">https://news.ycombinator.com/item?id=20788855</a></li>
+</ul></div>
+
+ <div id="outline-container-orgb940c26" class="outline-3">
+ <h3 id="orgb940c26">Type examples</h3>
+ <div class="outline-text-3" id="text-orgb940c26">
+ <p>
+From the HyperSpec:
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-lisp">(defun equidimensional (a)
+  (or (< (array-rank a) 2)
+      (apply #'= (array-dimensions a)))) ; =>  EQUIDIMENSIONAL
+(deftype square-matrix (&optional type size)
+  `(and (array ,type (,size ,size))
+	(satisfies equidimensional))) ; =>  SQUARE-MATRIX
+</pre>
+</div>
+
+ <p>
+Some useful types from the  <code>trivial-types</code> package:
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-lisp">(deftype pathname-designator ()
+  '(or string
+       file-associated-stream
+       pathname))
+
+(deftype function-designator ()
+  '(or symbol
+       function))
+
+(deftype string-designator ()
+  '(or character
+       symbol
+       string))
+</pre>
+</div>
+
+ <p>
+In practice:
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-lisp">(declaim (ftype (function (trivial-types:pathname-designator) pathname) my-basename))
+(defun my-basename (path)
+  (uiop:pathname-parent-directory-pathname path))
+
+(compile nil '(lambda () (my-basename 17)))
+; in: LAMBDA ()
+;     (MY-BASENAME 17)
+;
+; note: deleting unreachable code
+;
+; caught WARNING:
+;   Constant
+;     17 conflicts with its asserted type
+;     (OR (VECTOR CHARACTER) (VECTOR NIL) BASE-STRING
+;         (AND STREAM (SATISFIES TRIVIAL-TYPES:FILE-ASSOCIATED-STREAM-P)) PATHNAME).
+;   See also:
+;     The SBCL Manual, Node "Handling of Types"
+;
+; compilation unit finished
+;   caught 1 WARNING condition
+;   printed 1 note
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+ <div id="outline-container-orgb4ba122" class="outline-2">
+ <h2 id="orgb4ba122">Export at definition site</h2>
+ <div class="outline-text-2" id="text-orgb4ba122">
+ <p>
+One of the main pain points in Common Lisp development is exporting public symbols.
+</p>
+
+ <p>
+Traditionally, symbols were exported from a dedicated “package” file that’s loaded
+first.
+This is cumbersome and error-prone since the symbols and their exports may run
+out of sync.
+</p>
+
+ <p>
+There is an  <code>export</code> function which can be called at definition site.  Sadly,
+since it’s a function, it won’t be called at compilation time and thus will yield
+an error if you attempt to access the symbol from a foreign package at this point.
+</p>
+
+ <p>
+The trick is to force the evaluation of  <code>export</code> at compilation time with:
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-lisp">(eval-when (:compile-toplevel :load-toplevel :execute)
+  (export FOO))
+</pre>
+</div>
+
+ <p>
+Since this is rather lengthy, I recommend you use Serapeum’s  <code>export-*</code> macros:
+ <a href="https://github.com/ruricolist/serapeum/blob/master/REFERENCE.md#export-always-symbols-optional-package-nil-package-supplied">https://github.com/ruricolist/serapeum/blob/master/REFERENCE.md#export-always-symbols-optional-package-nil-package-supplied</a>.
+</p>
+
+ <p>
+Hopefully the syntax will get even more practical once  <a href="https://github.com/ruricolist/serapeum/issues/38">issue 38</a> is resolved.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-org724ee4b" class="outline-2">
+ <h2 id="org724ee4b">Documentation</h2>
+ <div class="outline-text-2" id="text-org724ee4b">
+ <p>
+Contextual documentation is part of the Common Lisp standard, the so-called
+“docstrings” which can be placed at the beginning of variable and function
+definitions.
+</p>
+
+ <p>
+A detail that is perhaps not so well known is that classes, slots and packages
+also support docstrings via the  <code>:documentation</code> keyword.  It’s underused in the
+community and I believe we should encourage its use.
+</p>
+
+ <p>
+Another perk of Common Lisp is the ability to declare the types of functions,
+variables, class slots, etc.
+</p>
+
+ <p>
+So instead of adding a comment about the accepted types of a function arguments
+and the type of the return value, simply  <code>declaim</code> it:
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-lisp">(declaim (ftype (function (number) string) number->string))
+(defun number->string (n)
+  ...)
+</pre>
+</div>
+
+ <p>
+This has the double benefit of documenting the argument types and the return
+types of your function, as well as enforcing compile-time type-checking.
+</p>
+
+ <p>
+Same goes with class slots:
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-lisp">(defclass my-compiler ()
+  ((name :accessor name
+	 :initarg :name
+	 :initform ""
+	 :type string
+	 :documentation "Name of your favourite Common Lisp compiler.")
+   ...))
+</pre>
+</div>
+</div>
+</div>
+
+ <div id="outline-container-org67d190c" class="outline-2">
+ <h2 id="org67d190c">Compilers</h2>
+ <div class="outline-text-2" id="text-org67d190c">
+ <p>
+Common Lisp is a standard and Common Lisp compilers are legions.
+</p>
+
+ <p>
+Some target specific use cases.
+</p>
+
+ <ul class="org-ul"> <li> <a href="http://ecls.sourceforge.net/">ECL</a> targets embedded development, with good interop with C.</li>
+ <li> <a href="https://abcl.org/">ABCL</a> is build on top of the Java virtual machine and thus has good interop
+with Java.</li>
+</ul> <p>
+For general purpose development, the go-to compiler these days is  <a href="http://www.sbcl.org/">SBCL</a>.  It is
+actively developed and has many benefits:
+</p>
+
+ <ul class="org-ul"> <li>Probably the best gradual type checking of all Common Lisp compilers.</li>
+ <li>Fast compilation.</li>
+ <li>Fast executables.</li>
+ <li>Statistical profiler.</li>
+ <li>Coverage analysis.</li>
+</ul></div>
+</div>
+
+ <div id="outline-container-orgba366c1" class="outline-2">
+ <h2 id="orgba366c1">Debugging and stepper</h2>
+ <div class="outline-text-2" id="text-orgba366c1">
+ <p>
+Many Common Lisp compilers offer great support for debbuging.
+In particular, the  <code>step</code> macro is part of the standard.
+</p>
+
+ <p>
+With SBCL, you must first compile the code you want to debug with
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-lisp">(declaim (optimize (speed 0) (space 0) (debug 3)))
+</pre>
+</div>
+
+ <p>
+or evaluate the target expressions with  <code>C-u C-c C-c</code>.
+</p>
+
+ <p>
+Then you can run
+</p>
+
+ <pre class="example">
+(step (foo bar))
+</pre>
+
+ <p>
+to step through the execution of  <code>(foo bar)</code>.  With SLIME / SLY, the Emacs point
+will follow the currently-executed expression!
+</p>
+</div>
+
+ <div id="outline-container-orgbaa07bc" class="outline-3">
+ <h3 id="orgbaa07bc">Compiler warnings</h3>
+ <div class="outline-text-3" id="text-orgbaa07bc">
+ <p>
+To increase the level of warning detection, call
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-lisp">(declaim (optimize (speed 0) (space 0) (debug 3)))
+</pre>
+</div>
+
+ <p>
+before loading a system.
+</p>
+
+ <p>
+Also  <code>reload</code>-ing a system might raise more warnings.
+You can use  <code>,reload-system</code> in SLIME / SLY.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-org591852e" class="outline-3">
+ <h3 id="org591852e">More debugging tips</h3>
+ <div class="outline-text-3" id="text-org591852e">
+ <p>
+See this great tutorial in four parts which covers breakpoints, stepping,
+inspection, class redefinitions and restarts:
+ <a href="https://malisper.me/debugging-lisp-part-1-recompilation/">https://malisper.me/debugging-lisp-part-1-recompilation/</a>.
+</p>
+
+ <p>
+(Thanks to  <a href="https://news.ycombinator.com/user?id=Jach">Jach</a> for sharing.)
+</p>
+</div>
+</div>
+</div>
+
+ <div id="outline-container-org0e797b2" class="outline-2">
+ <h2 id="org0e797b2">Deployment and executable size</h2>
+ <div class="outline-text-2" id="text-org0e797b2">
+ <p>
+The myth: Common Lisp scripts and binaries are hard to distribute; binaries are
+too big.
+</p>
+
+ <p>
+The truth: Common Lisp compilers offer a lot of flexibility.
+</p>
+
+ <ul class="org-ul"> <li>If portability across compilers is not an issue, it’s trivial to distribute
+scripts, e.g. by using the  <code>#!sbcl --script</code> shebang.</li>
+
+ <li>It’s even possible to distribute the compiled files (e.g. the .fasls) since
+they are executable.  The exact same compiler must be present on the target
+machine however.</li>
+
+ <li>Binaries produced by some compilers like SBCL or CCL are rather large for a
+reason: they include a self-standing complete Lisp image, that is to say more
+or less the whole compiler plus the required libraries.  The benefit: the
+binary does not depend on the compiler and thus the binary is extremely
+portable; to top it all, the user can connect a REPL to the stand-alone binary
+and hack the application while it’s running!</li>
+
+ <li>Some compilers like ECL or CLISP can produce dynamic binaries that link
+against a runtime library (just like C).  Those binaries tend to be very small.</li>
+
+ <li>SBCL can produce compressed executables with no noticeable impact on startup
+time.  With compression, a hello-world binary with all of SBCL fits in some
+15 MiB.</li>
+</ul> <p>
+Tip: Add this to your  <code>.asd</code> to automatically create compressed binaries with
+SBCL:
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-lisp">#+sb-core-compression
+(defmethod asdf:perform ((o asdf:image-op) (c asdf:system))
+  (uiop:dump-image (asdf:output-file o c) :executable t :compression t))
+</pre>
+</div>
+</div>
+</div>
+
+ <div id="outline-container-orga96453b" class="outline-2">
+ <h2 id="orga96453b">Guix vs. Roswell</h2>
+ <div class="outline-text-2" id="text-orga96453b">
+ <p>
+ <a href="https://github.com/roswell/roswell">Roswell</a> is a Common Lisp environment manager that can install various Common
+Lisp compilers, deploy applications, etc.
+</p>
+
+ <p>
+While less popular among Common Lisp developers, I believe that  <a href="https://guix.gnu.org">Guix</a>
+advantageously supersedes Roswell:
+</p>
+
+ <ul class="org-ul"> <li>Guix does not distribute opaque binaries, it allows us to produce  <a href="https://reproducible-builds.org/">reproducible
+packages</a> (which are also increasingly more bootstrappable).  Thus Guix is much
+more trustable.</li>
+ <li>Guix environments can mix in any other packages, such as libraries or other
+programming languages.  It is thus possible to create environments for complex
+projects dealing with multiple programming languages at the same time.</li>
+ <li>Guix can run environments in containers.</li>
+ <li>Guix can automatically “pack” a Common Lisp application with all its
+dependencies (including non-Lisp ones) as a tarball or a Docker image.</li>
+</ul></div>
+</div>
+
+ <div id="outline-container-org4692c2f" class="outline-2">
+ <h2 id="org4692c2f">Take-away</h2>
+ <div class="outline-text-2" id="text-org4692c2f">
+ <p>
+I believe that Common Lisp deserves its reputation of a robust, practical,
+general purpose programming language.  It’s high time we moved on from the old
+myths and we fixed the few pain points that still remain.
+</p>
+
+ <p>
+The setup and the learning curve is still a bit steep today, but it does not
+have to be this way: with the right web sites, documentation and tools, I’m
+convinced we could boost Common Lisp accessibility and reach out to many more
+developers out there.
+</p>
+
+ <p>
+Fashions are changing and many third-party libraries allows the language to keep
+up with the latest trendy paradigms.
+</p>
+
+ <p>
+Finally, Common Lisp is a gigantic ecosystem that we never stop exploring.  I
+believe it’s important for the community to be dynamic and communicative about
+the evolution of the language.  So don’t hesitate to reach out to me, share you
+critics and tell me what you think about this article!
+</p>
+</div>
+</div>
+</div>

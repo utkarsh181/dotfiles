@@ -1,0 +1,5 @@
+<p>I've developed a more robust framework for implementing LARBS that will make it considerably easier and more elegant to manage packages. Now all packages are read in one single csv file and are processed based on whether the user chose their package group and whether the package is in the main repos or only in the AUR (this detection is now done automatically).</p>
+
+<p>There's also now a (mostly) ncurses based interface during installation and, if it means anything, I've considerably reduced the size of the script seeing that the deployment method is now less <i>ad hoc</i>.</p>
+
+<p>I'm hoping to "officially" re-release the scripts very soon, in fact, after this they may not actually change much at all until I do, all is needed is a little testing. You're welcome to try it yourself now and see the results.</p>

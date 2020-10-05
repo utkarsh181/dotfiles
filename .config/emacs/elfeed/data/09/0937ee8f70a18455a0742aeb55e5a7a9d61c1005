@@ -1,0 +1,21 @@
+
+<p>Some of you had already tried out the new version of mutt-wizard on Gitlab, but I've now <a href="https://github.com/LukeSmithxyz/mutt-wizard" target="_blank">release it on the Github repository as well</a>. mutt-wizard has always be able to:</p>
+
+<ul>
+	<li>Access your mail on the command line without having to set anything up. It looks pretty and has sensible default settings.</li>
+	<li>Optionally download, store and sync your email offline, so you can browse your email with no latency and read and write replies while offline.</li>
+	<li>Securely encrypt all your passwords with GPG so you don't have dangerous plaintext floating around or to avoid typing your passwords in constantly.</li>
+	<li>Configs for neomutt, isync and msmtp automatically generated based on your server settings, which in many cases, mutt-wizard already knows.</li>
+</ul>
+
+<p>Here are some of the biggest changes in mutt-wizard that make it much better now:</p>
+
+<ul>
+	<li>The original mutt-wizard required three annoying steps for each account: (1) data input, then (2) the user manually running offlineimap and then (3) running the script again to finalize boxes. Wow that was dumb. <b>isync now enables all the configuration to happen in one quick sitting as fast as you can type your info in.</b></li>
+	<li>You now have the option of <strong>not</strong> keeping mail offline, in case you don't want that.</li>
+	<li>Passwords are now saved with <code>pass</code>, which avoids some headaches.</li>
+	<li><code>dialog</code> is no longer used as user-interface.</li>
+	<li>More error handling, but also less errors.</li>
+</ul>
+
+<p>Check the link above to get it. Be sure to read the README for how to use it.</p>

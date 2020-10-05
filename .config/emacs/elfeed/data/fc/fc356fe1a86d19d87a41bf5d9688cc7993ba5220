@@ -1,0 +1,1031 @@
+<div id="content">
+ <p>
+This article sketches a rationale on source code indentation.
+</p>
+
+ <p>
+Indentation is a never-ending holy war between programmers.  The divergence that
+resulted led to the development of many complex tools (GNU indent, Uncrustify,
+to name a few) and every decent text editor to implement a complex indentation
+engine.
+</p>
+
+ <p>
+Teams have to reach an agreement on indentation.  If you happen to be part of
+several teams, chances are high that you have to work with different
+conventions.
+</p>
+
+ <p>
+This pushes editors to implement yet another complex and unreliable feature:
+indentation guessing.
+</p>
+
+ <p>
+Versioning and  <code>diff</code> tools bring yet more trouble to the case.  A simple
+open/save on a file with a different editor than the original can lead to a huge
+ <code>diff</code>.
+</p>
+
+ <p>
+Discussions on how to solve this problem have proven to inevitably reach a
+dead-end.  The following sketch of rationale does not claim to solve it either,
+however I would like to point out how simple measures taken right from the
+inception of a programming language can help reducing all the hassle the
+indentation question creates.
+</p>
+
+ <div id="outline-container-orgb529730" class="outline-2">
+ <h2 id="orgb529730">Rationale</h2>
+ <div class="outline-text-2" id="text-orgb529730">
+ <p>
+Main arguments:
+</p>
+
+ <ul class="org-ul"> <li>Readability matters.  Code is read more than it is written.</li>
+ <li>Code changes should be versioning-friendly.</li>
+ <li>Freedom of form for clarity where that matters.  Tools should not constrain
+you.</li>
+</ul> <p>
+Lesser arguments:
+</p>
+
+ <ul class="org-ul"> <li>The less bytes the better.</li>
+ <li>The indentation engine should be short and simple.</li>
+</ul></div>
+</div>
+
+ <div id="outline-container-orgaa559dd" class="outline-2">
+ <h2 id="orgaa559dd">The Go example</h2>
+ <div class="outline-text-2" id="text-orgaa559dd">
+ <p>
+Let us consider the Go language (first issued in 2010).  The official
+implementation ships with an indentation/formatting tool called  <code>gofmt</code>.  From
+the  <a href="http://blog.golang.org/go-fmt-your-code">official website</a>:
+</p>
+
+ <blockquote>
+ <p>
+Gofmt’d code is:
+</p>
+
+ <ul class="org-ul"> <li>easier to write: never worry about minor formatting concerns while hacking
+away,</li>
+ <li>easier to read: when all code looks the same you need not mentally convert
+others’ formatting style into something you can understand.</li>
+ <li>easier to maintain: mechanical changes to the source don’t cause unrelated
+changes to the file’s formatting; diffs show only the real changes.</li>
+ <li>uncontroversial: never have a debate about spacing or brace position ever
+again!</li>
+</ul></blockquote>
+
+ <p>
+This basically brings an end to any of the aforementioned conflicts on
+indentation.
+</p>
+
+ <p>
+ <code>gofmt</code> is a tool for both indenting and style.  Important things to note
+however, it will not
+</p>
+
+ <ul class="org-ul"> <li>touch your comments;</li>
+ <li>split nor join lines;</li>
+ <li>change empty lines.</li>
+</ul> <p>
+However, it will:
+</p>
+
+ <ul class="org-ul"> <li>change spacing between tokens;</li>
+ <li>indent your code conforming to one precise style (more or less in K&R style);</li>
+ <li>tabify the code (no spaces, no alignment).</li>
+</ul> <p>
+Let us analyze these choices.
+</p>
+
+ <ul class="org-ul"> <li>Comment style is extremely varied, and there is no clear winner.   <code>gofmt</code> is a
+ <i>standard</i> tool, and as such it does not claim to impose a comment style.</li>
+
+ <li>Line splitting depends on line width (which value is left to the programmer’s
+choice), and  <i>where it feels right</i>.  This can obviously not be determined
+computationally.  So it seems wise not to touch it.  However it does merge
+multiple empty lines between two comments.  I am not sure why it is being
+inconsistent here.</li>
+
+ <li>Empty lines are used to separate parts of the program, again,  <i>where it feels
+right</i>.  This should not be changed either.</li>
+
+ <li>It is very hard for a human being to be consistent with token spacing.  Rules
+can vary here.  All that matters is that the end result is consistent and
+readable.</li>
+
+ <li>Same thing for indentation.</li>
+
+ <li>The use of tabulations over spaces can be argued.  Same thing for alignment,
+despite being more subject to personal opinions.  I will discuss this in later
+sections.</li>
+</ul> <p>
+Now let us come back to our rationale.
+</p>
+
+ <ul class="org-ul"> <li> <blockquote>
+ <p>
+Readability matters. Code is read more than it is written.
+</p>
+</blockquote>
+
+ <p>
+The choice of style for indentation and token spacing is good enough: it is
+close to K&R, a style which has been widely accepted and source of inspiration
+for many other styles.
+</p></li>
+
+ <li> <blockquote>
+ <p>
+Code changes should be versioning-friendly.
+</p>
+</blockquote>
+
+ <p>
+ <code>gofmt</code> ensures this.
+</p></li>
+
+ <li> <blockquote>
+ <p>
+Freedom of form for clarity where that matters. Tools should not constrain
+you.
+</p>
+</blockquote>
+
+ <p>
+ <code>gofmt</code> leaves you freedom on how you separate parts of your code with
+linebreaks (except for comments) and how you format comments.  What cannot be
+decided computationally is left to the author.
+</p></li>
+
+ <li> <blockquote>
+ <p>
+The less bytes the better.
+</p>
+</blockquote>
+
+ <p>
+The use of tabs and no alignment help.
+</p></li>
+
+ <li> <blockquote>
+ <p>
+The indentation engine should be short and simple.
+</p>
+</blockquote>
+
+ <p>
+Rules are just a few.  No alignment helps.
+</p></li>
+</ul></div>
+</div>
+
+ <div id="outline-container-orga40b451" class="outline-2">
+ <h2 id="orga40b451">A solution</h2>
+ <div class="outline-text-2" id="text-orga40b451">
+ <p>
+ <code>gofmt</code> choices look reasonable in regard to our rationale.  But the quality of
+the style are not worth discussing in face of the invaluable advantages it
+provides.  Its ultimate goal, as stated in the above quote, is not to format
+code, it is to relieve the programmer from the burden of style and indentation,
+leaving focus on content.
+</p>
+
+ <p>
+Being part of the standard distribution helps a great deal to bring an end to
+the style and indentation wars.
+</p>
+
+ <p>
+The solution to the style and indentation problem is not lying in a helpless
+attempt to find the best rules, it lies in providing a  <i>standard</i> formatting
+tool for a language that follows some rational criteria.
+</p>
+
+ <p>
+If a language has been out for years without a formatting tool, as it is the
+case for C, it is problably already too late.  Current formatting tools for C are
+fragmented.  They run in a significantly different manner than Go: instead of
+enforcing one common style, they are made configurable to adapt everone’s style.
+It makes sense since none of these tools are standard, they cannot pretend to
+impose a style.
+</p>
+
+ <p>
+Some other language took a different approach by only publishing a rationale on
+style.  While this is a respectable decision, it is not as helpful as providing a
+standard formatting tool: programmers still have to set up their editor properly
+in accordance to the rationale, and some are simply not willing to make the
+effort.
+</p>
+
+ <p>
+In the next sections, I will argue more on specific indentation choices.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-orgfcd5ee1" class="outline-2">
+ <h2 id="orgfcd5ee1">Tabulations</h2>
+ <div class="outline-text-2" id="text-orgfcd5ee1">
+ <p>
+The use of tabs over spaces is a source of flaming debates.  However it seems
+like there is a (not so overwhelming) majority of programmers using  <i>tabs only</i>
+or  <i>tabs + spaces for alignment</i>.
+</p>
+
+ <p>
+Pros:
+</p>
+
+ <ul class="org-ul"> <li>It uses less bytes as long as indentation is >1.  Who uses an indentation of 1
+anyway?</li>
+
+ <li> <p>
+The tab width is adaptable live.  This it  <i>the one argument</i> for tabs against
+spaces.  Values between 2 and 8 are customary.  2 leaves more space on screen
+which can be handy in restricted conditions.  But 8 allows for more clarity,
+in particular to distinguish big nested blocks.  The  <a href="https://www.kernel.org/doc/Documentation/CodingStyle">Linux kernel style</a>
+provides a rationale for using a tab width of 8.
+</p>
+
+ <p>
+When using spaces, if one uses 2-spaces indentation rule, the code can not be
+made more readable without actually modifying the file.
+</p></li>
+</ul> <p>
+Cons:
+</p>
+
+ <ul class="org-ul"> <li>The code will not display identically across different configurations.  But in
+regard to the previous point, this is a feature, not an issue.</li>
+</ul> <p>
+Back to the rationale:
+</p>
+
+ <ul class="org-ul"> <li> <blockquote>
+ <p>
+Readability matters. Code is read more than it is written.
+</p>
+</blockquote>
+
+ <p>
+Tabs allow for flexibility in readability.
+</p></li>
+
+ <li> <blockquote>
+ <p>
+Code changes should be versioning-friendly.
+</p>
+</blockquote>
+
+ <p>
+Changing the tab width does not change the file. Changing space indentation
+does.
+</p></li>
+
+ <li> <blockquote>
+ <p>
+Freedom of form for clarity where that matters. Tools should not constrain
+you.
+</p>
+</blockquote>
+
+ <p>
+Tab width is left to the user taste and needs.
+</p></li>
+
+ <li> <blockquote>
+ <p>
+The less bytes the better.
+</p>
+</blockquote>
+
+ <p>
+Tab use less bytes than spaces.
+</p></li>
+
+ <li> <blockquote>
+ <p>
+The indentation engine should be short and simple.
+</p>
+</blockquote>
+
+ <p>
+N/A.
+</p></li>
+</ul></div>
+</div>
+
+ <div id="outline-container-org5eb4325" class="outline-2">
+ <h2 id="org5eb4325">Alignment</h2>
+ <div class="outline-text-2" id="text-org5eb4325">
+ <p>
+Alignment is mostly seen in tables and in function calls:
+</p>
+
+ <pre class="example">
+foo = { bar,
+        baz }
+
+foo ( bar,
+      baz )
+</pre>
+
+ <p>
+Pro:
+</p>
+
+ <ul class="org-ul"> <li>It makes structured code look clear.</li>
+</ul> <p>
+Cons:
+</p>
+
+ <ul class="org-ul"> <li> <p>
+Alignment, as for style, is determined by many parameters. The question of
+what part of the code should be aligned is hard to answer both for humans and
+machines.
+</p>
+
+ <p>
+Body only:
+</p>
+
+ <pre class="example">
+int foo[3] = { bar,
+               baz,
+               qux
+};
+</pre>
+
+ <p>
+Body + openers/closers:
+</p>
+
+ <pre class="example">
+int foo[3] = { bar,
+               baz,
+               qux
+             };
+</pre></li>
+
+ <li> <p>
+Alignment is hard to implement in formatters and editors. All the parameters
+must be configurable, or else the tool is constraining the formatting.
+</p>
+
+ <p>
+For example, if alignment yields an ugly result as in
+</p>
+
+ <pre class="example">
+foobar('arg1', function ()
+  print('foobar')
+end,
+       'arg3'
+)
+</pre>
+
+ <p>
+one can “fix” this by changing the outline:
+</p>
+
+ <pre class="example">
+foobar('arg1',
+       function ()
+         print('foobar')
+       end,
+       'arg3'
+)
+</pre>
+
+ <p>
+In that case you cannot control clarity, you are forced to obey to the
+limitation of your editor.
+</p></li>
+</ul> <p>
+Alignment can bring some clarity. As such, our rationale sounds very favourable:
+</p>
+
+ <blockquote>
+ <p>
+Readability matters. Code is read more than it is written.
+</p>
+</blockquote>
+
+ <p>
+However it should be noted that unaligned but indented code is notwithstanding
+readable:
+</p>
+
+ <pre class="example">
+foo = {
+    bar,
+    baz
+}
+</pre>
+
+ <p>
+And the other parts of the rationale are not as positive:
+</p>
+
+ <blockquote>
+ <p>
+Code changes should be versioning-friendly.
+</p>
+</blockquote>
+
+ <p>
+This is never the case with alignment:
+</p>
+
+ <pre class="example">
+foo = { bar,
+        baz
+}
+
+
+foobar = { bar,
+           baz
+}
+
+foo = {
+    bar,
+    baz
+}
+</pre>
+
+ <blockquote>
+ <p>
+Freedom of form for clarity where that matters. Tools should not constrain
+you.
+</p>
+</blockquote>
+
+ <p>
+This is not the case if your editor is not customizable enough to let you have
+fine-grained control over the alignment rules.
+</p>
+
+ <blockquote>
+ <p>
+The less bytes the better.
+</p>
+</blockquote>
+
+ <p>
+Alignment is always using more bytes than unaligned code.
+</p>
+
+ <blockquote>
+ <p>
+The indentation engine should be short and simple.
+</p>
+</blockquote>
+
+ <p>
+Alignment is obviously harder to implement than no alignment at all; moreover,
+it can be quite tricky to implement a generic alignment engine that is
+customizable enough so as not to impede freedom of form.
+</p>
+
+ <p>
+In practice, I believe that the fanciness alignment provides is not worth its
+downsides.
+</p>
+</div>
+
+ <div id="outline-container-org3b67198" class="outline-3">
+ <h3 id="org3b67198">Other considerations</h3>
+ <div class="outline-text-3" id="text-org3b67198">
+</div>
+ <div id="outline-container-org84253e0" class="outline-4">
+ <h4 id="org84253e0">Inner alignment</h4>
+ <div class="outline-text-4" id="text-org84253e0">
+ <pre class="example">
+map {
+  key       = value1,
+  longerkey = value2,
+}
+</pre>
+
+ <p>
+Inner alignment is independent of indentation, and should use spaces only.  It
+often increases clarity in long and complex structure.  The downside is that as
+soon as you add an entry that does not fit the alignment, you will have to
+re-align everything.  This is a bit tricky to do automatically with the most
+advanced editors, while being impossible with all the others.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-org6d56ba2" class="outline-4">
+ <h4 id="org6d56ba2">End-of-line alignment</h4>
+ <div class="outline-text-4" id="text-org6d56ba2">
+ <p>
+This is usually restricted to comments.  One should never spread end-of-line
+comments over different indentation levels.  In the following example with a tab
+width of 2,
+</p>
+
+ <pre class="example">
+if (foo) { // Long comment
+  bar;     // spread over
+}          // Multiple line
+</pre>
+
+ <p>
+switching to a tab width of 4 will break the alignment.
+</p>
+
+ <pre class="example">
+if (foo) { // Long comment
+    bar;     // spread over
+}          // Multiple line
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+ <div id="outline-container-org26584d9" class="outline-2">
+ <h2 id="org26584d9">Tools</h2>
+ <div class="outline-text-2" id="text-org26584d9">
+ <p>
+The only help you can find for incurable languages like C lies in formatting
+tools. They will help a team working with a consistently formatted code base.
+</p>
+</div>
+
+ <div id="outline-container-org85ca2ef" class="outline-3">
+ <h3 id="org85ca2ef">GNU indent</h3>
+ <div class="outline-text-3" id="text-org85ca2ef">
+ <p>
+It uses the GNU style by default, and every option is meant to change its
+behaviour starting from there.  This is hardly transparent or convenient.
+</p>
+
+ <p>
+GNU indent comes with the possibility to split or join lines.  If this option is
+set, and maximum line-width is set to, let us say 70 characters, it will
+transform
+</p>
+
+ <pre class="example">
+if (long_condition1 && long_condition2 && long_condition3 && long_condition4) {
+</pre>
+
+ <p>
+to
+</p>
+
+ <pre class="example">
+if (long_condition1
+    && long_condition2
+    && long_condition3
+    && long_condition4) {
+</pre>
+
+ <p>
+If line splitting is off, then it will force joining lines!  I.e. it will
+transform
+</p>
+
+ <pre class="example">
+if (long_condition1
+  && long_condition2
+  && long_condition3
+  && long_condition4) {
+</pre>
+
+ <p>
+to
+</p>
+
+ <pre class="example">
+if (long_condition1 && long_condition2 && long_condition3 && long_condition4) {
+</pre>
+
+ <p>
+and does not leave the formatting to the user.  It can be very annoying for long
+lines.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-org752032e" class="outline-3">
+ <h3 id="org752032e">Astyle</h3>
+ <div class="outline-text-3" id="text-org752032e">
+ <p>
+As for GNU indent, Astyle comes with a default formatting (this is not a good
+thing).  Beside it cannot toggle alignment off.
+</p>
+
+ <p>
+Its options have some yet unseen intricacies:
+</p>
+
+ <blockquote>
+ <p>
+Using the k&r option may cause problems because of the &. This can be resolved
+by enclosing the k&r in quotes (e.g. –style=“k&r”) or by using one of the
+alternates –style=kr or –style=k/r.
+</p>
+</blockquote>
+
+ <p>
+The  <a href="http://astyle.sourceforge.net/astyle.html">documentation</a> is of debatable quality:
+</p>
+
+ <blockquote>
+ <p>
+Also known as Kernel Normal Form (KNF) style, this is the style used in the
+Linux kernel.
+</p>
+</blockquote>
+
+ <p>
+KNF is used for the  <a href="https://en.wikipedia.org/wiki/Kernel_Normal_Form">*BSD kernels</a>. (See the external links.)
+</p>
+
+ <blockquote>
+ <p>
+“One True Brace Style” formatting/indenting uses linux brackets and adds
+brackets to unbracketed one line conditional statements.
+</p>
+</blockquote>
+
+ <p>
+The Linux kernel style already enforces the use of brackets on one-line
+statements.  Note that it is not only restricted to conditional statements.  See
+the  <a href="https://www.kernel.org/doc/Documentation/CodingStyle">Linux kernel coding style</a>.
+</p>
+
+ <p>
+To put it together, it is maintained with  <a href="http://harmful.cat-v.org/software/svn/">Subversion</a>.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-org1ee611d" class="outline-3">
+ <h3 id="org1ee611d">Uncrustify</h3>
+ <div class="outline-text-3" id="text-org1ee611d">
+ <p>
+It is much more complete than its competitors and comes with an option for
+virtually everything.  It will not let you run it without specifying an option
+file.  As such it is totally transparent.  Alignment is customizable.
+</p>
+</div>
+</div>
+</div>
+
+ <div id="outline-container-orgeed57f5" class="outline-2">
+ <h2 id="orgeed57f5">Algorithm</h2>
+ <div class="outline-text-2" id="text-orgeed57f5">
+ <p>
+One of our points in the rationale is dedicated to the simplicity of the
+algorithm.  We will investigate a few implementation challenges to help us
+understand why additional features such as alignment can impede simplicity.
+</p>
+</div>
+
+ <div id="outline-container-orga3c448d" class="outline-3">
+ <h3 id="orga3c448d">Terms</h3>
+ <div class="outline-text-3" id="text-orga3c448d">
+ <ul class="org-ul"> <li>Opener: a token that increases the indentation of the following part.
+Typically an opening parenthesis/bracket, or a token signaling the beginning
+of a statement.</li>
+ <li>Closer: the counter part of an opener.  Typically a closing
+parenthesis/bracket, or a token signaling the end of a statement.</li>
+ <li>Middler: a key word found between an opener and a closer.  It can impact
+indentation under specific circumstance.  Typically keywords such as  <code>then</code> or
+ <code>else</code>.</li>
+ <li> <p>
+Continuation: a line is said to be continuing if it is semantically attached
+to the previous line.  For instance
+</p>
+
+ <pre class="example">
+foo = bar +
+    baz
+
+foo = "string on\
+    multiple lines"
+</pre></li>
+</ul></div>
+</div>
+
+ <div id="outline-container-orgf45f5fa" class="outline-3">
+ <h3 id="orgf45f5fa">Edge cases</h3>
+ <div class="outline-text-3" id="text-orgf45f5fa">
+ <p>
+Before going any further, let us review a few generic edge cases.
+</p>
+</div>
+
+ <div id="outline-container-org55959dd" class="outline-4">
+ <h4 id="org55959dd">Stacked openers and closers</h4>
+ <div class="outline-text-4" id="text-org55959dd">
+ <p>
+What if several openers appear on the same line?  Shall we indent once or stack
+the indent values?  Indenting once looks fine here:
+</p>
+
+ <pre class="example">
+if cond1 { if cond2 {
+    // code
+}}
+</pre>
+
+ <p>
+but not right there:
+</p>
+
+ <pre class="example">
+if cond1 { if cond2 {
+    // code
+}
+}
+</pre>
+
+ <p>
+Besides it breaks the rule of versioning-friendliness from the rationale:
+</p>
+
+ <pre class="example">
+if cond1 {
+     if cond2 {
+        // code
+}}
+</pre>
+
+ <p>
+This leads us to the closers: should all closers appearing on the same line
+unindent once?  The choice is this
+</p>
+
+ <pre class="example">
+if cond1 { if cond2 { if cond3 {
+            // code
+        }}}
+</pre>
+
+ <p>
+versus that:
+</p>
+
+ <pre class="example">
+if cond1 { if cond2 { if cond3 {
+            // code
+}}}
+</pre>
+
+ <p>
+It is hard to see after 2 indentation levels which statement the closers are
+actually closing.  Lisp hackers will probably not mind.
+</p>
+
+ <p>
+However, it should be noted that closers should unindent their own line only if
+they appear first.  It is important for the indentation to be meaningful in
+regard to block nesting.  In the following it is clearer that  <code>foo()</code> is called
+inside the condition on  <code>cond2</code>:
+</p>
+
+ <pre class="example">
+if cond1 then
+     if cond2
+     then foo() end end
+</pre>
+
+ <p>
+than here:
+</p>
+
+ <pre class="example">
+if cond1 then
+     if cond2
+then foo() end end
+</pre>
+
+ <p>
+or there in C:
+</p>
+
+ <pre class="example">
+if (cond1) {
+     if (cond2)
+{ foo() } }
+</pre>
+</div>
+</div>
+
+ <div id="outline-container-orgde062a3" class="outline-4">
+ <h4 id="orgde062a3">Continuation</h4>
+ <div class="outline-text-4" id="text-orgde062a3">
+ <p>
+Line continuation is one of the trickiest part of indentation.  It is considered
+good practice to keep line width within a reasonable range, typically around 80.
+Some lines will eventually end up being too long to fit within the desired
+width, and will have to get split.
+</p>
+
+ <p>
+Determining if a line is continuing or not involves some analysis.  A naive
+approach would be:
+</p>
+
+ <ul class="org-ul"> <li>Check both the last token of previous line and the first token of current
+line.  At least one of them must be a continuation token (boolean logic,
+newline escape, etc.).</li>
+
+ <li>If current line is continuing and previous line is not, increase indentation.</li>
+
+ <li>If current line is not continuing and previous line is, decrease indentation.</li>
+</ul> <p>
+Continuing lines should typically be indented one level up.
+</p>
+
+ <pre class="example">
+foo = bar +
+    baz
+</pre>
+
+ <p>
+For statement conditions, both the opener and the continuation will increase the
+indentation level:
+</p>
+
+ <pre class="example">
+if foo &&
+        bar
+then ...
+</pre>
+
+ <p>
+The double indentation is not really desired.  The only reason for considering
+ <code>if</code> as an opener is for cases like this:
+</p>
+
+ <pre class="example">
+if
+    foo &&
+        bar
+then ...
+</pre>
+
+ <p>
+We can easily solve this issue by considering  <code>then</code> as an opener and  <code>if</code> as a
+continuation token.
+</p>
+
+ <p>
+In Go, the curly braces are obvious openers and closers.  The  <code>if</code> and  <code>for</code>
+keywords should be continuation tokens.  In C, the parenthesis adds up to the
+indentation, so the problem is still not solved:
+</p>
+
+ <pre class="example">
+if (foo &&
+        bar) {
+}
+</pre>
+
+ <p>
+Workaround suggestions:
+</p>
+
+ <ul class="org-ul"> <li>Leave it as it is.</li>
+ <li>Add an exception.</li>
+ <li>Feel free to send me a smarter solution!</li>
+</ul> <p>
+Another tricky problem:
+</p>
+
+ <pre class="example">
+a = foo +
+    bar(baz,
+    barbaz
+) +
+    foobar
+</pre>
+
+ <p>
+After the function call, the line is not seen as continuing anymore, so
+indentation gets decreased by 1 level, while being increased by 1 level because
+of the opener (so no change overall).
+</p>
+
+ <p>
+It gets even worse when nested:
+</p>
+
+ <pre class="example">
+a = foo +
+    bar(baz +
+            bazbaz
+    ) +
+    foobar
+
+b = foo +
+    bar(baz(
+            bazbaz
+        )
+    ) +
+    foobar
+</pre>
+
+ <p>
+The solution to this problem involves a more complex continuation algorithm.  We
+need to use a stack to remember the level of indentation of the nested
+continuations.
+</p>
+
+ <ul class="org-ul"> <li>Indent line.</li>
+
+ <li>Check if continuing: either the end token on previous line or the start token
+on current line must be a continuation token.</li>
+
+ <li>If current indentation does not match the stack and if continuing, increase
+indent and push the new indentation on the stack.</li>
+
+ <li>If not continuing and current indentation is < stack indentation, pop the
+stack and decrease indent.</li>
+</ul> <p>
+The cases not matched by the previous conditions do not change the indentation
+level.
+</p>
+</div>
+</div>
+</div>
+
+ <div id="outline-container-org12bc9c6" class="outline-3">
+ <h3 id="org12bc9c6">An example algorithm</h3>
+ <div class="outline-text-3" id="text-org12bc9c6">
+ <p>
+The following algorithm yields an indentation engine close in practice to the
+one found in  <code>gofmt</code>.  The indentation is computed by looking at current and
+previous lines only, thus being efficient.
+</p>
+
+ <p>
+What if previous line indentation is wrong? It does not matter, as indenting the
+whole file at once will make sure every line is indented properly.
+</p>
+
+ <p>
+ <i>Unmatched</i> means  <i>not matched on the same line</i>. Openers match their respective
+closer forward and vice-versa.
+</p>
+
+ <p>
+ <i>First pass:</i>
+</p>
+
+ <pre class="example">
+On current line:
+-1 on every closer until an unmatched opener is met, if first token is a closer.
+-1 if first token is a middler.
+
+On previous line:
++ current indentation.
++1 on every unmatched opener.
++1 if first token is a middler.
+-1 on every unmatched closer if first token is not a closer.
+</pre>
+
+ <p>
+For this last case, it is worth noting that if the first token is a middler,
+then the first unmatched closer is compensating the indentation change.
+</p>
+
+ <p>
+ <i>Second pass:</i>
+</p>
+
+ <pre class="example">
++ continuation indentation.
+</pre>
+
+ <p>
+For the continuation indentation, we use the algorithm from the previous
+section.
+</p>
+</div>
+</div>
+</div>
+
+ <div id="outline-container-orge00eba3" class="outline-2">
+ <h2 id="orge00eba3">References</h2>
+ <div class="outline-text-2" id="text-orge00eba3">
+ <ul class="org-ul"> <li> <a href="http://www.emacswiki.org/emacs/TabsAreEvil">EmacsWiki: Tabs are evil</a></li>
+ <li> <a href="https://en.wikipedia.org/wiki/Indent_style">Wikipedia: Indent style</a></li>
+ <li> <a href="https://www.kernel.org/doc/Documentation/CodingStyle">Linux kernel coding style</a></li>
+</ul></div>
+</div>
+</div>

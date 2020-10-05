@@ -1,0 +1,373 @@
+<div id="content">
+ <div id="outline-container-org12b82a1" class="outline-2">
+ <h2 id="org12b82a1">The importance of blogging</h2>
+ <div class="outline-text-2" id="text-org12b82a1">
+ <p>
+Blogs (or personal websites) are an essential piece of the the Internet as
+means of sharing knowledge openly.  In particular, blogs really shine at
+sharing:
+</p>
+
+ <ul class="org-ul"> <li>articles  <a href="http://daniellakens.blogspot.com/2017/04/five-reasons-blog-posts-are-of-higher.html">(before landing in access-restricting journals)</a>,</li>
+ <li>projects,</li>
+ <li>literature reference and all other sources of knowledge.  It’s a good place to
+keep track of  <a href="https://ambrevar.xyz/links/index.html">web links of articles and videos</a>.</li>
+</ul> <p>
+A  <a href="https://en.wikipedia.org/wiki/Web_feed">web feed</a> (for instance RSS or Atom) is important to free the visitors from
+manually checking for updates: let the updates go to them.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-orgbd6fc6b" class="outline-2">
+ <h2 id="orgbd6fc6b">Nothing but Org</h2>
+ <div class="outline-text-2" id="text-orgbd6fc6b">
+ <p>
+The World Wide Web was devised to use HTML, which is rather painful to write
+directly.  I don’t want to go through that, it’s too heavy a burden.  Many web
+writers including me until recently use the  <a href="https://daringfireball.net/projects/markdown/">Markdown</a> format.
+</p>
+
+ <p>
+Nonetheless, for a long time I’ve been wanting to write blog posts in the  <a href="https://orgmode.org/">Org</a>
+format.  I believe that Org is a much superior markup format for reasons that
+are already well laid down by  <a href="http://karl-voit.at/2017/09/23/orgmode-as-markup-only">Karl Voit</a>.  I can’t help but highlight a few more
+perks of Org:
+</p>
+
+ <ul class="org-ul"> <li>It has excellent math support (see my  <a href="../homogeneous/index.html">article on homogeneous coordinates</a> for
+an example).  For an HTML output, several backends are supported including
+ <a href="https://www.mathjax.org/">MathJax</a>.  It’s smart enough not to include MathJax when there is no math.  To
+top it all, there is no extra or weird syntax: it’s simply raw TeX / LaTeX.</li>
+
+ <li>It supports file hierarchies and updates inter-file links dynamically.  It
+also detects broken links on export.</li>
+
+ <li>It has excellent support for multiple export formats, including LaTeX and PDFs.</li>
+</ul></div>
+</div>
+
+ <div id="outline-container-orgbd522ca" class="outline-2">
+ <h2 id="orgbd522ca">Version control system</h2>
+ <div class="outline-text-2" id="text-orgbd522ca">
+ <p>
+A significant downside of printed books and documents is that they can’t be
+updated.  That is to say, unless you acquire a new edition, should there be any.
+The Internet comes with the advantage that it allows to update content
+worldwide, in a fraction of an instant.
+</p>
+
+ <p>
+Updating is important: originals are hardly ever typo-free; speculations might
+turn out to be wrong; phrasing could prove ambiguous.  And most importantly, the
+readers feedback can significantly help improve the argumentation and need be
+taken into account.
+</p>
+
+ <p>
+The general trend around blogging seems to go in the other direction: articles
+are often published and left as-is, never to be edited.
+</p>
+
+ <p>
+As such, many blog articles are struck by the inescapable flail of time and
+technological advancement: they run out of fashion and lose much of their
+original value.
+</p>
+
+ <p>
+But there is a motivation behind this immobility: the ability to edit removes
+the guarantee that readers can access the article in its original
+form.  Content could be lost in the process.  External references become
+meaningless if the content has been removed or changed from the source they
+refer to.
+</p>
+
+ <p>
+Thankfully there is a solution to this problem: version control systems.  They
+keep all versions available to the world and make editing fully transparent.
+</p>
+
+ <p>
+I keep the source of my website at
+ <a href="https://gitlab.com/ambrevar/ambrevar.gitlab.io">https://gitlab.com/ambrevar/ambrevar.gitlab.io</a>, in a public  <a href="https://git-scm.com/">Git</a> repository.
+</p>
+
+ <p>
+I cannot stress enough the importance of  <a href="../vcs/index.html">keeping your projects under version
+control</a> in a  <i>publicly readable repository</i>:
+</p>
+
+ <ul class="org-ul"> <li>It allows not only you but also all visitors to keep track of  <i>all</i> changes.
+This gives a  <i>guarantee of transparency</i> to your readers.</li>
+
+ <li>It makes it trivial for anyone to  <i>clone</i> the repository locally: the website
+can be read offline in the Org format!</li>
+</ul></div>
+</div>
+
+ <div id="outline-container-orgec02947" class="outline-2">
+ <h2 id="orgec02947">Publishing requirements</h2>
+ <div class="outline-text-2" id="text-orgec02947">
+ <p>
+ <a href="https://orgmode.org/worg/org-blog-wiki.html">Worg has a list of blogging systems</a> that work with the Org format.  Most of them
+did not cut it for me however because I think a website needs to meet
+important requirements:
+</p>
+
+ <dl class="org-dl"> <dt>Full control over the URL of the published posts.</dt> <dd>This is a golden rule of
+the web: should I change the publishing system, I want to be able to stick
+to the same URLs or else all external references would be broken.  This is
+a big no-no and in my opinion it makes most blogging systems unacceptable.</dd>
+
+ <dt>Top-notch Org support.</dt> <dd>I believe generators like Jekyll and Nikola only
+have partial Org support.</dd>
+
+ <dt>Simple publishing pipeline.</dt> <dd>I want the generation process to be as simple
+as possible.  This is important for maintenance.  Should I someday switch
+host, I want to be sure that I can set up the same pipeline.</dd>
+
+ <dt>Full control over the publishing system.</dt> <dd>I want maximum control over the
+generation process.  I don’t want to be restricted by a non-Turing-complete
+configuration file or a dumb programming language.</dd>
+
+ <dt>Ease of use.</dt> <dd>The process as a whole must be as immediate and friction-less
+as possible, or else I take the risk of feeling too lazy to
+publish new posts and update the content.</dd>
+
+ <dt>Hackability.</dt> <dd>Last but not least, and this probably supersedes all other
+requirements:  <i>The system must be hackable</i>.  Lisp-based
+systems are prime contenders in that area.</dd>
+</dl></div>
+</div>
+
+ <div id="outline-container-orgfc46ce4" class="outline-2">
+ <h2 id="orgfc46ce4">Org-publish</h2>
+ <div class="outline-text-2" id="text-orgfc46ce4">
+ <p>
+This narrows down the possibilities to just one, if I’m not mistaken: Emacs with
+Org-publish.
+</p>
+
+ <ul class="org-ul"> <li>The  <a href="https://gitlab.com/ambrevar/ambrevar.gitlab.io/blob/master/publish.el">configuration</a> happens in Lisp which gives me maximum control.</li>
+
+ <li>Org-support is obviously optimal.</li>
+
+ <li> <p>
+The pipeline is as simple as it gets:
+</p>
+ <div class="org-src-container">
+ <pre class="src src-sh">emacs --quick --script publish.el --funcall=org-publish-all
+</pre>
+</div></li>
+</ul> <p>
+Org-publish comes with  <a href="https://orgmode.org/manual/Publishing.html">lots of options</a>, including sitemap generation (here  <a href="../articles.html">my
+post list</a> with anti-chronological sorting).  It supports code highlighting
+through the  <code>htmlize</code> package.
+</p>
+</div>
+
+ <div id="outline-container-orga2eb939" class="outline-3">
+ <h3 id="orga2eb939">Webfeeds</h3>
+ <div class="outline-text-3" id="text-orga2eb939">
+ <p>
+One thing it lacked for me however was the generation of web feeds (RSS or
+Atom).  I looked at the existing possibilities in Emacs Lisp but I could not
+find anything satisfying.  There is  <code>ox-rss</code> in Org-contrib, but it only works
+over a single Org file, which does not suit my needs of one file per blog post.
+So I went ahead and implemented  <a href="https://gitlab.com/ambrevar/emacs-webfeeder">my own generator</a>.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-orga3c031d" class="outline-3">
+ <h3 id="orga3c031d">History of changes (dates and logs)</h3>
+ <div class="outline-text-3" id="text-orga3c031d">
+ <p>
+Org-publish comes with a timestamp system that proves handy to avoid building
+unchanged files twice.  It’s not so useful though to retrieve the date of last
+modification because a file may be rebuilt for external reasons (e.g. change in
+the publishing script).
+</p>
+
+ <p>
+Since I use the version control system (here Git), it should be most natural to
+keep track of the creation dates and last modification date of the article.
+</p>
+
+ <p>
+Org-publish does not provide direct support for Git, but thanks to Lisp this
+feature can only be a simple hack away:
+</p>
+
+ <div class="org-src-container">
+ <pre class="src src-elisp">(defun ambrevar/git-creation-date (file)
+  "Return the first commit date of FILE.
+Format is %Y-%m-%d."
+  (with-temp-buffer
+    (call-process "git" nil t nil "log" "--reverse" "--date=short" "--pretty=format:%cd" file)
+    (goto-char (point-min))
+    (buffer-substring-no-properties (line-beginning-position) (line-end-position))))
+
+(defun ambrevar/git-last-update-date (file)
+  "Return the last commit date of FILE.
+Format is %Y-%m-%d."
+  (with-output-to-string
+    (with-current-buffer standard-output
+      (call-process "git" nil t nil "log" "-1" "--date=short" "--pretty=format:%cd" file))))
+</pre>
+</div>
+
+ <p>
+Then only  <code>org-html-format-spec</code> is left to hack so that the  <code>%d</code> and  <code>%C</code>
+specifiers (used by  <code>org-html-postamble-format</code>) rely on Git instead.
+</p>
+
+ <p>
+See  <a href="https://gitlab.com/ambrevar/ambrevar.gitlab.io/blob/master/publish.el">my publishing script</a> for the full implementation.
+</p>
+</div>
+</div>
+</div>
+
+ <div id="outline-container-orgc639e17" class="outline-2">
+ <h2 id="orgc639e17">Personal domain and HTTPS</h2>
+ <div class="outline-text-2" id="text-orgc639e17">
+ <p>
+I previously stressed out the importance of keeping the URL permanents.  Which
+means that we should not rely on the domain offered by a hosting platform such
+as  <a href="https://about.gitlab.com/features/pages/">GitLab Pages</a>, since changing host implies changing domain, thus invalidating
+all former post URLs.  Acquiring a domain is a necessary step.
+</p>
+
+ <p>
+This might turn off those looking for the cheapest option, but in fact getting
+domain name comes close to zero cost if you are not limitating yourself to just a
+subset of popular options.  For a personal blog, the domain name and the
+top-level domain should not matter much and can be easily adjusted to bring the
+costs to a minimum.
+</p>
+
+ <p>
+There are many registrars to choose from.  One of the biggest, GoDaddy has  <a href="https://en.wikipedia.org/wiki/GoDaddy#Controversies">a
+debatable reputation</a>.  I’ve opted for  <a href="https://www.gandi.net/">https://www.gandi.net/</a>.
+</p>
+
+ <p>
+With a custom domain, we also need a certificate for HTTPS.  This used to come
+at a price but is now free and straightforward with  <a href="https://letsencrypt.org/">Let’s Encrypt</a>.  Here is a
+ <a href="https://about.gitlab.com/2016/04/11/tutorial-securing-your-gitlab-pages-with-tls-and-letsencrypt/">tutorial for GitLab pages</a>.  (Note that the commandline tool is called  <a href="https://certbot.eff.org">certbot</a>
+now.)
+</p>
+</div>
+</div>
+
+ <div id="outline-container-org5d1d464" class="outline-2">
+ <h2 id="org5d1d464">Permanent URLs and folder organization pitfalls</h2>
+ <div class="outline-text-2" id="text-org5d1d464">
+ <p>
+ <a href="https://nullprogram.com/blog/2017/09/01/">Chris Wellons</a> has some interesting insights about the architecture of a blog.
+</p>
+
+ <p>
+ <a href="https://www.w3.org/Provider/Style/URI">URLs are forever</a>, and as such a key requirement of every website is to ensure
+all its URLs will remain permanent.  Thus the folder organization of the blog
+has to be thought of beforehand.
+</p>
+
+ <dl class="org-dl"> <dt>Keep the URLs human-readable and easy to remember.</dt> <dd>Make them short and
+meaningful.</dd>
+
+ <dt>Avoid dates in URLs.</dt> <dd>This is a very frequent mishappen with blogs.  There
+are usually no good reason to encode the date in the URL of a post, it only
+makes it harder to remember and more prone to change when moving platform.</dd>
+
+ <dt>Avoid hierarchies.</dt> <dd>Hierarchies usually don’t help with the above points,
+put everything under the same folder instead.  Even if some pages belong to
+different “categories” (for instance “articles” and “projects”), this is
+only a matter of presentation on the sitemap (or the welcome page).  It
+should not influence the URLs.  When the category is left out, it’s one
+thing less to remember whether the page  <code>foo</code> was an article or a project.</dd>
+
+ <dt>Place  <code>index.html</code> files in dedicated folders.</dt> <dd>If the page extension does
+not matter (e.g. between  <code>.html</code> and  <code>.htm</code>), you can easily save the
+visitors from any further guessing by storing your  <code>foo</code> article in
+ <code>foo/index.html</code>.  Thus browsing  <code>https://domain.tld/foo/</code> will
+automatically retrieve the right document.  It’s easier and shorter than
+ <code>https://domain.tld/foo.htm</code>.</dd>
+
+ <dt>Don’t rename files.</dt> <dd>Think twice before naming a file: while you can later
+tweak some virtual mapping between the URL and a renamed file, it’s better
+to stick to the initial names to keep the file-URL association as
+straightforward as possible.</dd>
+</dl></div>
+</div>
+
+ <div id="outline-container-org3de4e19" class="outline-2">
+ <h2 id="org3de4e19">Future development</h2>
+ <div class="outline-text-2" id="text-org3de4e19">
+ <p>
+There are more features I’d like to add to my homepage.  Ideally, I’d rather
+stick to free software, limit external resources (i.e. avoid depending on
+external Javascript), keep code and data under my control.
+</p>
+
+ <p>
+Implementation suggestions and other ideas are more than welcome!
+</p>
+
+ <dl class="org-dl"> <dt>Comment system.</dt> <dd>Disqus is non-free,  <a href="https://github.com/phusion/juvia">Juvia</a> looks good but it’s unmaintained,
+ <a href="http://tildehash.com/?page=hashover">hashover</a> seems to be one of the nicest options.  I’m also particularly
+interested in the  <a href="https://www.w3.org/TR/webmention/">Webmention</a> W3C recommendation.  For now I simplly rely on
+the  <a href="https://gitlab.com/ambrevar/ambrevar.gitlab.io/issues">GitLab issue page</a>.</dd>
+
+ <dt>Statistics and analytics.</dt> <dd> <a href="https://matomo.org/">Matomo</a> looks interesting.  I’d need to set it up
+on a server.</dd>
+
+ <dt>Tags and ubiquitous fuzzy-search.</dt> <dd>I’d like to add a universal search bar
+with tag support so that the complete website can be fuzzy-searched and
+filtered by tags.</dd>
+</dl></div>
+</div>
+
+ <div id="outline-container-org2537717" class="outline-2">
+ <h2 id="org2537717">Other publishing systems</h2>
+ <div class="outline-text-2" id="text-org2537717">
+ <ul class="org-ul"> <li> <a href="https://github.com/greghendershott/frog">Frog</a> is a blog generator written in  <a href="https://racket-lang.org/">Racket</a>.  While it may be one of the best
+of its kind, it sadly does not support the Org format as of this writing.
+Some blogs generated with Frog:
+ <ul class="org-ul"> <li> <a href="https://alex-hhh.github.io">https://alex-hhh.github.io</a></li>
+ <li> <a href="http://jao.io/pages/about.html">http://jao.io/pages/about.html</a></li>
+</ul></li>
+
+ <li> <a href="https://dthompson.us/projects/haunt.html">Haunt</a> is a blog generator written in  <a href="https://www.gnu.org/software/guile/">Guile</a>.  It seems to be very complete and
+extensible, but sadly it does not support the Org format as of this writing.
+Some blogs generated with Haunt:
+ <ul class="org-ul"> <li> <a href="https://dthompson.us/index.html">https://dthompson.us/index.html</a></li>
+ <li> <a href="https://www.gnu.org/software/guix/">https://www.gnu.org/software/guix/</a></li>
+</ul></li>
+
+ <li> <a href="https://github.com/kingcons/coleslaw">Coleslaw</a> is a blog generator in  <a href="https://common-lisp.net/">Common Lisp</a>.  It seems to be very complete and
+extensible, but sadly it does not support the Org format as of this writing.
+It has a commandline tool,  <a href="https://github.com/40ants/coleslaw-cli">Coleslaw-cli</a>.  Some blogs generated with Coleslaw:
+ <ul class="org-ul"> <li> <a href="https://github.com/kingcons/coleslaw/wiki/Blogroll">https://github.com/kingcons/coleslaw/wiki/Blogroll</a></li>
+</ul></li>
+</ul></div>
+</div>
+
+ <div id="outline-container-org98d6c14" class="outline-2">
+ <h2 id="org98d6c14">Other Org-blogs</h2>
+ <div class="outline-text-2" id="text-org98d6c14">
+ <ul class="org-ul"> <li> <a href="https://bzg.fr/">https://bzg.fr/</a>:  <a href="https://bzg.fr/en/blogging-from-emacs.html/">Also in pure Org/Lisp</a>.</li>
+ <li> <a href="https://explog.in/">https://explog.in/</a>:  <a href="https://explog.in/config.html">Also in pure Org/Lisp</a>?</li>
+ <li> <a href="http://jgkamat.gitlab.io/">http://jgkamat.gitlab.io/</a>:  <a href="http://jgkamat.gitlab.io/blog/website1.html">Also in pure Org/Lisp</a>.</li>
+ <li> <a href="https://ogbe.net/">https://ogbe.net/</a>:  <a href="https://ogbe.net/blog/blogging_with_org.html">Also in pure Org/Lisp</a>.</li>
+ <li> <a href="https://www.sadiqpk.org/">https://www.sadiqpk.org/</a>:  <a href="http://sadiqpk.org/blog/2018/08/08/blogging-with-org-mode.html">Also in pure Org/Lisp</a>.</li>
+ <li> <a href="http://endlessparentheses.com/">http://endlessparentheses.com/</a>:  <a href="http://endlessparentheses.com/how-i-blog-one-year-of-posts-in-a-single-org-file.html">Generated with Jekyll</a>.</li>
+ <li> <a href="https://gjhenrique.com/">https://gjhenrique.com/</a>:  <a href="https://gjhenrique.com/meta.html">Generated with Jekyll</a>.</li>
+ <li> <a href="http://juanreyero.com/">http://juanreyero.com/</a>:  <a href="http://juanreyero.com/open/org-jekyll/">Generated with Jekyll</a>.</li>
+ <li> <a href="https://babbagefiles.xyz/">https://babbagefiles.xyz/</a>:  <a href="https://babbagefiles.xyz/new-blog/">Generated with Hugo</a>.</li>
+ <li> <a href="http://cestlaz.github.io/">http://cestlaz.github.io/</a>:  <a href="http://cestlaz.github.io/posts/using-emacs-35-blogging/">Generated with Nikola</a>.</li>
+</ul></div>
+</div>
+</div>

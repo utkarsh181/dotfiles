@@ -1,0 +1,10 @@
+
+<p>For the past day or so, I've been "writing" a blog "system". Really it's only about 100 lines in shell script, which sure as hell beats installing WordPress and having huge databases on the server.</p>
+
+<p>I want to have one rolling blog page, automatic RSS feed updates and maybe even standalone pages, so that's what I wrote. I also want to be able to link to individual blog entries on the rolling page, so I have it automatically label each header for the use of interior urls.</p>
+
+<p>If you're reading this, wherever you're reading it, it's been successfuly.</p>
+
+<p>Really all the script does is let you write a HTML draft entry, and when you're done, it appends it to the rolling page and converts its information into an RSS feed entry and appends it to your RSS feed. "Append" is probably the wrong word though, since it's not being added to the end, but in front of other entries.</p>
+
+<p>Anyway, I hope to be able to have a fully functioning and synced blog and RSS feed, without the hassle or bloat, now I'm pretty confident that I'm right about at it. The only thing I haven't implemented (and might not) is the ability to change and delete posts from the RSS/rolling blog/standalone page directory. I'm the kind of person who doesn't believe in revision though, so maybe I'll slide without that.</p>

@@ -1,0 +1,11 @@
+
+<p>I haven't been using my RSS feed to annouce videos recently, but I feel like I should be... 🤔</p>
+
+<p>Anyway, I've released a video showcasing dwm <a href="https://www.youtube.com/watch?v=xnREqY-oyzM">here</a>. If you're reading this post right as I'm releasing it, it's been set as a premiere on YouTube to release at the top of the hour.</p>
+
+<p>The title is naturally self-aware clickbait, the video is just a brief, updated explanation of the logic of dwm, similar to my original video a year or so ago on it, albeit catered to my build.</p>
+
+<p>I also go into some of the stuff I've added recently that make it a drop in improvement over my old i3 dotfiles.</p>
+
+<p>The dwm build is <a href="https://github.com/lukesmithxyz/dwm">here</a>, the status bar, which I'll do an idividual video on later is
+<a href="https://github.com/lukesmithxyz/dwmblocks">here</a>, and remeber that you'll need to install <code>libxft-bgra</code> for it to render color characters without crashing.</p>

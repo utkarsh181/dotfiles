@@ -1,0 +1,11 @@
+
+<p><a target="_blank" href="https://www.youtube.com/watch?v=U2n5aGqou9E">New video out on nnn</a>, which is a much lighter and faster equivalent of ranger for browsing files on the terminal.</p>
+
+<p>nnn is quite speedy and has a design that will be somewhat unfamiliar to some, using only environmental variables for configuration, instead of either traditional dotfiles or suckless-like <code>config.h</code> with the intent of recompilation.
+Nonetheless, nnn has all the basics you need, lacking the bloat of ranger.
+I'll still be using ranger, as I've fallen into some of its more specific features, but nnn will probably be the best for some of you out there.
+</p>
+
+<p>Source code is <a target="_blank" href="https://github.com/jarun/nnn">here</a>, although it should be in the Arch default repos.</p>
+
+<p>Also, check out <a target="_blank" href="https://www.youtube.com/watch?v=L6Vu7WPkoJo">my video on ranger</a>. I still always get the most questions about what ranger is, so here's the link again ;-)</p>

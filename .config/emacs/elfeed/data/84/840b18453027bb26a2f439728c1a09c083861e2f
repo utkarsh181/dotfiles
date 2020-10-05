@@ -1,0 +1,225 @@
+<div id="content">
+ <p>
+Have you ever installed an application on a computer, a smartphone or your
+favourite smart device?  Can you trust that it does its job instead of doing the
+opposite of what it displays on screen or, worse, compromise your data and your
+private life?
+</p>
+
+ <p>
+How can you know?  You might think “Let’s use free and open source software!”
+The bad news: it’s far, very far from being enough.
+</p>
+
+ <p>
+This is a hard and yet very real problem that hits our everyday life constantly.
+Consider this: the digital pictures of our loved ones, banking operations, the
+(political?) news feed that we read, our contacts and the communication with our
+friends and colleagues; all of it happens through applications.
+</p>
+
+ <p>
+How can we protect ourselves from deceit?  How can we guarantee trust in the
+machines that we use?
+</p>
+
+ <p>
+First, we need to understand how applications are made.
+</p>
+
+ <div id="outline-container-org4040f26" class="outline-2">
+ <h2 id="org4040f26">The assembly line of software</h2>
+ <div class="outline-text-2" id="text-org4040f26">
+ <p>
+Applications are  <i>written</i> in the form of  <i>source code</i>, which are specialized
+human languages made up to give instructions to computers.  But the machine
+cannot understand this source code directly: it must first be  <i>compiled</i> into
+ <i>machine code</i>, which are series of operating instructions coded with numbers.
+The program responsible for translating source code into machine code is called
+a  <i>compiler</i>.  The resulting  <i>compiled application</i> can then be run by the user.
+</p>
+
+ <p>
+While the source code is intelligible to humans and offers a pretty high level
+of transparency of its logic, compiled code is a virtually unreadable sequence of
+numbers.  Moreover, one instruction on source code translates to several coded
+instructions on machine language.  Thus, they are effectively  <i>black boxes</i>.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-orga3f68a5" class="outline-2">
+ <h2 id="orga3f68a5">Open source is not enough</h2>
+ <div class="outline-text-2" id="text-orga3f68a5">
+ <p>
+We might be tempted to think that free open source software gives us
+transparency about what’s in the application.  While the compiled application we
+download from the Internet is a black box, we could just compile the source code
+ourselves and compare the result with the downloaded application, right?  If it’s
+identical, then we are good.
+</p>
+
+ <p>
+So why is free, open source software not trustworthy then?  Because when you
+compile the source code twice, chances are that you’ll get slightly  <i>different
+black boxes</i>.
+</p>
+
+ <p>
+So how can you know that the compiled software you’ve downloaded is in fact a
+proper translation of the source code instead of some modified version of it?
+</p>
+
+ <p>
+In practice this means that it’s often difficult to  <i>reproduce</i> the
+exact same compiled application that is offered for download.
+</p>
+
+ <p>
+Notice that it’s enough that merely one 0 or 1 got flipped for the behaviour
+of the application to change completely.  In other words, if two applications
+are not identical to the bit, everything can happen and all trust vanishes.
+</p>
+
+ <p>
+This lack of reliability in the compilation of applications comes from the
+“chaos” in the machine environment: slightly different software used for
+compilation (e.g. different versions), different hardware, different date…
+The slightest difference in the compilation environment is susceptible to flip a
+bit.
+</p>
+
+ <p>
+This is called the  <i>reproduciblity</i> problem.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-org6eedc69" class="outline-2">
+ <h2 id="org6eedc69">Software is made with software</h2>
+ <div class="outline-text-2" id="text-org6eedc69">
+ <p>
+The compiler is also an application that must be compiled, by another compiler,
+from some source code.  The same applies to this other compiler, and so on.  It
+seems to be a chicken and egg problem: can we ever trust any compiler then?
+</p>
+
+ <p>
+It is actually possible: if we go up the chain of compilers far enough, we reach
+a level where we have a trivial “machine level” compiler that can build a simple
+compiler from source.
+This machine-readable file is small enough that it is no longer a black box and
+can be inspected by humans.  The simpler compiler can in turn build a more
+complex compiler, etc., until we get today’s compilers.
+</p>
+
+ <p>
+This is called the  <i>bootstrappability</i> problem.
+</p>
+</div>
+</div>
+
+ <div id="outline-container-orgb7c53c8" class="outline-2">
+ <h2 id="orgb7c53c8">Trust all the way</h2>
+ <div class="outline-text-2" id="text-orgb7c53c8">
+ <p>
+To sum up, we need the following properties in order to be able to trust
+computer software:
+</p>
+
+ <ul class="org-ul"> <li>Free and open source software.</li>
+ <li>Reproducibility.</li>
+ <li>Bootstrappability.</li>
+</ul> <p>
+This is only useful if the entire software running on your machine obeys these
+principles.  A single black box on your machine can wreck havoc.  In other
+words, the entire  <i>operating system</i> itself must be free and open source
+software, reproducible and bootstrappable.
+</p>
+
+ <p>
+This is precisely  <a href="https://guix.gnu.org">GNU Guix</a>’ stated goal: Offer a strong guarantee of reliability and
+trust.
+</p>
+
+ <ul class="org-ul"> <li>Reliability: It just works, and more importantly, it will always work.  No
+more unexpected, random behaviour; no more “software erosion.”</li>
+
+ <li>Trust: Work is in progress to fully  <i>bootstrap</i> the software assembly line,
+which means everything will soon be fully transparent..</li>
+</ul> <p>
+What’s even more interesting with Guix is the that this novel approach to
+operating systems gives it great usability benefits:
+</p>
+
+ <ul class="org-ul"> <li>Unbreakable system and time travel: Have you ever updated a system only to
+restart it broken or less functional?  (Say there was a power cut during the
+upgrade.)  With Guix you keep a history of all previous  <i>states</i> of the
+system, even when you change the configuration manually.  If something breaks,
+you can always go back in time.  No more fear of updates or tinkering around
+with the settings!</li>
+</ul> <ul class="org-ul"> <li>Multiple versions: Sometimes you’ll need an older version of a program (for
+instance to support an old format or a feature that’s gone in a newer version).
+Guix allows to install multiple versions of the same program in parallel.</li>
+</ul></div>
+</div>
+
+ <div id="outline-container-orgb15514d" class="outline-2">
+ <h2 id="orgb15514d">Can everyone use Guix?</h2>
+ <div class="outline-text-2" id="text-orgb15514d">
+ <p>
+Guix is currently (January 2020) actively developed by a community of
+programmers from all over the world.  It is stable and can be used in a number
+of settings, from laptop and desktop computers to servers and scientific
+computing.
+</p>
+
+ <p>
+More work needs to be done in terms of accessibility and ease of use so that the
+less technically-minded among us can also enjoy Guix some day.  Then, hopefully,
+we will find Guix preinstalled on computers, ready for everyone to use.
+</p>
+
+ <p>
+If you’d like to contribute in some way, feel free to  <a href="https://guix.gnu.org/contact/">reach out to us!</a>
+</p>
+</div>
+</div>
+
+ <div id="outline-container-orgfd44a09" class="outline-2">
+ <h2 id="orgfd44a09">Special thanks</h2>
+ <div class="outline-text-2" id="text-orgfd44a09">
+ <ul class="org-ul"> <li>André Nunes Batista</li>
+ <li>Sherab Kelsang</li>
+</ul></div>
+</div>
+
+ <div id="outline-container-org099b38b" class="outline-2">
+ <h2 id="org099b38b">References</h2>
+ <div class="outline-text-2" id="text-org099b38b">
+ <ul class="org-ul"> <li> <a href="https://guix.gnu.org">https://guix.gnu.org</a>: The home page of GNU Guix with blog articles, documentation,
+videos and more.</li>
+
+ <li> <a href="https://nixos.org/">https://nixos.org/</a>: The other operating system that targets similar goals.
+Nix was an inspiration for Guix.</li>
+
+ <li> <a href="https://en.wikipedia.org/wiki/Backdoor_(computing)">https://en.wikipedia.org/wiki/Backdoor_(computing)</a>#Compiler <sub>backdoors</sub>:
+Compilers can be malicious and create malicious compilers in turn.  This is
+commonly known as the “Thompson attack,” as first mentioned in the speech
+“Reflections on Trusting Trust” by Ken Thompson.</li>
+
+ <li> <a href="https://www.quora.com/What-is-a-coders-worst-nightmare/answer/Mick-Stute?srid=RBKZ&amp;share=1">https://www.quora.com/What-is-a-coders-worst-nightmare/answer/Mick-Stute?srid=RBKZ&amp;share=1</a>:
+The story of an actual implementation of the “Thompson attack.”</li>
+
+ <li> <a href="https://reproducible-builds.org/">https://reproducible-builds.org/</a>: Technical information on reproducibility.</li>
+
+ <li> <a href="https://bootstrappable.org/">https://bootstrappable.org/</a>: Technical information on bootstrappability.</li>
+
+ <li> <a href="https://www.gnu.org/software/mes/">https://www.gnu.org/software/mes/</a>: GNU Mes is a project that aims at
+bootstrapping the main compilers until stage0.</li>
+
+ <li> <a href="https://savannah.nongnu.org/projects/stage0">https://savannah.nongnu.org/projects/stage0</a>: The “machine-level” compiler that
+both readable by machines and humans.</li>
+</ul></div>
+</div>
+</div>

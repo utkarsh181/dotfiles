@@ -1,0 +1,9 @@
+
+<p>I'm sure some of you have run across this before, but after getting a lot of questions about it, I figured it might be worth it to do <a target="_blank" href="https://www.youtube.com/watch?v=vt33Hp-4RXg">a video on fuzzy finder (fzf)</a>.
+For long-time channel subscribers, fzf can be thought of as a dmenu-like program for the terminal, you can pipe an input and it allows the user to select one of those input lines by typing, then it prints it to standard output.
+</p>
+
+<p>
+That opens up a world of possibilities, so I show some of my minor implementations in the video.
+Check the fzf website for a couple more suggestions, but I think you can come up with a lot on your own as well.
+</p>

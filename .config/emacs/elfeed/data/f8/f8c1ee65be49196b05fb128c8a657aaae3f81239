@@ -1,0 +1,5 @@
+
+<p>This morning I recorded myself writing two brief status bar scripts that illustrate how to get, awk and sort basic Memory and CPU data on the Linux command line.
+I use just basic commands like <code>ps</code>, <code>awk</code> and others, but it might be useful for either newbies or those looking for ideas.
+You can see the video <a target="_blank" href="https://youtu.be/MNwpdqD_I8Y">here</a>.
+</p>

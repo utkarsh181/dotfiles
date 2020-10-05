@@ -1,0 +1,12 @@
+
+<p>My new PeerTube instance will be temporarily down today as I migrate to a new and much better server with plenty of storage space and bandwidth (and a better processor to boot).</p>
+
+<p>I've already started the transfer, but I'll need to stop the current instance in an hour or so to make sure I can transfer the whole database without a problem and test it all.
+That means that the video site (but nothing else) will go dark for a couple hours.</p>
+
+<p>The new instance will still be at <a href="https://videos.lukesmith.xyz">videos.lukesmith.xyz</a>.
+Hopefully I will be able to move the whole database over without data loss, but if I fail to do that, it will just start a new instance and people can recreate accounts and re-follow my instance.
+Hopefully that won't be necessary though.</p>
+
+<p>And yes, I'll be able to transfer all my old videos over once this migration is complete.
+PeerTube has some scripts that automatically mirror YouTube channels and I'll have plenty of hard-drive space.</p>

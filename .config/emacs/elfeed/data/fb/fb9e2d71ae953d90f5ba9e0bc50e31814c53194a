@@ -1,0 +1,14 @@
+
+<p>
+I've just put up a video, the first of several on groff/troff. <a target="_blank" href="https://www.youtube.com/watch?v=w8EKH_fjmXA">Check it out here.</a>
+troff (groff is the GNU version) is a unix utility for document formatting and type-setting which is built into your system and substantially faster, more minimal, and more manipulatible on the command line than TeX or compiling via R markdown or pandoc.
+</p>
+
+<p>
+I've been playing around with it for a while now and am continually impressed with how easy it is.
+Its adherence to UNIX principles makes extending it extremely easy, and in future videos I'll talk about the many ways you can extend it (again, already bulit into your system), including adding images, tables, and refernces in a way similar to Bibtex.
+</p>
+
+<p>
+I hope the video piques your interest and there will be extensions coming out very soon. ;-)
+</p>

@@ -1,0 +1,12 @@
+
+<p>I usually abstain from using the mouse, but I've noticed a lot of interest in <em>plumbing</em> recently, and have got a lot of emails about it.
+Plan 9 is a highly unique operating system, integrating the mouse directly into the most basic UI, and the right click importantly can "plumb" selected text.
+This can mean various things from opening or running the file corresponding to the text or something else, but as a design feature, plumbing is something worth playing around with on other operating systems.
+</p>
+
+<p><a target="_blank" href="https://youtu.be/RlMxbQmMz_4">I've put out a video here on my current plumbing script.</a> It's part of my dotfiles now, mapped to <code>Super + C</code> since that's one of the lone leftover keys. I'm sure you could bind it to one of your many mouse buttons as well if you have one of those meme mouses.</p>
+
+<p>
+Of course, this kind of plumbing is piecemeal compared to the Plan 9 orignal: it really is a kind of text handler mediated by dmenu, but it gets at part of the functionality. It can open files whose text is displayed on the terminal, it can search for text in the browser or on eBay or on OpenStreetMaps, or generate QR codes for text.
+You're welcome to suggest elegant ways to improve the script on <a target="_blank" href="https://github.com/lukesmithxyz/voidrice">the git repository</a>.
+</p>

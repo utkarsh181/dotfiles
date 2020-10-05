@@ -1,0 +1,11 @@
+
+<p>New video up <a href="https://www.youtube.com/watch?v=tR9zk3xz5SA" target="_blank">here</a>, where I talk about how to use isync (mbsync), which is a extensible program for downloading mail from any mail server or host to your computer.
+</p>
+
+<p>I use isync in my daily email workflow to read mail locally with mutt (<a href="https://www.youtube.com/watch?v=G4g-du1MIas" target="_blank">as I talked about in the video on terminal applications yesterday</a>).
+This not only acts as a backup, but allows email to be loaded and modified instantaneously, and I can run typical Unix commands on the mail directories that it creates.
+My mail module in my status bar, which displays unread mail is based on this for example.
+</p>
+
+<p>In the video, I also briefly mention how to set up mutt to read this mail.
+It's actually as easily as setting the <code>folder</code> variable to the mail directory.</p>

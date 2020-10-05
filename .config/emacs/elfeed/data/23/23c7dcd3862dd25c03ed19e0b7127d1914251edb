@@ -1,0 +1,14 @@
+
+<p>You may know of <a target="_blank" href="https://en.wikipedia.org/wiki/Sci-Hub">Sci-Hub</a>, an excellent service by Alexandra Elbakyan that opens pay-walled academic articles for free public use.</p>
+
+<p>The typical use of the service is to go to the main site (right now <a target="_blank" href="http://sci-hub.tw">http://sci-hub.tw</a>, it changes often due to piracy accusations), give it a link to an academic article and it will pop up a new window allowing you to download it.</p>
+
+<p>This is way too much keypressing and clicking for me, and I want an browser-free way of doing this. Instead I made a line like the following to put in your <code>bashrc</code> to run a link through sci-hub and automatically download it.</p>
+
+<code>
+shdl() { curl -O $(curl -s http://sci-hub.tw/"$@" | grep location.href | grep -o http.*pdf) ;}
+</code>
+
+<p>Then you can simply download an article by passing the link of its preview or abstract, e.g.: <code>shdl https://link.springer.com/article/10.1007%2Fs40806-017-0133-5</code> and it will download to your current directory.</p>
+
+<p>I have this as part of my <a target="_blank" href="https://github.com/LukeSmithxyz/voidrice/blob/master/.scripts/linkhandler">linkhandler</a> script, which I have my RSS reader newsboat run on desired entries in my RSS feeds. Specifically, I subscribe to many RSS feeds for academic journals, and now with this script, if I see an article I want to read, I can just run my linkhandler script and download them immediately without laboriously having to open the browser to copy the url and then paste it into sci-hub, etc. Note that in my linkhandler script, I have it detect if the link is of an academic publisher (which is a modifiable variable) and that the Sci-Hub link is also a separate variable because, as I said, it occasionally changes and I want it to be distinct.</p>

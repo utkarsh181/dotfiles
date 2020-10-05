@@ -1,0 +1,6 @@
+
+<p>I'm changing a couple lines in the blog script (<code>lb</code>) that beautify the standalone pages, giving them UTF-8 encoding, actual titles and the website's stylesheet. While the standalone pages were originally an afterthought, I'm sure someone will like using them. I'll also probably put a video up about the blog system anyway<p>
+
+<p>I've also been working on the forum today, and I'll also be putting up an update to the mutt-wizard which will hopefully fix compatibility with certain sites. Originally, I made the apparently improper and pessimistic assumption that some providers don't use +INBOX as the inbox location, encouraging me to writing a very skiddie line in grep to filter out all non-inbox boxes to smartly guess the true inbox. This caused the system to detect people's "Contacts" or "SMS" folders as their inbox in some cases.</p>
+
+<p>I'll be fixing this soon so that it always just assumes that "+INBOX" is the real thing, which I think will lessen the errors people have.</p>

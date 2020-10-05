@@ -1,0 +1,16 @@
+
+<p>I just put up <a target="_blank" href="https://www.youtube.com/watch?v=GYW9i_u5PYs">a video on sxiv</a>, "the simple X image viewer".
+I've switched from feh to it for several reasons:
+</p>
+
+<ul>
+	<li>You can designate arbitrary commands to run on images via a custom script. I set up commands to make images the wallpaper, move or copy them to directories and run imagemagick commands on them.</li>
+	<li>.gif animations are supported, which feh can't do.</li>
+	<li>It comes with a free thumbnail view as well, which can be very handy for sorting through images. I'm moving away from using ranger with its single image previews and this is a big plus.</li>
+	<li>It can read from and write to standard input/output. As I say in the video, I don't quite know what to use this for yet, but it can be very handy in user scripts to provide a dmenu-like menu for selecting images for other commands.</li>
+</ul>
+
+<p>
+I also mention that I <em>don't</em> know yet if sxiv can be used to set backgrounds.
+feh can, hence I still have it installed and use it for that, but if anyone knows how to make sxiv do the same, please tell me so I can save a dependency in LARBS. ;-)
+</p>

@@ -1,0 +1,17 @@
+
+<p>Holy crap, I've probably installed and reinstalled LARBS 50 times in the past couple days as I've ironed out the last kinks. I've totally rewritten <code>larbs.sh</code> twice (arguably three times) this week, but the result is fantastic.
+The script runs smoother than ever on the user side (a full installation takes less than 10 minutes now) and I've autistically separated the code into functions for portability and customizeability.</p>
+
+<p>And boy is it.
+Aside from the script now being composed of easy to manipulate functions, <code>larbs.sh</code> now reads in a separate programs file (in .csv format) and can take a custom dotfiles repo as well.
+You can feed it a .csv like <a target="_blank" href="https://github.com/LukeSmithxyz/LARBS/blob/master/progs.csv">this one</a> and it can parse the list and install the programs in whatever way it needs to.
+E.g. in the setup now, untagged programs are in the main repo, programs tagged with <code>A</code> are AUR programs and <code>G</code> programs are git repositories installable with <code>make &amp;&amp; sudo make install</code>. Depending on the tag, LARBS will run a different install command as needed.
+Note that the last column (which is a description of the program in a verb phrase) appears at runtime to describe the program while it's installed.
+A nice little addition.
+</p>
+
+<p>So you can easily setup a your own LARBS now.
+Since I said I was going to do real-life videos on bash scripts, I might do an explainer on this one, since I'm sure it might be generally edifying, but also very useful for people who want to extend the scripts.
+</p>
+
+<p>Check it out: <a target="_blank" href="https://github.com/LukeSmithxyz/LARBS">LARBS on Github</a>.</p>

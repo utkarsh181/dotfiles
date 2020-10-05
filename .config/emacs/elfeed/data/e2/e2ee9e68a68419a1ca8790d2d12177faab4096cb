@@ -1,0 +1,10 @@
+
+<p>When I did <a target="_blank" href="https://www.youtube.com/watch?v=FJmm7wl4JUI">my original video on st</a>, AKA the suckless <a target="_blank" href="https://st.suckless.org/">simple terminal</a>, a lot of other people decided to migrate over, but there are a couple of features that I hadn't added to my build, or people were confused how to add. Now, partially in preparation for LARBS, I've added some more features, including the fact that the terminal colors now use your Xresources colors by default, enabling the use of <a target="_blank" href="https://github.com/dylanaraps/pywal">wal/pywal</a> for creating universal colorschemes. (If you don't know what this is, <a target="_blank" href="https://www.youtube.com/watch?v=Es79N_9BblE">I did a video on it a couple months ago</a>.)</p>
+
+<p>You can now check out my patched version of st <a target="_blank" href="https://github.com/LukeSmithxyz/st">right here</a>, and it will have all the best patches applied by default now.</p>
+
+<p>I think it's at the point where I consider st just about the best possible terminal for me (and probably for most all people). I occationally get requests to submit by build to the AUR, which I might do, but I can definitely say that you can safely use my build and get all the features you expect from a terminal while it still being bugless and minimal as any good suckless software should be.</p>
+
+<p>Well actually, on bugs, there is one little, minor annoyance in the program and that's that ranger image previews disappear when you mouse away from the given window.
+While there is a patch for st 0.7 which gives it sixel compatibility, due to its *le bloat* it hasn't been accepted into the program, and aside from that, I don't think ranger is built to work with sixel itself either so far.
+Either way, I still consider st largely "the best", but being able to patch in something like this would make it closer to "perfect". With the features and bindings I have in my build, I find it a little sad when I have to use another terminal.</p>

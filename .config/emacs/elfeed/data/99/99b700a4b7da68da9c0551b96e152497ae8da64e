@@ -1,0 +1,10 @@
+
+<p>Check out my <a href="https://github.com/LukeSmithxyz/voidrice/tree/master/.local/bin">scripts folder</a> for two new uploads today (although I made them quite a bit ago).</p>
+
+<p>First is <code>tag</code>, a simple wrapper for <code>opustags</code> and <code>vorbiscomment</code> that gives a easier interface for manually tagging .opus and .ogg files.</p>
+
+<p>More notable, however is <code>booksplit</code>, which uses the script above to take a long audio file and a list of timecodes and automatically splits that file up into tracks/chapter files.</p>
+
+<p>I use this when I can only find some audio content on YouTube and want to convert it to typical music files for listening offline, all with appropriate tags.</p>
+
+<p>I just put up a video on all of this <a href="https://www.youtube.com/watch?v=z_CcQhbwINU">here</a>.</p>

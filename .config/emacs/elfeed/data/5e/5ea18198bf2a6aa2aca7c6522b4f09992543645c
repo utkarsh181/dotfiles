@@ -1,0 +1,8 @@
+
+<p>As an experiment, I've added to my blog system (<a target="_blank" href="https://github.com/LukeSmithxyz/lb">lb</a>) an extra element, only amounting to a small edition of code. This is an additional (more traditional) blog index page, which you can see <a target="_blank" href="https://lukesmith.xyz/blogindex.html">here</a>.</p>
+
+<p>It's pretty simple and really just prepends new entries to the top just like the rest of the blog system does for your RSS feed and the <a href="https://lukesmith.xyz/blog.html">rolling blog file</a>. The titling by month is not automatic, so each month, you'd have to add a new heading though. Not sure if I want to bother automating that.</p>
+
+<p>It does add the date to the title as well, which is automatic, but I didn't add it to older entries since I revising that would be a little more difficult.</p>
+
+<p>I've pushed these changes to the Github, but they're still liable to change a little bit. You can feel free to update your local repo or not, as it won't affect the rest of the system whether you use this feature or not.</p>

@@ -1,0 +1,9 @@
+
+<p>For a while I had been looking for a command to pause all mpv video instances on my computer. I have a lock script which, while locking, automatically pauses the audio from my mpd, but I had wanted a way to pause all mpv instances as well, otherwise I would have to do the potentially annoying task of getting to the right workspace and hitting pause manually. I could find a lot more "complicated" solutions where you have to start mpv on a particular socket, but I ran across a much easier and universal possibility:</p>
+
+<code>xdotool search --class mpv | xargs -I % xdotool key --window % comma</code>
+
+<p>Which is a pretty funny command, but works exactly how I want. If you're not familiar with xdotool, this one-liner just searchs for all <code>mpv</code> instances and sends the key <code>,</code> to each of them, which by default moves the video back by a frame and pauses it.
+So now I've just added this line to my lock script, so if I ever am watching something and want to leave my computer and lock it, I don't have to worry about manually pausing mpv which may be on another screeen.
+Also, while I've always had <code>Super+p</code> mapped to "pause/unpause mpd audio", I've mapped <code>Super+Shift+P</code> to "pause mpd and all mpv instances", running this one-liner along with the true mpd pause command.
+</p>
