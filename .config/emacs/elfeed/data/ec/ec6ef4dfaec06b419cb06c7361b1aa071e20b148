@@ -1,2 +1,0 @@
-<p>I actually got a worthwhile suckless terminal configuration going. Check out the video, and also <a href="https://github.com/LukeSmithxyz/st">my git repo</a> with my particular build.</p>
-		<p>It has transparency and scrollback, and a lot of helpful bindings, but also all the typical perks of st: excellent unicode compatibility and general non-bugginess.</p>

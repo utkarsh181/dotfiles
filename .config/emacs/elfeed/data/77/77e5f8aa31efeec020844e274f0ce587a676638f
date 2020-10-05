@@ -1,3 +1,0 @@
-<p>I'm in the process of moving the entire website/LARBS/the forum to a VPS, due to the annoying practices of my former host, HostGator. Expect some downtime or certificate errors. My main website and this feed should be done (that's the easy part).</p>
-
-<p>Hopefully I'll have LARBS.xyz finished today as well, but the forum might take another day, just because I have to go through the rigmarole of installing myBB manually on my new server which I haven't done before. That said, I managed to figure out how to install/run/configure an Apache server this morning so I figure myBB can't be much more difficult.</p>

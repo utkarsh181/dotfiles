@@ -1,4 +1,0 @@
-
-<p>At the request of viewers, I might be putting out a series of videos on shell scripting in the wild. You can see the first video of this <a target="_blank" href="https://www.youtube.com/watch?v=YOpeXETS2z0">here</a>. I cover a small script I use for mounting USB drives on Linux, as opposed to using some fancy (bloated?) daemon or other service.</p>
-
-<p>It's probably part of my sense to not trust anything I didn't write myself ;-)</p>

@@ -1,9 +1,0 @@
-
-<p>
-My st build now uses Xresources colors (including those set my pywal ofcourse) if available, but otherwise, it defaults to <a target="_blank" href="https://ethanschoonover.com/solarized/">solarized colors</a>.
-For a default theme, the solarized colors are actually sort of wearing on me, and I'm looking for another sufficiently distinct, but also mostly generic colorscheme to use as a default.
-</p>
-
-<p>
-If you have any suggestions, email me or <a target="_blank" href="https://github.com/LukeSmithxyz/st/issues/23">post them here</a> in the Github issue I just made for it.
-</p>

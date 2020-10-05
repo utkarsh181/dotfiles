@@ -1,2 +1,0 @@
-
-<p>I've put up <a target="_blank" href="https://www.youtube.com/watch?v=D8pcvkRsx1g">a new imagemagick video</a>, where I briefly talk about how to quickly trim junk from images with the <code>-trim</code> option and basic usage of the <code>-transparent</code> option, which allows you to automatically choose a color to treat as transparent. Just a brief topic, but you can get a whole lot out of these little tools in terms of making image modification way faster.</p>

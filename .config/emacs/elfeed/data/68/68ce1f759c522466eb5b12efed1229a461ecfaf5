@@ -1,1 +1,0 @@
-<p>I had some free time this afternoon, so I decided to optimize by website backend. I've started to compile my website offline with a bash script that preemptively loads the required php commands. That's a marginal economy on the server-side, but mostly just an excuse to get something done.</p>

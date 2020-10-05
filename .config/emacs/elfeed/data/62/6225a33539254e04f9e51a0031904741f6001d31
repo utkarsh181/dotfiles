@@ -1,6 +1,0 @@
-
-<p><a target="_blank" href="https://www.youtube.com/watch?v=sp0qgpeG6EY">New video out on eqn</a>, which is a groff/troff preprocessor that automatically formats mathematical expressions. It can be compared to LaTeX's math mode, but I actually enjoy the syntax much more.</p>
-
-<p>In the vid, we go from basic math to square roots, summation, integrals, defining <code>eqn</code> macros and doing inline code.</p>
-
-<p>You can get more info on the kinds of things you can get done with <code>eqn</code> with the cornucopia of documentation here: <a target="_blank" href="https://troff.org/papers.html#eqn">https://troff.org/papers.html#eqn</a>.</p>

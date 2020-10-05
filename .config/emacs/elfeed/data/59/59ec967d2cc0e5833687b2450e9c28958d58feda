@@ -1,8 +1,0 @@
-
-<p>I actually mentioned this on the last stream with Rudy, but despite .ogg and .opus audio files being generally very compressed, while retaining good audio quality, I don't know of any simple command line tools for tagging them.
-If anyone does, keep me posted about them! I've tried most of the stuff in the Arch repos and the AUR, and I can't find something that doesn't require some GUI that loads the required library, or requires you to tag while encoding.
-</p>
-
-<p>As I think Rudy said, ncmpcpp doesn't have the ability to tag these files either, and I suppose some other library is either required or unintigrated into it.</p>
-
-<p>I've put this on <a href="https://lukesmith.xyz/wishlist.html#oggtag" target="_blank">the Hacking Wishlist</a>, but hopefully the solution is something simple and obvious.</p>

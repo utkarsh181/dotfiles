@@ -1,3 +1,0 @@
-<p>I've added a new options to the mutt-wizard which will automatically add a cronjob that runs a script that smartly syncs offlineimap at the interval you want if there's an internet connection.</p>
-
-<p>It also checks to see if new mail has been downloaded, and if it has, will provide a brief little notification ding! Enjoy!</p>

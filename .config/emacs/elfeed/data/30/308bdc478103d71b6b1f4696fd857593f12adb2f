@@ -1,6 +1,0 @@
-
-<p>I've decided to severely trim down my website, not in content, but in frills. We'll see how this works out, and if it does, I plan on keeping it this way with maybe minor beautification.</p>
-
-<p>At a surface level, my site is just going to be two main HTML pages: the <a target="_blank" href="http://lukesmith.xyz/index.html">main page</a> and <a href="https://lukesmith.xyz/2018.html">a blog/updates page</a> which I have made automatically (This also includes RSS updates).</p>
-
-<p>One of the other things I've made use of is an Apache server's capability to display directory contents in and index page. You've probably seen things like this, see one of mine at <a target="_blank" href="http://lukesmith.xyz/talks/">talks/</a>. You can also give these pages CSS and descriptions for the files, which I've decided to take advantage of. It seems like a much better way of organizing files on your website and making them accessible than doing it manually in HTML.</p>

@@ -1,5 +1,0 @@
-<p>If you track my Github, you may've noticed I've been making some bigger changes to my LARBS and voidrice repositories, preparing for a re-release of LARBS with more fanfare, and more tutorial videos to go along with it (I've also updated https://larbs.xyz to HTTPS since that's a more legit concern).</p>
-
-<p>There have been a lot of little improvements, and I'm hoping to have a lot of the small kinks worked out before then.</p>
-
-<p>There is one thing I'd really like and don't know if it exists, and that is a kind of mutt config generator or wizard, that will automatically detect your email provider's servers and set the more annoying settings by itself. I've put some documentation up about how to configure mutt so far, but I really wish there were a way to make it easier for users.</p>

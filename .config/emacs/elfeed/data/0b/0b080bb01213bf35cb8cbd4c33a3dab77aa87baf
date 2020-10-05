@@ -1,3 +1,0 @@
-<p>I think I'll put a video up on this tomorrow, but I'm starting to put together an ncurses script that will automatically configure mutt, offlineIMAP, notmuch, and everything else you need for a fully featured offline terminal email service, all with basically no user effort beyond putting in their email and password.</p>
-
-<p>If you're a mutt user, you can help me by sending me your email server settings if they're not already in the autoconf/domains.csv file.</p>

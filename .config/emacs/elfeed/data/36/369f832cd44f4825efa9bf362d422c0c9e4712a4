@@ -1,4 +1,0 @@
-
-<p>Short video out today, but one on a commonly asked question: how do you mount, access and sync an Android phone on Linux?</p>
-
-<p>Check out the video <a href="https://www.youtube.com/watch?v=lcmJg4OfKzs" target="_blank">here</a>. I'll show you how I use <code>simple-mtpfs</code>, and how I automate the process with dmenu.</p>

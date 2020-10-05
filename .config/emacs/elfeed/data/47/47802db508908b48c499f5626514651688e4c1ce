@@ -1,4 +1,0 @@
-
-<p>I've finally put HTTPS on <a href="https://forum.lukesmith.xyz">the forum</a> for security's sake. I appreciate that people have been signing up already anyway. I'll probably reannounce it on the channel when I do a live stream probably tomorrow.</p>
-
-<p>You may've noticed that there was also some server downtime, that was actually relevant to the SLL upgrade. I stupidly miswrote something and broke my Apache server for a minute or two. All fixed now though.</p>

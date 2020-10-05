@@ -1,2 +1,0 @@
-;;; Generated package description from /home/utkarsh/.config/emacs/elpa/saveplace-pdf-view-20200719.113/saveplace-pdf-view.el  -*- no-byte-compile: t -*-
-(define-package "saveplace-pdf-view" "20200719.113" "Save place in pdf-view buffers" '((emacs "24.1") (pdf-tools "1.0")) :commit "9bdb911989a0d84d5cac62dc533e9a8a6141effb" :keywords '("files" "convenience") :authors '(("Nicolai Singh <nicolaisingh at pm.me>")) :maintainer '("Nicolai Singh <nicolaisingh at pm.me>") :url "https://github.com/nicolaisingh/saveplace-pdf-view")

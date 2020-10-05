@@ -1,7 +1,0 @@
-
-<p>New video up on <a target="_blank" href="https://www.youtube.com/watch?v=9KAp_zWeI34">entr</a>, which is a very handy command that will monitor whatever files you give it on standard input and will run a requested command on them whenever they are saved/changed. While it's not a core utility, it's almost a must have for system administration and for those interested in autocompilation or automating other aspects of your system or development environment.</p>
-
-<p>
-The main website of the project is <a target="_blank" href="http://eradman.com/entrproject/">here</a> which actually gives some pretty salient use cases, but I detail some I've used in the video a bit.
-I'm sure for a lot of people this is "what they've always been looking for" because it's a task not perfectly filled by the typical programs.
-</p>

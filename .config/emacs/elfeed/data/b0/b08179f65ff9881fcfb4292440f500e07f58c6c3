@@ -1,6 +1,0 @@
-
-<p>I just released <a target="_blank" href="https://www.youtube.com/watch?v=rgSxYvFWjUY">a brief video on cronjobs</a>, how to make them for new users, including the syntax, but also some of the jobs that I have run on my machine (also about the minor annoyance of specifying displays for some graphical commands).</p>
-
-<p>I didn't start using cronjobs until only a couple months ago, but now I've fully integrated them into my system. As I state in the video, I do my updating via cron by havine a <code>pacman -Syuw --noconfirm</code> command run every two hours to check for and download package updates (it also gives me a preview of the number of updateable packages on my i3blocks bar). I then finalize the update when I want, but don't have to watch the downloading happen. If you want, you could just as easily remove the <code>-w</code> and have the updating done all automatically if you don't feel like you need to see what's new.</p>
-
-<p>Any suggestions on new cronjobs are welcome!</p>
