@@ -353,12 +353,6 @@ This command can then be followed by the standard
   :ensure t
   :commands helm-lsp-workspace-symbol)
 
-(use-package lsp-python-ms
-  :ensure t
-  :init (setq lsp-python-ms-auto-install-server t)
-  :hook (python-mode . (lambda ()
-                          (require 'lsp-python-ms)
-                          (lsp))))  ; or lsp-deferred
 (use-package try
   :ensure t)
 

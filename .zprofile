@@ -16,7 +16,7 @@ fi
 # Default programs:
 export EDITOR="emacs"
 export BROWSER="brave"
-export TERMINAL="gnome-terminal"
+export TERMINAL="st"
 
 # ~/ Clean-up:
 export XDG_CONFIG_HOME="$HOME/.config"
