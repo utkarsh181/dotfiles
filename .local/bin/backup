@@ -1,3 +1,3 @@
 #!/bin/sh
 
-duplicity --exclude /home/utkarsh/.local/share/mail --exclude /home/utkarsh/Music  --exclude /home/utkarsh/.cache/ --exclude /home/utkarsh/Pictures/wallpapers /home/utkarsh file:///run/media/utkarsh/INTEL/Backup/
+duplicity --exclude /home/utkarsh/.local/share/mail --exclude /home/utkarsh/Music --exclude /home/utkarsh/Video  --exclude /home/utkarsh/.cache/ --exclude /home/utkarsh/Pictures/wallpapers /home/utkarsh file:///mnt/INTEL/Backup/

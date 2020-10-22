@@ -39,50 +39,87 @@
   (require 'use-package))
 
 ;; disable GUI components
-(scroll-bar-mode -1)
-(tool-bar-mode -1)
-(blink-cursor-mode -1)
-(menu-bar-mode -1)
-
-;; (add-to-list 'default-frame-alist '(font . "JetBrains Mono Medium:size=12"))
-;; (set-face-attribute 'default t :font "JetBrains Mono Medium:size=12")
-
-;; theme setting
-(use-package modus-operandi-theme
-  :ensure t
+(use-package emacs
   :config
-  (setq modus-operandi-theme-visible-fringe t
-	modus-operandi-theme-3d-modeline t
-	modus-operandi-theme-bold-constructs t
-	modus-operandi-theme-slanted-constructs t)
-  :init
-  ;; (load-theme 'modus-operandi t)
-  )
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1)
+  (blink-cursor-mode -1)
+  (menu-bar-mode -1))
 
-(use-package modus-vivendi-theme
-  :ensure t
+(use-package emacs
   :config
-  ;; enable some of the customisation options before loading the theme
-  (setq modus-vivendi-theme-visible-fringe t
-	modus-Vivendi-theme-3d-modeline t
-	modus-vivendi-theme-bold-constructs t
-	modus-vivendi-theme-slanted-constructs t
-	)
-  :init
-  ;; load the theme
-  (load-theme 'modus-vivendi t))
+  (add-to-list 'default-frame-alist '(font . "JetBrains Mono Medium:size=12"))
+  (set-face-attribute 'default t :font "JetBrains Mono Medium:size=12")
+  ;; set font for emoji
+  (set-fontset-font t '(#x1f300 . #x1fad0)
+		    (cond
+		     ((member "Noto Color Emoji" (font-family-list)) "Noto Color Emoji"))))
+
+;; to start emacs server
+(use-package server
+  :hook (after-init-hook . server-start))
+
+;;theme settings
+(use-package emacs
+  :config
+  (defmacro contrib/format-sexp (sexp &rest objects)
+    `(eval (read (format ,(format "%S" sexp) ,@objects))))
+
+  ;; This is currently not used in this section.  Search for it in the
+  ;; section about setting fonts, `prot/font-bold-face' in particular.
+  (defvar prot/modus-theme-after-load-hook nil
+    "Hook that runs after loading a Modus theme.
+See `prot/modus-operandi' or `prot/modus-vivendi'.")
+
+  ;; The variables do not reveal my preferences.  Always testing things.
+  (dolist (theme '("operandi" "vivendi"))
+    (contrib/format-sexp
+     (defun prot/modus-%1$s ()
+       (setq modus-%1$s-theme-slanted-constructs t
+             modus-%1$s-theme-bold-constructs t
+             modus-%1$s-theme-fringes nil ; {nil,'subtle,'intense}
+             modus-%1$s-theme-mode-line '3d ; {nil,'3d,'moody}
+	     )
+       (load-theme 'modus-%1$s t)
+       (run-hooks 'prot/modus-theme-after-load-hook))
+     theme))
+  (defun prot/modus-themes-toggle (&optional arg)
+    "Toggle between `prot/modus-operandi' and `prot/modus-vivendi'.
+
+With optional \\[universal-argument] prefix, enable
+`prot/modus-themes-alt-mode' for the loaded theme."
+    (interactive "P")
+    (if (eq (car custom-enabled-themes) 'modus-operandi)
+        (progn
+          (disable-theme 'modus-operandi)
+          (prot/modus-vivendi))
+      (disable-theme 'modus-vivendi)
+      (prot/modus-operandi)))
+
+  :hook (after-init-hook . prot/modus-vivendi)
+  :bind ("<f5>" . prot/modus-themes-toggle))
 
 ;; cache directory for emacs
 (setq backup-directory-alist '(("." . "~/.cache/emacs")))
 
-;; auto-pair and parentheses highlighting
-(electric-pair-mode 1)
-(show-paren-mode 1)
+;; auto-pair
+(use-package electric
+  :init
+  (electric-pair-mode 1))
 
+;;parentheses highlighting
+(use-package paren
+  :init
+  (show-paren-mode 1))
 
-(recentf-mode 1)
-(setq recentf-max-menu-items 25)
-(setq recentf-max-saved-items 25)
+;; built-in minor mode that keeps track of the files
+;; you have opened, allowing you revisit them faster.
+(use-package recentf
+  :init
+  (recentf-mode 1)
+  :config
+  (setq recentf-max-menu-items 25)
+  (setq recentf-max-saved-items 25))
 
 ;; Better default
 (global-set-key (kbd "M-/") 'hippie-expand)
@@ -97,6 +134,23 @@
 (global-set-key (kbd "C-c f") 'find-file-other-window)
 (global-set-key (kbd "C-c b") 'view-buffer-other-window)
 (setq custom-file "~/.config/emacs/custom.el")
+
+;; Deletes text under selection when insertion is made
+(use-package delsel
+  :hook (after-init-hook . delete-selection-mode))
+
+
+;; The common thread of these options is the feedback they
+;; provide us with or simplify common tasks so that their feedback does not cause friction
+(use-package emacs
+  :config
+  (setq echo-keystrokes 0.25)
+  (defalias 'yes-or-no-p 'y-or-n-p)
+  (put 'narrow-to-region 'disabled nil)
+  (put 'upcase-region 'disabled nil)
+  (put 'downcase-region 'disabled nil)
+  (put 'dired-find-alternate-file 'disabled nil)
+  (put 'overwrite-mode 'disabled t))
 
 (use-package emacs
   :config
@@ -218,7 +272,7 @@ This command can then be followed by the standard
          ("<C-S-return>" . ut/new-line-above)))
 
 (use-package expand-region
-  :ensure t
+  :ensure
   :config
   (global-set-key (kbd "C-=") 'er/expand-region))
 
@@ -235,7 +289,7 @@ This command can then be followed by the standard
 
 ;; toggle to view sub-directories in Dired
 (use-package dired-subtree
-  :ensure t
+  :ensure
   :after dired
   :config
   (setq dired-subtree-use-backgrounds nil)
@@ -243,9 +297,10 @@ This command can then be followed by the standard
 	      ("<tab>" . dired-subtree-toggle)
 	      ("<C-tab>" . dired-subtree-cycle)
 	      ("<S-iso-lefttab>" . dired-subtree-remove)))
+
 ;; toggle to peep in dired
 (use-package peep-dired
-  :ensure t
+  :ensure
   :after dired
   :config
   (setq peep-dired-enable-on-directories nil)
@@ -254,14 +309,13 @@ This command can then be followed by the standard
   :bind (:map dired-mode-map
               ("P" . peep-dired)))
 
-;; because author was a vimmer
+;; use 'n' and 'p' to navigate in peed-dired mode
  (eval-after-load "peep-dired"
     '(progn
        (define-key peep-dired-mode-map (kbd "n") 'peep-dired-next-file)
        (define-key peep-dired-mode-map (kbd "p") 'peep-dired-prev-file)))
 
 (use-package diredfl
-  :ensure
   :config
   (setq diredfl-ignore-compressed-flag nil)
   :hook (dired-mode-hook . diredfl-mode))
@@ -277,37 +331,44 @@ This command can then be followed by the standard
 ;; Mode Line setting
 (column-number-mode 1)
 
+;; reverts buffer is file is change on disk
+(use-package autorevert
+  :diminish
+  :config
+  (setq auto-revert-verbose t)
+  (global-auto-revert-mode 1))
+
 (use-package minions
-  :ensure t
+  :ensure
   :config (minions-mode 1))
 
 (use-package org-bullets
-  :ensure t
+  :ensure
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
 (use-package company
-  :ensure t
+  :ensure
   :config
   (setq company-idle-delay 0)
   (setq company-minimum-prefix-length 1)
-  (global-company-mode t)
+  (global-company-mode 1)
   (company-tng-mode))
 
 (use-package company-irony
-  :ensure t
+  :ensure
   :config
   (add-to-list 'company-backends 'company-irony))
 
 (use-package irony
-  :ensure t
+  :ensure
   :config
   (add-hook 'c++-mode-hook 'irony-mode)
   (add-hook 'c-mode-hook 'irony-mode)
   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
 
 (use-package company-jedi
-  :ensure t
+  :ensure
   :config
   (add-hook 'python-mode-hook 'jedi:setup))
 
@@ -318,104 +379,113 @@ This command can then be followed by the standard
 (add-hook 'python-mode-hook 'ut/python-mode-hook)
 
 (use-package company-quickhelp
-  :ensure t
+  :ensure
   :init
   (company-quickhelp-mode))
 
 (use-package irony-eldoc
-  :ensure t
+  :ensure
   :config
   (add-hook 'irony-mode-hook #'irony-eldoc))
 
 (use-package flycheck
-  :ensure t
+  :ensure
   :init
   (global-flycheck-mode)
   :config
   (setq flycheck-python-pycompile-executable "python3")
   (add-hook 'after-init-hook #'global-flycheck-mode))
 
-(setq lsp-keymap-prefix "C-c l")
+;; (setq lsp-keymap-prefix "C-c l")
 
-(use-package lsp-mode
-  :ensure t
-  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (c++-mode-hook . lsp)
-	 (python-mode-hook . lsp)
-         ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration)
-	 )
+;; (use-package lsp-mode
+;;   :ensure
+;;   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+;;          (c++-mode-hook . lsp)
+;; 	 (python-mode-hook . lsp)
+;;          ;; if you want which-key integration
+;;          (lsp-mode . lsp-enable-which-key-integration)
+;; 	 )
+;;   :config
+;;   :commands lsp)
+
+;; ;; lsp and helm integration
+;; (use-package helm-lsp
+;;   :ensure
+;;   :commands helm-lsp-workspace-symbol)
+
+(use-package ido
   :config
-  :commands lsp)
+  (ido-mode 1)
+  (setq ido-enable-flex-matching t)
+  (setq ido-everywhere t)
+  (setq ido-use-virtual-buffers t)
+  (setq ido-use-faces t)
+  (setq ido-max-window-height nil)
+  ;; Display ido results vertically, rather than horizontally
+  (setq ido-decorations (quote ("\n-> " "" "\n   " "\n   ..." "[" "]" " [No match]" " [Matched]" " [Not readable]" " [Too big]" " [Confirm]")))
+  (defun ido-disable-line-truncation () (set (make-local-variable 'truncate-lines) nil))
+  (add-hook 'ido-minibuffer-setup-hook 'ido-disable-line-truncation)
+  (defun ido-define-keys () ;; C-n/p is more intuitive in vertical layout
+    (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
+    (define-key ido-completion-map (kbd "C-p") 'ido-prev-match))
+  (add-hook 'ido-setup-hook 'ido-define-keys))
 
-;; lsp and helm integration
-(use-package helm-lsp
-  :ensure t
-  :commands helm-lsp-workspace-symbol)
+(use-package smex
+  :ensure
+  :config
+  (global-set-key (kbd "M-x") 'smex)
+  (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+  (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command))
 
 (use-package try
-  :ensure t)
+  :ensure)
 
-(use-package which-key
-  :ensure t
-  :config
-  (which-key-mode 1))
-
-(use-package ace-window
-  :ensure t
-  :config
-  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
-  :init
-  (progn
-    (global-set-key [remap other-window] 'ace-window)))
-
-(use-package helm
-  :ensure t
-  :config
-  (helm-mode)
-  (global-set-key (kbd "M-x") 'helm-M-x)
-  (global-set-key (kbd "C-x C-f") 'helm-find-files)
-  (global-set-key (kbd "C-x C-r") 'helm-recentf))
-
-(use-package helm-flyspell
-  :ensure t
-  :config
-  ;; (define-key evil-normal-state-map (kbd "z=") 'helm-flyspell-correct))
-  (define-key flyspell-mode-map (kbd "C-c $") 'helm-flyspell-correct ))
-
+;; better pdf experience inside emacs
 (use-package pdf-tools
-  :ensure t
-  ;; :pin manual ;; manually update
+  :ensure
   :config
   ;; initialise
   (pdf-tools-install)
   ;; open pdfs scaled to fit page
   (setq-default pdf-view-display-size 'fit-page)
-  ;; use normal isearch
+  ;; midnight mode to be coherent with modus-vivendi theme
   (setq pdf-view-midnight-colors '("#ffffff" . "#000000"))
   (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward))
-  
 
+;; save the last position in pdf-view mode
 (use-package saveplace-pdf-view
-  :ensure t
+  :ensure
   :init
   (save-place-mode 1))
 
+;; rss and atom feed reader inside emacs
 (use-package elfeed
-  :ensure t
+  :ensure
   :config
   (setq elfeed-use-curl t)
   (setq elfeed-curl-max-connections 10)
   (setq elfeed-db-directory "~/.config/emacs/elfeed/")
   (setq elfeed-enclosure-default-dir "~/Downloads/")
   (setq elfeed-search-clipboard-type 'CLIPBOARD)
-  (global-set-key (kbd "C-x w") 'elfeed)
   (setq elfeed-feeds
-      '("http://lukesmith.xyz/rss.xml"
-	"https://notrelated.libsyn.com/rss"
-	"https://www.archlinux.org/feeds/news/"
-	"https://ambrevar.xyz/atom.xml"
-	"https://protesilaos.com/codelog.xml")))
+      '(("http://lukesmith.xyz/rss.xml" luke)
+	("https://notrelated.libsyn.com/rss" luke)
+	("https://www.archlinux.org/feeds/news/" linux distro)
+	("https://ambrevar.xyz/atom.xml" emacs)
+	("https://protesilaos.com/codelog.xml" emacs)
+	("https://www.youtube.com/feeds/videos.xml?user=OmegaDungeon" linux youtube)
+	("https://www.youtube.com/feeds/videos.xml?channel_id=UCVls1GmFKf6WlTraIb_IaJg" linux youtube)
+	("https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA" luke youtube)
+	("https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" youtube))))
+
+(use-package password-store
+  :ensure
+  :commands (password-store-copy
+             password-store-edit
+             password-store-insert)
+  :config
+  (setq password-store-time-before-clipboard-restore 30))
 
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))
