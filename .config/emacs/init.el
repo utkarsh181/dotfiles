@@ -28,9 +28,6 @@
   (setq use-package-always-demand nil)
   (setq use-package-expand-minimally nil)
   (setq use-package-enable-imenu-support t)
-  ;; The following is VERY IMPORTANT.  Write hooks using their real name
-  ;; instead of a shorter version: after-init ==> `after-init-hook'.
-  ;;
   ;; This is to empower help commands with their contextual awareness,
   ;; such as `describe-symbol'.
   (setq use-package-hook-name-suffix nil))
@@ -45,15 +42,6 @@
   (tool-bar-mode -1)
   (blink-cursor-mode -1)
   (menu-bar-mode -1))
-
-(use-package emacs
-  :config
-  (add-to-list 'default-frame-alist '(font . "JetBrains Mono Medium:size=12"))
-  (set-face-attribute 'default t :font "JetBrains Mono Medium:size=12")
-  ;; set font for emoji
-  (set-fontset-font t '(#x1f300 . #x1fad0)
-		    (cond
-		     ((member "Noto Color Emoji" (font-family-list)) "Noto Color Emoji"))))
 
 ;; to start emacs server
 (use-package server
@@ -71,7 +59,6 @@
     "Hook that runs after loading a Modus theme.
 See `prot/modus-operandi' or `prot/modus-vivendi'.")
 
-  ;; The variables do not reveal my preferences.  Always testing things.
   (dolist (theme '("operandi" "vivendi"))
     (contrib/format-sexp
      (defun prot/modus-%1$s ()
@@ -139,9 +126,7 @@ With optional \\[universal-argument] prefix, enable
 (use-package delsel
   :hook (after-init-hook . delete-selection-mode))
 
-
-;; The common thread of these options is the feedback they
-;; provide us with or simplify common tasks so that their feedback does not cause friction
+;; make Emacs prompts more tolerable
 (use-package emacs
   :config
   (setq echo-keystrokes 0.25)
@@ -149,8 +134,8 @@ With optional \\[universal-argument] prefix, enable
   (put 'narrow-to-region 'disabled nil)
   (put 'upcase-region 'disabled nil)
   (put 'downcase-region 'disabled nil)
-  (put 'dired-find-alternate-file 'disabled nil)
-  (put 'overwrite-mode 'disabled t))
+  (put 'overwrite-mode 'disabled nil)
+  (put 'dired-find-alternate-file 'disabled nil))
 
 (use-package emacs
   :config
@@ -271,12 +256,13 @@ This command can then be followed by the standard
          ("<C-return>" . ut/new-line-below)
          ("<C-S-return>" . ut/new-line-above)))
 
+;; increases the selected region by semantic units
 (use-package expand-region
   :ensure
   :config
   (global-set-key (kbd "C-=") 'er/expand-region))
 
-;; Dired setting
+;; dired(directory editor) settings
 (use-package dired
   :config
   (setq dired-recursive-copies 'always)
@@ -287,7 +273,7 @@ This command can then be followed by the standard
   :hook ((dired-mode-hook . dired-hide-details-mode)
          (dired-mode-hook . hl-line-mode)))
 
-;; toggle to view sub-directories in Dired
+;; toggle to view sub-directories in dired
 (use-package dired-subtree
   :ensure
   :after dired
@@ -298,7 +284,7 @@ This command can then be followed by the standard
 	      ("<C-tab>" . dired-subtree-cycle)
 	      ("<S-iso-lefttab>" . dired-subtree-remove)))
 
-;; toggle to peep in dired
+;; preview mode for Emacs
 (use-package peep-dired
   :ensure
   :after dired
@@ -320,7 +306,7 @@ This command can then be followed by the standard
   (setq diredfl-ignore-compressed-flag nil)
   :hook (dired-mode-hook . diredfl-mode))
 
-;; flyspell settings
+;; spell checker  settings
 (use-package flyspell
   :config
   (setq ispell-program-name "aspell")
@@ -328,7 +314,7 @@ This command can then be followed by the standard
 	  (prog-mode-hook . flyspell-prog-mode)))
 
 
-;; Mode Line setting
+;; mode Line setting
 (column-number-mode 1)
 
 ;; reverts buffer is file is change on disk
@@ -338,6 +324,7 @@ This command can then be followed by the standard
   (setq auto-revert-verbose t)
   (global-auto-revert-mode 1))
 
+;; helps to keep mode line uncluttered
 (use-package minions
   :ensure
   :config (minions-mode 1))
@@ -347,6 +334,7 @@ This command can then be followed by the standard
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
+;; auto complete
 (use-package company
   :ensure
   :config
@@ -414,30 +402,19 @@ This command can then be followed by the standard
 ;;   :ensure
 ;;   :commands helm-lsp-workspace-symbol)
 
-(use-package ido
-  :config
-  (ido-mode 1)
-  (setq ido-enable-flex-matching t)
-  (setq ido-everywhere t)
-  (setq ido-use-virtual-buffers t)
-  (setq ido-use-faces t)
-  (setq ido-max-window-height nil)
-  ;; Display ido results vertically, rather than horizontally
-  (setq ido-decorations (quote ("\n-> " "" "\n   " "\n   ..." "[" "]" " [No match]" " [Matched]" " [Not readable]" " [Too big]" " [Confirm]")))
-  (defun ido-disable-line-truncation () (set (make-local-variable 'truncate-lines) nil))
-  (add-hook 'ido-minibuffer-setup-hook 'ido-disable-line-truncation)
-  (defun ido-define-keys () ;; C-n/p is more intuitive in vertical layout
-    (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
-    (define-key ido-completion-map (kbd "C-p") 'ido-prev-match))
-  (add-hook 'ido-setup-hook 'ido-define-keys))
-
-(use-package smex
+;; narrowing framework
+(use-package helm
   :ensure
+  :init
+  (helm-mode 1)
   :config
-  (global-set-key (kbd "M-x") 'smex)
-  (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-  (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command))
+  (global-set-key (kbd "M-x") 'helm-M-x)
+  (global-set-key (kbd "C-x r b") 'helm-filtered-bookmarks)
+  ;; (global-set-key (kbd "M-y") 'helm-show-kill-ring)
+  (global-set-key (kbd "C-x b") 'helm-mini)
+  (global-set-key (kbd "C-x C-f") 'helm-find-files))
 
+;; try package without installing!!
 (use-package try
   :ensure)
 
@@ -473,12 +450,18 @@ This command can then be followed by the standard
 	("https://notrelated.libsyn.com/rss" luke)
 	("https://www.archlinux.org/feeds/news/" linux distro)
 	("https://ambrevar.xyz/atom.xml" emacs)
+	("https://www.reddit.com/r/emacs/top.rss"emacs reddit)
+	("https://www.reddit.com/r/archlinux/top.rss" linux reddit)
 	("https://protesilaos.com/codelog.xml" emacs)
 	("https://www.youtube.com/feeds/videos.xml?user=OmegaDungeon" linux youtube)
 	("https://www.youtube.com/feeds/videos.xml?channel_id=UCVls1GmFKf6WlTraIb_IaJg" linux youtube)
 	("https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA" luke youtube)
 	("https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" youtube))))
 
+(use-package bongo
+  :ensure )
+
+;; pass(standard password manager) interface for Emacs
 (use-package password-store
   :ensure
   :commands (password-store-copy
@@ -489,5 +472,3 @@ This command can then be followed by the standard
 
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))
-
-;;; init.el ends here
