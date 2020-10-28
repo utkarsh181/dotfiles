@@ -332,7 +332,7 @@ This command can then be followed by the standard
 (use-package org-bullets
   :ensure
   :config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode -1))))
 
 ;; auto complete
 (use-package company
