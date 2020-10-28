@@ -306,6 +306,38 @@ This command can then be followed by the standard
   (setq diredfl-ignore-compressed-flag nil)
   :hook (dired-mode-hook . diredfl-mode))
 
+(use-package display-line-numbers
+  :config
+  ;; Set absolute line numbers.  A value of "relative" is also useful.
+  (setq display-line-numbers-type t)
+  ;; Use absolute numbers in narrowed buffers
+  (setq display-line-numbers-widen t)
+
+  (define-minor-mode prot/display-line-numbers-mode
+    "Toggle `display-line-numbers-mode' and `hl-line-mode'."
+    :init-value nil
+    :global nil
+    (if prot/display-line-numbers-mode
+        (progn
+          (display-line-numbers-mode 1)
+          (hl-line-mode 1)
+          (setq-local truncate-lines t))
+      (display-line-numbers-mode -1)
+      (hl-line-mode -1)
+      (setq-local truncate-lines nil)))
+  :bind ("<f7>" . prot/display-line-numbers-mode))
+
+(use-package whitespace
+  :config
+  (defun prot/toggle-invisibles ()
+    "Toggles the display of indentation and space characters."
+    (interactive)
+    (if (bound-and-true-p whitespace-mode)
+        (whitespace-mode -1)
+      (whitespace-mode)))
+  :bind (("<f6>" . prot/toggle-invisibles)
+         ("C-c z" . delete-trailing-whitespace)))
+
 ;; spell checker  settings
 (use-package flyspell
   :config

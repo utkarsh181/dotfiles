@@ -1,0 +1,2 @@
+* dotfiles
+  [[file:~/Pictures/pic-full-201028-2137-36.png][screenshot]]
