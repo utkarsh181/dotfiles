@@ -112,15 +112,15 @@ With optional \\[universal-argument] prefix, enable
 (global-set-key (kbd "M-/") 'hippie-expand)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "M-z") 'zap-up-to-char)
-
-(global-set-key (kbd "C-s") 'isearch-forward-regexp)
-(global-set-key (kbd "C-r") 'isearch-backward-regexp)
-(global-set-key (kbd "C-M-s") 'isearch-forward)
-(global-set-key (kbd "C-M-r") 'isearch-backward)
-(global-set-key (kbd "C-c d") 'dired-other-window)
-(global-set-key (kbd "C-c f") 'find-file-other-window)
-(global-set-key (kbd "C-c b") 'view-buffer-other-window)
 (setq custom-file "~/.config/emacs/custom.el")
+
+;; manage other buffer with ease
+(use-package emacs
+  :config
+  (global-set-key (kbd "C-c d") 'dired-other-window)
+  (global-set-key (kbd "C-c f") 'find-file-other-window)
+  ;; edit buffer with 'E'
+  (global-set-key (kbd "C-c b") 'view-buffer-other-windows))
 
 ;; Deletes text under selection when insertion is made
 (use-package delsel
@@ -190,7 +190,7 @@ duplicating."
         (copy-region-as-kill pbol peol)
         (message "Current line copied"))))
 
-  
+
   (defun ut/yank-replace-line-or-region ()
     "Replace line or region with latest kill.
 This command can then be followed by the standard
@@ -364,7 +364,7 @@ This command can then be followed by the standard
 (use-package org-bullets
   :ensure
   :config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode -1))))
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
 ;; auto complete
 (use-package company
