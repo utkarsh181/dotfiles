@@ -1,4 +1,4 @@
-;;; init.el --- Utkarsh Singh Emacs Configuration
+;;; init.el --- Utkarsh Singh Emacs Configuration  -*- lexical-binding: t; -*-
 ;;
 ;;; Commentary:
 ;;
@@ -120,7 +120,7 @@ With optional \\[universal-argument] prefix, enable
   (global-set-key (kbd "C-c d") 'dired-other-window)
   (global-set-key (kbd "C-c f") 'find-file-other-window)
   ;; edit buffer with 'E'
-  (global-set-key (kbd "C-c b") 'view-buffer-other-windows))
+  (global-set-key (kbd "C-c b") 'counsel-switch-buffer-other-window))
 
 ;; Deletes text under selection when insertion is made
 (use-package delsel
@@ -345,6 +345,13 @@ This command can then be followed by the standard
   :hook ( (text-mode-hook . flyspell-mode)
 	  (prog-mode-hook . flyspell-prog-mode)))
 
+(use-package eshell
+  :bind ("<s-return>" . eshell))
+
+(use-package org
+  :bind (:map org-mode-map
+              ("<C-return>" . nil)
+              ("<C-S-return>" . nil)))
 
 ;; mode Line setting
 (column-number-mode 1)
@@ -361,10 +368,10 @@ This command can then be followed by the standard
   :ensure
   :config (minions-mode 1))
 
-(use-package org-bullets
+(use-package org-superstar
   :ensure
   :config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+  (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
 
 ;; auto complete
 (use-package company
@@ -375,38 +382,38 @@ This command can then be followed by the standard
   (global-company-mode 1)
   (company-tng-mode))
 
-(use-package company-irony
-  :ensure
-  :config
-  (add-to-list 'company-backends 'company-irony))
+;; (use-package company-irony
+;;   :ensure
+;;   :config
+;;   (add-to-list 'company-backends 'company-irony))
 
-(use-package irony
-  :ensure
-  :config
-  (add-hook 'c++-mode-hook 'irony-mode)
-  (add-hook 'c-mode-hook 'irony-mode)
-  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
+;; (use-package irony
+;;   :ensure
+;;   :config
+;;   (add-hook 'c++-mode-hook 'irony-mode)
+;;   (add-hook 'c-mode-hook 'irony-mode)
+;;   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
 
-(use-package company-jedi
-  :ensure
-  :config
-  (add-hook 'python-mode-hook 'jedi:setup))
+;; (use-package company-jedi
+;;   :ensure
+;;   :config
+;;   (add-hook 'python-mode-hook 'jedi:setup))
 
-(defun ut/python-mode-hook ()
-  "Add company-back-end and company-jedi to python major mode."
-  (add-to-list 'company-backends 'company-jedi))
+;; (defun ut/python-mode-hook ()
+;;   "Add company-back-end and company-jedi to python major mode."
+;;   (add-to-list 'company-backends 'company-jedi))
 
-(add-hook 'python-mode-hook 'ut/python-mode-hook)
+;; (add-hook 'python-mode-hook 'ut/python-mode-hook)
 
-(use-package company-quickhelp
-  :ensure
-  :init
-  (company-quickhelp-mode))
+;; (use-package company-quickhelp
+;;   :ensure
+;;   :init
+;;   (company-quickhelp-mode))
 
-(use-package irony-eldoc
-  :ensure
-  :config
-  (add-hook 'irony-mode-hook #'irony-eldoc))
+;; (use-package irony-eldoc
+;;   :ensure
+;;   :config
+;;   (add-hook 'irony-mode-hook #'irony-eldoc))
 
 (use-package flycheck
   :ensure
@@ -416,35 +423,47 @@ This command can then be followed by the standard
   (setq flycheck-python-pycompile-executable "python3")
   (add-hook 'after-init-hook #'global-flycheck-mode))
 
-;; (setq lsp-keymap-prefix "C-c l")
+(setq lsp-keymap-prefix "C-c l")
 
-;; (use-package lsp-mode
+(use-package lsp-mode
+  :ensure
+  :hook ((c++-mode-hook . lsp)
+	 (c-mode-hook . lsp)
+	 (python-mode-hook . lsp))
+  :commands lsp)
+
+;; (use-package helm
 ;;   :ensure
-;;   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-;;          (c++-mode-hook . lsp)
-;; 	 (python-mode-hook . lsp)
-;;          ;; if you want which-key integration
-;;          (lsp-mode . lsp-enable-which-key-integration)
-;; 	 )
+;;   :init
+;;   (helm-mode 1)
 ;;   :config
-;;   :commands lsp)
-
-;; ;; lsp and helm integration
-;; (use-package helm-lsp
-;;   :ensure
-;;   :commands helm-lsp-workspace-symbol)
+;;   (global-set-key (kbd "M-x") 'helm-M-x)
+;;   (global-set-key (kbd "C-x r b") 'helm-filtered-bookmarks)
+;;   ;; (global-set-key (kbd "M-y") 'helm-show-kill-ring)
+;;   (global-set-key (kbd "C-x b") 'helm-mini)
+;;   (global-set-key (kbd "C-x C-f") 'helm-find-files))
 
 ;; narrowing framework
-(use-package helm
+(use-package counsel
   :ensure
   :init
-  (helm-mode 1)
+  (ivy-mode 1)
   :config
-  (global-set-key (kbd "M-x") 'helm-M-x)
-  (global-set-key (kbd "C-x r b") 'helm-filtered-bookmarks)
-  ;; (global-set-key (kbd "M-y") 'helm-show-kill-ring)
-  (global-set-key (kbd "C-x b") 'helm-mini)
-  (global-set-key (kbd "C-x C-f") 'helm-find-files))
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "(%d/%d) ")
+  (global-set-key (kbd "C-s") 'swiper-isearch)
+  (global-set-key (kbd "M-x") 'counsel-M-x)
+  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+  (global-set-key (kbd "M-y") 'counsel-yank-pop)
+  (global-set-key (kbd "C-x b") 'ivy-switch-buffer)
+  (global-set-key (kbd "C-c v") 'ivy-push-view)
+  (global-set-key (kbd "C-c V") 'ivy-pop-view))
+
+;; present 'Recency bias' in M-x command
+(use-package amx
+  :ensure
+  :config
+  (amx-mode 1))
 
 ;; try package without installing!!
 (use-package try
@@ -465,8 +484,6 @@ This command can then be followed by the standard
   (pdf-tools-install)
   ;; open pdfs scaled to fit page
   (setq-default pdf-view-display-size 'fit-page)
-  ;; midnight mode to be coherent with modus-vivendi theme
-  (setq pdf-view-midnight-colors '("#ffffff" . "#000000"))
   (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward))
 
 ;; save the last position in pdf-view mode
@@ -497,8 +514,27 @@ This command can then be followed by the standard
 	("https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA" luke youtube)
 	("https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" youtube))))
 
-(use-package bongo
-  :ensure )
+;; terminal emulator inside Emacs
+(use-package vterm
+  :ensure
+  :commands vterm
+  :config
+  (setq vterm-disable-bold-font nil)
+  (setq vterm-disable-inverse-video nil)
+  (setq vterm-disable-underline nil)
+  (setq vterm-kill-buffer-on-exit nil)
+  (setq vterm-max-scrollback 9999)
+  (setq vterm-shell "/bin/zsh")
+  (setq vterm-term-environment-variable "xterm-256color"))
+
+;; similar to htop
+(use-package proced
+  :commands proced
+  :config
+  (setq proced-auto-update-flag t)
+  (setq proced-auto-update-interval 1)
+  (setq proced-descend t)
+  (setq proced-filter 'user))
 
 ;; pass(standard password manager) interface for Emacs
 (use-package password-store
@@ -508,6 +544,11 @@ This command can then be followed by the standard
              password-store-insert)
   :config
   (setq password-store-time-before-clipboard-restore 30))
+
+(use-package sdcv
+  :ensure
+  :hook (sdcv-mode-hook . (lambda ()
+                            (font-lock-mode -1))))
 
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))
