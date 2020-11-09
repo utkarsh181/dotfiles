@@ -1,9 +1,8 @@
 ;;; init.el --- Utkarsh Singh Emacs Configuration  -*- lexical-binding: t; -*-
-;;
 ;;; Commentary:
-;;
+
 ;; A bare-boned config template.
-;;
+
 ;;; Code:
 
 ;; Speed up startup
@@ -35,7 +34,7 @@
 (eval-when-compile
   (require 'use-package))
 
-;; disable GUI components
+;; disable GUI component
 (use-package emacs
   :config
   (scroll-bar-mode -1)
@@ -43,22 +42,24 @@
   (blink-cursor-mode -1)
   (menu-bar-mode -1))
 
-;; to start emacs server
+;; to start Emacs server
 (use-package server
   :hook (after-init-hook . server-start))
+
+(use-package modus-operandi-theme
+  :ensure)
+
+(use-package modus-vivendi-theme
+  :ensure)
 
 ;;theme settings
 (use-package emacs
   :config
   (defmacro contrib/format-sexp (sexp &rest objects)
     `(eval (read (format ,(format "%S" sexp) ,@objects))))
-
-  ;; This is currently not used in this section.  Search for it in the
-  ;; section about setting fonts, `prot/font-bold-face' in particular.
   (defvar prot/modus-theme-after-load-hook nil
     "Hook that runs after loading a Modus theme.
 See `prot/modus-operandi' or `prot/modus-vivendi'.")
-
   (dolist (theme '("operandi" "vivendi"))
     (contrib/format-sexp
      (defun prot/modus-%1$s ()
@@ -72,7 +73,6 @@ See `prot/modus-operandi' or `prot/modus-vivendi'.")
      theme))
   (defun prot/modus-themes-toggle (&optional arg)
     "Toggle between `prot/modus-operandi' and `prot/modus-vivendi'.
-
 With optional \\[universal-argument] prefix, enable
 `prot/modus-themes-alt-mode' for the loaded theme."
     (interactive "P")
@@ -82,19 +82,23 @@ With optional \\[universal-argument] prefix, enable
           (prot/modus-vivendi))
       (disable-theme 'modus-vivendi)
       (prot/modus-operandi)))
-
   :hook (after-init-hook . prot/modus-vivendi)
   :bind ("<f5>" . prot/modus-themes-toggle))
 
 ;; cache directory for emacs
 (setq backup-directory-alist '(("." . "~/.cache/emacs")))
 
+;; set font for emoji
+(use-package emacs
+  :config
+  (set-fontset-font t nil "Noto Color Emoji" nil 'append))
+
 ;; auto-pair
 (use-package electric
   :init
   (electric-pair-mode 1))
 
-;;parentheses highlighting
+;; parentheses highlighting
 (use-package paren
   :init
   (show-paren-mode 1))
@@ -108,7 +112,7 @@ With optional \\[universal-argument] prefix, enable
   (setq recentf-max-menu-items 25)
   (setq recentf-max-saved-items 25))
 
-;; Better default
+;; better default
 (global-set-key (kbd "M-/") 'hippie-expand)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "M-z") 'zap-up-to-char)
@@ -262,7 +266,7 @@ This command can then be followed by the standard
   :config
   (global-set-key (kbd "C-=") 'er/expand-region))
 
-;; dired(directory editor) settings
+;; file manager
 (use-package dired
   :config
   (setq dired-recursive-copies 'always)
@@ -302,6 +306,7 @@ This command can then be followed by the standard
        (define-key peep-dired-mode-map (kbd "p") 'peep-dired-prev-file)))
 
 (use-package diredfl
+  :ensure
   :config
   (setq diredfl-ignore-compressed-flag nil)
   :hook (dired-mode-hook . diredfl-mode))
@@ -382,39 +387,6 @@ This command can then be followed by the standard
   (global-company-mode 1)
   (company-tng-mode))
 
-;; (use-package company-irony
-;;   :ensure
-;;   :config
-;;   (add-to-list 'company-backends 'company-irony))
-
-;; (use-package irony
-;;   :ensure
-;;   :config
-;;   (add-hook 'c++-mode-hook 'irony-mode)
-;;   (add-hook 'c-mode-hook 'irony-mode)
-;;   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
-
-;; (use-package company-jedi
-;;   :ensure
-;;   :config
-;;   (add-hook 'python-mode-hook 'jedi:setup))
-
-;; (defun ut/python-mode-hook ()
-;;   "Add company-back-end and company-jedi to python major mode."
-;;   (add-to-list 'company-backends 'company-jedi))
-
-;; (add-hook 'python-mode-hook 'ut/python-mode-hook)
-
-;; (use-package company-quickhelp
-;;   :ensure
-;;   :init
-;;   (company-quickhelp-mode))
-
-;; (use-package irony-eldoc
-;;   :ensure
-;;   :config
-;;   (add-hook 'irony-mode-hook #'irony-eldoc))
-
 (use-package flycheck
   :ensure
   :init
@@ -459,13 +431,13 @@ This command can then be followed by the standard
   (global-set-key (kbd "C-c v") 'ivy-push-view)
   (global-set-key (kbd "C-c V") 'ivy-pop-view))
 
-;; present 'Recency bias' in M-x command
+;; present recency-bias in M-x command
 (use-package amx
   :ensure
   :config
   (amx-mode 1))
 
-;; try package without installing!!
+;; try package without installing!
 (use-package try
   :ensure)
 
@@ -484,6 +456,7 @@ This command can then be followed by the standard
   (pdf-tools-install)
   ;; open pdfs scaled to fit page
   (setq-default pdf-view-display-size 'fit-page)
+  ;; swiper doesn't work in PDF-view mode
   (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward))
 
 ;; save the last position in pdf-view mode
@@ -549,6 +522,25 @@ This command can then be followed by the standard
   :ensure
   :hook (sdcv-mode-hook . (lambda ()
                             (font-lock-mode -1))))
+(use-package notmuch
+  :ensure)
+
+(use-package smtpmail
+  :init
+  (setq smtpmail-default-smtp-server "smtp.google.com")
+  :config
+  (setq smtpmail-smtp-server "smtp.google.com")
+  (setq smtpmail-stream-type 'ssl)
+  (setq smtpmail-smtp-service 587)
+  (setq smtpmail-queue-mail nil))
+
+(use-package smtpmail-async
+  :after smtpmail
+  :config
+  (setq send-mail-function 'async-smtpmail-send-it)
+  (setq message-send-mail-function 'async-smtpmail-send-it))
 
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))
+;; End:
+;;; init.el ends here
