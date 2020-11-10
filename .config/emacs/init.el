@@ -5,7 +5,7 @@
 
 ;;; Code:
 
-;; Speed up startup
+;; speed up startup
 (setq gc-cons-threshold (* 50 1000 1000))
 
 (setq inhibit-startup-screen t)
@@ -384,16 +384,15 @@ This command can then be followed by the standard
   :config
   (setq company-idle-delay 0)
   (setq company-minimum-prefix-length 1)
-  (global-company-mode 1)
-  (company-tng-mode))
+  :hook ((prog-mode-hook . (company-mode))
+	 (prog-mode-hook . (company-tng-mode))))
 
 (use-package flycheck
   :ensure
-  :init
-  (global-flycheck-mode)
   :config
   (setq flycheck-python-pycompile-executable "python3")
-  (add-hook 'after-init-hook #'global-flycheck-mode))
+  ;; (add-hook 'after-init-hook #'global-flycheck-mode)
+  :hook (prog-mode-hook . flycheck-mode))
 
 (setq lsp-keymap-prefix "C-c l")
 
@@ -418,8 +417,6 @@ This command can then be followed by the standard
 ;; narrowing framework
 (use-package counsel
   :ensure
-  :init
-  (ivy-mode 1)
   :config
   (setq ivy-use-virtual-buffers t)
   (setq ivy-count-format "(%d/%d) ")
@@ -429,7 +426,16 @@ This command can then be followed by the standard
   (global-set-key (kbd "M-y") 'counsel-yank-pop)
   (global-set-key (kbd "C-x b") 'ivy-switch-buffer)
   (global-set-key (kbd "C-c v") 'ivy-push-view)
-  (global-set-key (kbd "C-c V") 'ivy-pop-view))
+  (global-set-key (kbd "C-c V") 'ivy-pop-view)
+  :init
+  (ivy-mode 1))
+
+(use-package ace-window
+  :ensure
+  :init
+  (global-set-key (kbd "C-x o") 'ace-window)
+  :config
+  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 
 ;; present recency-bias in M-x command
 (use-package amx
