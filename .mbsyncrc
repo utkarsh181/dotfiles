@@ -1,0 +1,25 @@
+IMAPStore utkarsh190601@gmail.com-remote
+Host imap.gmail.com
+Port 993
+User utkarsh190601@gmail.com
+PassCmd "pass mw-utkarsh190601@gmail.com"
+AuthMechs LOGIN
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+MaildirStore utkarsh190601@gmail.com-local
+Subfolders Verbatim
+Path /home/utkarsh/.local/share/mail/utkarsh190601@gmail.com/
+Inbox /home/utkarsh/.local/share/mail/utkarsh190601@gmail.com/INBOX
+Flatten .
+
+Channel utkarsh190601@gmail.com
+Expunge Both
+Master :utkarsh190601@gmail.com-remote:
+Slave :utkarsh190601@gmail.com-local:
+Patterns * !"[Gmail]/All Mail"
+Create Both
+SyncState *
+MaxMessages 0
+ExpireUnread no
+# End profile

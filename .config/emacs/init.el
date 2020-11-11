@@ -20,7 +20,7 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-;; Configure `use-package' prior to loading it.
+;; configure `use-package' prior to loading it.
 (eval-and-compile
   (setq use-package-always-ensure nil)
   (setq use-package-always-defer nil)
@@ -52,7 +52,7 @@
 (use-package modus-vivendi-theme
   :ensure)
 
-;;theme settings
+;; theme settings
 (use-package emacs
   :config
   (defmacro contrib/format-sexp (sexp &rest objects)
@@ -88,7 +88,7 @@ With optional \\[universal-argument] prefix, enable
 ;; cache directory for emacs
 (setq backup-directory-alist '(("." . "~/.cache/emacs")))
 
-;; set font for emoji
+;; font settings
 (use-package emacs
   :config
   (set-fontset-font t nil "Noto Color Emoji" nil 'append))
@@ -113,10 +113,13 @@ With optional \\[universal-argument] prefix, enable
   (setq recentf-max-saved-items 25))
 
 ;; better default
-(global-set-key (kbd "M-/") 'hippie-expand)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "M-z") 'zap-up-to-char)
-(setq custom-file "~/.config/emacs/custom.el")
+
+;; write custom config in separate file
+(use-package emacs
+  :config
+  (setq custom-file "~/.config/emacs/custom.el"))
 
 ;; manage other buffer with ease
 (use-package emacs
@@ -382,10 +385,10 @@ This command can then be followed by the standard
 (use-package company
   :ensure
   :config
-  (setq company-idle-delay 0)
+  (setq company-idle-delay 0.1)
   (setq company-minimum-prefix-length 1)
-  :hook ((prog-mode-hook . (company-mode))
-	 (prog-mode-hook . (company-tng-mode))))
+  :hook ((prog-mode-hook . company-mode)
+	 (prog-mode-hook . company-tng-mode)))
 
 (use-package flycheck
   :ensure
@@ -403,20 +406,11 @@ This command can then be followed by the standard
 	 (python-mode-hook . lsp))
   :commands lsp)
 
-;; (use-package helm
-;;   :ensure
-;;   :init
-;;   (helm-mode 1)
-;;   :config
-;;   (global-set-key (kbd "M-x") 'helm-M-x)
-;;   (global-set-key (kbd "C-x r b") 'helm-filtered-bookmarks)
-;;   ;; (global-set-key (kbd "M-y") 'helm-show-kill-ring)
-;;   (global-set-key (kbd "C-x b") 'helm-mini)
-;;   (global-set-key (kbd "C-x C-f") 'helm-find-files))
-
 ;; narrowing framework
 (use-package counsel
   :ensure
+  :init
+  (ivy-mode 1)
   :config
   (setq ivy-use-virtual-buffers t)
   (setq ivy-count-format "(%d/%d) ")
@@ -426,9 +420,7 @@ This command can then be followed by the standard
   (global-set-key (kbd "M-y") 'counsel-yank-pop)
   (global-set-key (kbd "C-x b") 'ivy-switch-buffer)
   (global-set-key (kbd "C-c v") 'ivy-push-view)
-  (global-set-key (kbd "C-c V") 'ivy-pop-view)
-  :init
-  (ivy-mode 1))
+  (global-set-key (kbd "C-c V") 'ivy-pop-view))
 
 (use-package ace-window
   :ensure
@@ -491,7 +483,23 @@ This command can then be followed by the standard
 	("https://www.youtube.com/feeds/videos.xml?user=OmegaDungeon" linux youtube)
 	("https://www.youtube.com/feeds/videos.xml?channel_id=UCVls1GmFKf6WlTraIb_IaJg" linux youtube)
 	("https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA" luke youtube)
-	("https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" youtube))))
+	("https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" youtube)))
+  (defun elfeed-v-mpv (url)
+    "Watch a video from URL in MPV"
+    (async-shell-command (format "mpv '%s'" url)))
+
+  (defun elfeed-view-mpv (&optional use-generic-p)
+    "Youtube-feed link"
+    (interactive "P")
+    (let ((entries (elfeed-search-selected)))
+      (cl-loop for entry in entries
+	       do (elfeed-untag entry 'unread)
+	       when (elfeed-entry-link entry)
+	       do (elfeed-v-mpv it))
+      (mapc #'elfeed-search-update-entry entries)
+      (unless (use-region-p) (forward-line))))
+  
+  (define-key elfeed-search-mode-map (kbd "v") 'elfeed-view-mpv))
 
 ;; terminal emulator inside Emacs
 (use-package vterm
@@ -506,7 +514,7 @@ This command can then be followed by the standard
   (setq vterm-shell "/bin/zsh")
   (setq vterm-term-environment-variable "xterm-256color"))
 
-;; similar to htop
+;; built in process viewer inside Emacs
 (use-package proced
   :commands proced
   :config
@@ -548,5 +556,6 @@ This command can then be followed by the standard
 
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))
+
 ;; End:
 ;;; init.el ends here
