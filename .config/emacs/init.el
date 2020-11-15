@@ -91,7 +91,12 @@ With optional \\[universal-argument] prefix, enable
 ;; font settings
 (use-package emacs
   :config
-  (set-fontset-font t nil "Noto Color Emoji" nil 'append))
+  (set-fontset-font t nil "Noto Color Emoji" nil 'append)
+  (set-face-attribute 'default nil
+                    :family "Iosevka"
+                    :height 100
+                    :weight 'normal
+                    :width 'normal))
 
 ;; auto-pair
 (use-package electric
@@ -361,8 +366,9 @@ This command can then be followed by the standard
               ("<C-return>" . nil)
               ("<C-S-return>" . nil)))
 
-;; mode Line setting
-(column-number-mode 1)
+(use-package emacs
+  :config
+  (column-number-mode 1))
 
 ;; reverts buffer is file is change on disk
 (use-package autorevert
@@ -477,8 +483,6 @@ This command can then be followed by the standard
 	("https://notrelated.libsyn.com/rss" luke)
 	("https://www.archlinux.org/feeds/news/" linux distro)
 	("https://ambrevar.xyz/atom.xml" emacs)
-	("https://www.reddit.com/r/emacs/top.rss"emacs reddit)
-	("https://www.reddit.com/r/archlinux/top.rss" linux reddit)
 	("https://protesilaos.com/codelog.xml" emacs)
 	("https://www.youtube.com/feeds/videos.xml?user=OmegaDungeon" linux youtube)
 	("https://www.youtube.com/feeds/videos.xml?channel_id=UCVls1GmFKf6WlTraIb_IaJg" linux youtube)
