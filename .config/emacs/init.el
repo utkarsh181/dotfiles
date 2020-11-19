@@ -412,6 +412,12 @@ This command can then be followed by the standard
 	 (python-mode-hook . lsp))
   :commands lsp)
 
+;; elisp live documentation feedback
+(use-package eldoc
+  :diminish
+  :config
+  (global-eldoc-mode 1))
+
 ;; narrowing framework
 (use-package counsel
   :ensure
@@ -540,23 +546,28 @@ This command can then be followed by the standard
   :ensure
   :hook (sdcv-mode-hook . (lambda ()
                             (font-lock-mode -1))))
-(use-package notmuch
-  :ensure)
+
+(use-package message
+  :config
+  (setq mail-user-agent 'message-user-agent)
+  (setq user-mail-address "utkarsh190601@gmail.com"
+	user-full-name "Utkarsh Singh")
+  (setq message-kill-buffer-on-exit t)
+  (setq message-directory "~/.local/share/mail"))
 
 (use-package smtpmail
-  :init
-  (setq smtpmail-default-smtp-server "smtp.google.com")
   :config
-  (setq smtpmail-smtp-server "smtp.google.com")
-  (setq smtpmail-stream-type 'ssl)
-  (setq smtpmail-smtp-service 587)
-  (setq smtpmail-queue-mail nil))
+  (setq sendmail-program "/usr/bin/msmtp"
+      send-mail-function 'smtpmail-send-it
+      message-sendmail-f-is-evil t
+      message-sendmail-extra-arguments '("--read-envelope-from")
+      message-send-mail-function 'message-send-mail-with-sendmail))
 
-(use-package smtpmail-async
-  :after smtpmail
+(use-package notmuch
+  :ensure
   :config
-  (setq send-mail-function 'async-smtpmail-send-it)
-  (setq message-send-mail-function 'async-smtpmail-send-it))
+  (setq notmuch-search-oldest-first nil
+	notmuch-fcc-dirs '("utkarsh190601@gmail.com" . "utkarsh190601@gmail.com/[Gmail].Sent")))
 
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))

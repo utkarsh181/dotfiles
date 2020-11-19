@@ -1,0 +1,4 @@
+#!/bin/bash
+notmuch tag -inbox -unread +trash  path:utkarsh190601@gmail.com/[Gmail].Trash/**
+notmuch tag -inbox +spam  path:utkarsh190601@gmail.com/[Gmail].Spam/**
+notmuch tag -inbox -unread +sent path:utkarsh190601@gmail.com/[Gmail].Sent/**
