@@ -1,0 +1,19 @@
+# vim: filetype=neomuttrc
+# muttrc file for account utkarsh190601@gmail.com
+set realname = "utkarsh19"
+set from = "utkarsh190601@gmail.com"
+set sendmail = "msmtp -a utkarsh190601@gmail.com"
+alias me utkarsh19 <utkarsh190601@gmail.com>
+set folder = "/home/utkarsh/.local/share/mail/utkarsh190601@gmail.com"
+set header_cache = /home/utkarsh/.cache/mutt-wizard/utkarsh190601@gmail.com/headers
+set message_cachedir = /home/utkarsh/.cache/mutt-wizard/utkarsh190601@gmail.com/bodies
+set mbox_type = Maildir
+
+bind index,pager gg noop
+bind index,pager g noop
+bind index,pager M noop
+bind index,pager C noop
+bind index gg first-entry
+macro index o "<shell-escape>mw -y utkarsh190601@gmail.com<enter>" "run mbsync to sync utkarsh190601@gmail.com"
+unmailboxes *
+
