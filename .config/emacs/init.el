@@ -117,9 +117,12 @@ With optional \\[universal-argument] prefix, enable
   (setq recentf-max-menu-items 25)
   (setq recentf-max-saved-items 25))
 
-;; better default
+(use-package emacs
+:config
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "M-z") 'zap-up-to-char)
+;; apropos sort by relevancy
+(setq apropos-sort-by-scores t))
 
 ;; write custom config in separate file
 (use-package emacs
@@ -358,9 +361,6 @@ This command can then be followed by the standard
   :hook ( (text-mode-hook . flyspell-mode)
 	  (prog-mode-hook . flyspell-prog-mode)))
 
-(use-package eshell
-  :bind ("<s-return>" . eshell))
-
 (use-package org
   :bind (:map org-mode-map
               ("<C-return>" . nil)
@@ -434,18 +434,32 @@ This command can then be followed by the standard
   (global-set-key (kbd "C-c v") 'ivy-push-view)
   (global-set-key (kbd "C-c V") 'ivy-pop-view))
 
-(use-package ace-window
-  :ensure
-  :init
-  (global-set-key (kbd "C-x o") 'ace-window)
-  :config
-  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
-
 ;; present recency-bias in M-x command
 (use-package amx
   :ensure
   :config
   (amx-mode 1))
+
+;; undo system for window management
+;; NOTE: dwm also uses <s-left/right> to shift monitors which is disabled by default
+(use-package winner
+  :hook (after-init-hook . winner-mode)
+  :bind (("<s-right>" . winner-redo)
+         ("<s-left>" . winner-undo)))
+
+;; use ctrl-super-vim_keys to move around windows
+(use-package windmove
+  :config
+  (setq windmove-create-window nil)
+  :bind (("C-s-k" . windmove-up)
+         ("C-s-l" . windmove-right)
+         ("C-s-j" . windmove-down)
+         ("C-s-h" . windmove-left)
+         ;; numpad keys clockwise: 8 6 2 4
+         ("<kp-up>" . windmove-up)
+         ("<kp-right>" . windmove-right)
+         ("<kp-down>" . windmove-down)
+         ("<kp-left>" . windmove-left)))
 
 ;; try package without installing!
 (use-package try
@@ -508,10 +522,39 @@ This command can then be followed by the standard
 	       do (elfeed-v-mpv it))
       (mapc #'elfeed-search-update-entry entries)
       (unless (use-region-p) (forward-line))))
-  
+
   (define-key elfeed-search-mode-map (kbd "v") 'elfeed-view-mpv))
 
-;; terminal emulator inside Emacs
+;; shell implemented in elisp
+(use-package eshell
+  :config
+  :bind ("<s-return>" . eshell))
+
+(use-package esh-module
+  :config
+  (setq eshell-modules-list
+        '(eshell-alias
+          eshell-basic
+          eshell-cmpl
+          eshell-dirs
+          eshell-glob
+          eshell-hist
+          eshell-ls
+          eshell-pred
+          eshell-prompt
+          eshell-script
+          eshell-term
+          eshell-tramp
+          eshell-unix)))
+
+;; cache password for 10 mins
+(use-package em-tramp
+  :after esh-mode
+  :config
+  (setq password-cache t)
+  (setq password-cache-expiry 600))
+
+;; terminal emulator inside Emacs though eshell just works
 (use-package vterm
   :ensure
   :commands vterm
@@ -542,16 +585,21 @@ This command can then be followed by the standard
   :config
   (setq password-store-time-before-clipboard-restore 30))
 
+;; local dictionary using sdcv
 (use-package sdcv
   :ensure
+  ;; remove font-lock which causes awkward highlighting
   :hook (sdcv-mode-hook . (lambda ()
                             (font-lock-mode -1))))
+(use-package auth-source
+  :config
+  ;; (setq auth-source '("~/.local/share/emacs/authinfo.gpg"))
+  (setq user-mail-address "utkarsh190601@gmail.com")
+  (setq user-full-name "Utkarsh Singh"))
 
 (use-package message
   :config
   (setq mail-user-agent 'message-user-agent)
-  (setq user-mail-address "utkarsh190601@gmail.com"
-	user-full-name "Utkarsh Singh")
   (setq message-kill-buffer-on-exit t)
   (setq message-directory "~/.local/share/mail"))
 
