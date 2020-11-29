@@ -94,9 +94,7 @@ With optional \\[universal-argument] prefix, enable
   (set-fontset-font t nil "Noto Color Emoji" nil 'append)
   (set-face-attribute 'default nil
                     :family "Iosevka"
-                    :height 100
-                    :weight 'normal
-                    :width 'normal))
+                    :height 100))
 
 ;; auto-pair
 (use-package electric
@@ -615,7 +613,8 @@ This command can then be followed by the standard
   :ensure
   :config
   (setq notmuch-search-oldest-first nil
-	notmuch-fcc-dirs '("utkarsh190601@gmail.com" . "utkarsh190601@gmail.com/[Gmail].Sent")))
+	notmuch-fcc-dirs '("utkarsh190601@gmail.com" . "utkarsh190601@gmail.com/[Gmail].Sent"))
+  (setq notmuch-archive-tags '("-inbox" "-unread" "+deleted")))
 
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))
