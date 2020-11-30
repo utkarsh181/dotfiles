@@ -85,9 +85,6 @@ With optional \\[universal-argument] prefix, enable
   :hook (after-init-hook . prot/modus-vivendi)
   :bind ("<f5>" . prot/modus-themes-toggle))
 
-;; cache directory for emacs
-(setq backup-directory-alist '(("." . "~/.cache/emacs")))
-
 ;; font settings
 (use-package emacs
   :config
@@ -122,9 +119,11 @@ With optional \\[universal-argument] prefix, enable
 ;; apropos sort by relevancy
 (setq apropos-sort-by-scores t))
 
+;; create separate backup dir
 ;; write custom config in separate file
 (use-package emacs
   :config
+  (setq backup-directory-alist '(("." . "~/.cache/emacs")))
   (setq custom-file "~/.config/emacs/custom.el"))
 
 ;; manage other buffer with ease
@@ -150,6 +149,7 @@ With optional \\[universal-argument] prefix, enable
   (put 'overwrite-mode 'disabled nil)
   (put 'dired-find-alternate-file 'disabled nil))
 
+;; custom key bindings to reduce keystrokes for regular editing commands
 (use-package emacs
   :config
   (defun ut/new-line-below (&optional arg)
@@ -297,7 +297,7 @@ This command can then be followed by the standard
 	      ("<C-tab>" . dired-subtree-cycle)
 	      ("<S-iso-lefttab>" . dired-subtree-remove)))
 
-;; preview mode for Emacs
+;; preview mode for dired
 (use-package peep-dired
   :ensure
   :after dired
@@ -308,12 +308,13 @@ This command can then be followed by the standard
   :bind (:map dired-mode-map
               ("P" . peep-dired)))
 
-;; use 'n' and 'p' to navigate in peed-dired mode
+;; use 'n' and 'p' to navigate in peep-dired mode
  (eval-after-load "peep-dired"
     '(progn
        (define-key peep-dired-mode-map (kbd "n") 'peep-dired-next-file)
        (define-key peep-dired-mode-map (kbd "p") 'peep-dired-prev-file)))
 
+;; make dired more colourful
 (use-package diredfl
   :ensure
   :config
@@ -364,6 +365,7 @@ This command can then be followed by the standard
               ("<C-return>" . nil)
               ("<C-S-return>" . nil)))
 
+;; display column number in mode line
 (use-package emacs
   :config
   (column-number-mode 1))
@@ -380,18 +382,20 @@ This command can then be followed by the standard
   :ensure
   :config (minions-mode 1))
 
+;; prettify headings and plain lists in Org mode
 (use-package org-superstar
   :ensure
   :config
   (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
 
-;; auto complete
+;; text completion framework
 (use-package company
   :ensure
   :config
   (setq company-idle-delay 0.1)
   (setq company-minimum-prefix-length 1)
   :hook ((prog-mode-hook . company-mode)
+	 ;; use <tab> to cycle through completion
 	 (prog-mode-hook . company-tng-mode)))
 
 (use-package flycheck
@@ -403,6 +407,7 @@ This command can then be followed by the standard
 
 (setq lsp-keymap-prefix "C-c l")
 
+;; language server mode
 (use-package lsp-mode
   :ensure
   :hook ((c++-mode-hook . lsp)
@@ -463,6 +468,7 @@ This command can then be followed by the standard
 (use-package try
   :ensure)
 
+;; use the Emacsclient as $EDITOR
 (use-package with-editor
   :ensure
   :config
@@ -601,6 +607,7 @@ This command can then be followed by the standard
   (setq message-kill-buffer-on-exit t)
   (setq message-directory "~/.local/share/mail"))
 
+;; send mail from inside Emacs using smtp protocol
 (use-package smtpmail
   :config
   (setq sendmail-program "/usr/bin/msmtp"
@@ -609,6 +616,7 @@ This command can then be followed by the standard
       message-sendmail-extra-arguments '("--read-envelope-from")
       message-send-mail-function 'message-send-mail-with-sendmail))
 
+;; Emacs interface to notmuch
 (use-package notmuch
   :ensure
   :config
