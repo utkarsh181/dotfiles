@@ -90,7 +90,7 @@ With optional \\[universal-argument] prefix, enable
   :config
   (set-fontset-font t nil "Noto Color Emoji" nil 'append)
   (set-face-attribute 'default nil
-                    :family "Iosevka"
+                    :family "monospace"
                     :height 100))
 
 ;; auto-pair
@@ -421,6 +421,13 @@ This command can then be followed by the standard
   :config
   (global-eldoc-mode 1))
 
+;; manage how Emacs uniquely define identical-named files
+(use-package uniquify
+  :config
+  (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
+  (setq uniquify-strip-common-suffix t)
+  (setq uniquify-after-kill-buffer-p t))
+
 ;; narrowing framework
 (use-package counsel
   :ensure
@@ -580,7 +587,7 @@ This command can then be followed by the standard
   (setq proced-descend t)
   (setq proced-filter 'user))
 
-;; pass(standard password manager) interface for Emacs
+;; Emacs interface for pass(standard password manager)
 (use-package password-store
   :ensure
   :commands (password-store-copy
