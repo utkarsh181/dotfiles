@@ -90,8 +90,12 @@ With optional \\[universal-argument] prefix, enable
   :config
   (set-fontset-font t nil "Noto Color Emoji" nil 'append)
   (set-face-attribute 'default nil
-                    :family "monospace"
-                    :height 100))
+                    :family "Iosevka"
+                    :height 100)
+  ;; override system default mono-space font
+  (set-face-attribute 'fixed-pitch nil
+		      :family "Iosevka"
+		      :height 100))
 
 ;; auto-pair
 (use-package electric
