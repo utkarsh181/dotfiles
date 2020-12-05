@@ -631,8 +631,10 @@ This command can then be followed by the standard
 (use-package notmuch
   :ensure
   :config
-  (setq notmuch-search-oldest-first nil
-	notmuch-fcc-dirs '("utkarsh190601@gmail.com" . "utkarsh190601@gmail.com/[Gmail].Sent"))
+  (setq notmuch-search-oldest-first nil)
+  (setq notmuch-fcc-dirs '("utkarsh190601@gmail.com" . "utkarsh190601@gmail.com/[Gmail].Sent +sent -inbox"))
+  (setq notmuch-fcc-dirs
+      '(("utkarsh190601@gmail.com" . "utkarsh190601@gmail.com/[Gmail].Sent +sent -inbox -unread")))
   (setq notmuch-archive-tags '("-inbox" "-unread" "+deleted")))
 
 ;; Make gc pauses faster by decreasing the threshold.
