@@ -46,14 +46,9 @@
 (use-package server
   :hook (after-init-hook . server-start))
 
-(use-package modus-operandi-theme
-  :ensure)
-
-(use-package modus-vivendi-theme
-  :ensure)
-
 ;; theme settings
-(use-package emacs
+(use-package modus-themes
+  :ensure t
   :config
   (defmacro contrib/format-sexp (sexp &rest objects)
     `(eval (read (format ,(format "%S" sexp) ,@objects))))
@@ -279,7 +274,7 @@ This command can then be followed by the standard
   :config
   (global-set-key (kbd "C-=") 'er/expand-region))
 
-;; file manager
+;; directory editor
 (use-package dired
   :config
   (setq dired-recursive-copies 'always)
@@ -440,7 +435,7 @@ This command can then be followed by the standard
   :config
   (setq ivy-use-virtual-buffers t)
   (setq ivy-count-format "(%d/%d) ")
-  (global-set-key (kbd "C-s") 'swiper-isearch)
+  ;; (global-set-key (kbd "C-s") 'swiper-isearch)
   (global-set-key (kbd "M-x") 'counsel-M-x)
   (global-set-key (kbd "C-x C-f") 'counsel-find-file)
   (global-set-key (kbd "M-y") 'counsel-yank-pop)
