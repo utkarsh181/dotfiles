@@ -8,6 +8,6 @@ m   ${XDG_MUSIC_DIR:-$HOME/Music}
 mn  /mnt
 pp  ${XDG_PICTURES_DIR:-$HOME/Pictures}
 sc  ~/.local/bin
-Py  ~/Documents/programming_work/python_programming
-C   ~/Documents/programming_work/c_programming
-Cpp ~/Documents/programming_work/cpp_programming
+Py  ~/Documents/prog/python
+C   ~/Documents/prog/C
+Cpp ~/Documents/prog/cpp

@@ -129,6 +129,7 @@ With optional \\[universal-argument] prefix, enable
 (use-package emacs
   :config
   (global-set-key (kbd "C-c d") 'dired-other-window)
+  (global-set-key (kbd "C-c C-j") 'dired-jump-other-window)
   (global-set-key (kbd "C-c f") 'find-file-other-window)
   ;; edit buffer with 'E'
   (global-set-key (kbd "C-c b") 'counsel-switch-buffer-other-window))
@@ -286,15 +287,15 @@ This command can then be followed by the standard
          (dired-mode-hook . hl-line-mode)))
 
 ;; toggle to view sub-directories in dired
-(use-package dired-subtree
-  :ensure
-  :after dired
-  :config
-  (setq dired-subtree-use-backgrounds nil)
-  :bind (:map dired-mode-map
-	      ("<tab>" . dired-subtree-toggle)
-	      ("<C-tab>" . dired-subtree-cycle)
-	      ("<S-iso-lefttab>" . dired-subtree-remove)))
+;; (use-package dired-subtree
+;;   :ensure
+;;   :after dired
+;;   :config
+;;   (setq dired-subtree-use-backgrounds nil)
+;;   :bind (:map dired-mode-map
+;; 	      ("<tab>" . dired-subtree-toggle)
+;; 	      ("<C-tab>" . dired-subtree-cycle)
+;; 	      ("<S-iso-lefttab>" . dired-subtree-remove)))
 
 ;; preview mode for dired
 (use-package peep-dired
@@ -308,10 +309,10 @@ This command can then be followed by the standard
               ("P" . peep-dired)))
 
 ;; use 'n' and 'p' to navigate in peep-dired mode
- (eval-after-load "peep-dired"
-    '(progn
-       (define-key peep-dired-mode-map (kbd "n") 'peep-dired-next-file)
-       (define-key peep-dired-mode-map (kbd "p") 'peep-dired-prev-file)))
+(eval-after-load "peep-dired"
+  '(progn
+     (define-key peep-dired-mode-map (kbd "n") 'peep-dired-next-file)
+     (define-key peep-dired-mode-map (kbd "p") 'peep-dired-prev-file)))
 
 ;; make dired more colourful
 (use-package diredfl
@@ -319,6 +320,11 @@ This command can then be followed by the standard
   :config
   (setq diredfl-ignore-compressed-flag nil)
   :hook (dired-mode-hook . diredfl-mode))
+
+(use-package dired-aux
+  :config
+  (setq dired-create-destination-dirs 'ask)
+  (setq dired-vc-rename-file t))
 
 (use-package display-line-numbers
   :config
