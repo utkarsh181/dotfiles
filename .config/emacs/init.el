@@ -74,9 +74,13 @@ With optional \\[universal-argument] prefix, enable
     (if (eq (car custom-enabled-themes) 'modus-operandi)
         (progn
           (disable-theme 'modus-operandi)
-          (prot/modus-vivendi))
+          (prot/modus-vivendi)
+	  (if (eq major-mode 'pdf-view-mode)
+	      (pdf-view-midnight-minor-mode 1)))
       (disable-theme 'modus-vivendi)
-      (prot/modus-operandi)))
+      (prot/modus-operandi)
+      (if (eq major-mode 'pdf-view-mode)
+	      (pdf-view-midnight-minor-mode 0))))
   :hook (after-init-hook . prot/modus-vivendi)
   :bind ("<f5>" . prot/modus-themes-toggle))
 
@@ -575,7 +579,7 @@ This command can then be followed by the standard
   :ensure
   :commands vterm
   :config
-  (setq vterm-disable-bold-font nil)
+  (setq vterm-disable-bold nil)
   (setq vterm-disable-inverse-video nil)
   (setq vterm-disable-underline nil)
   (setq vterm-kill-buffer-on-exit nil)
