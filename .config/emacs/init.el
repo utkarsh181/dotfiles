@@ -87,14 +87,7 @@ With optional \\[universal-argument] prefix, enable
 ;; font settings
 (use-package emacs
   :config
-  (set-fontset-font t nil "Noto Color Emoji" nil 'append)
-  (set-face-attribute 'default nil
-                    :family "Iosevka"
-                    :height 100)
-  ;; override system default mono-space font
-  (set-face-attribute 'fixed-pitch nil
-		      :family "Iosevka"
-		      :height 100))
+  (set-fontset-font t nil "Noto Color Emoji" nil 'append))
 
 ;; auto-pair
 (use-package electric
