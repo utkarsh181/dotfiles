@@ -52,37 +52,37 @@
   :config
   (defmacro contrib/format-sexp (sexp &rest objects)
     `(eval (read (format ,(format "%S" sexp) ,@objects))))
-  (defvar prot/modus-theme-after-load-hook nil
+  (defvar contrib/modus-theme-after-load-hook nil
     "Hook that runs after loading a Modus theme.
-See `prot/modus-operandi' or `prot/modus-vivendi'.")
+See `contrib/modus-operandi' or `contrib/modus-vivendi'.")
   (dolist (theme '("operandi" "vivendi"))
     (contrib/format-sexp
-     (defun prot/modus-%1$s ()
+     (defun contrib/modus-%1$s ()
        (setq modus-%1$s-theme-slanted-constructs t
              modus-%1$s-theme-bold-constructs t
              modus-%1$s-theme-fringes nil ; {nil,'subtle,'intense}
              modus-%1$s-theme-mode-line '3d ; {nil,'3d,'moody}
 	     )
        (load-theme 'modus-%1$s t)
-       (run-hooks 'prot/modus-theme-after-load-hook))
+       (run-hooks 'contrib/modus-theme-after-load-hook))
      theme))
-  (defun prot/modus-themes-toggle (&optional arg)
-    "Toggle between `prot/modus-operandi' and `prot/modus-vivendi'.
+  (defun contrib/modus-themes-toggle (&optional arg)
+    "Toggle between `contrib/modus-operandi' and `contrib/modus-vivendi'.
 With optional \\[universal-argument] prefix, enable
-`prot/modus-themes-alt-mode' for the loaded theme."
+`contrib/modus-themes-alt-mode' for the loaded theme."
     (interactive "P")
     (if (eq (car custom-enabled-themes) 'modus-operandi)
         (progn
           (disable-theme 'modus-operandi)
-          (prot/modus-vivendi)
+          (contrib/modus-vivendi)
 	  (if (eq major-mode 'pdf-view-mode)
 	      (pdf-view-midnight-minor-mode 1)))
       (disable-theme 'modus-vivendi)
-      (prot/modus-operandi)
+      (contrib/modus-operandi)
       (if (eq major-mode 'pdf-view-mode)
 	      (pdf-view-midnight-minor-mode 0))))
-  :hook (after-init-hook . prot/modus-vivendi)
-  :bind ("<f5>" . prot/modus-themes-toggle))
+  :hook (after-init-hook . contrib/modus-vivendi)
+  :bind ("<f5>" . contrib/modus-themes-toggle))
 
 ;; font settings
 (use-package emacs
@@ -109,11 +109,11 @@ With optional \\[universal-argument] prefix, enable
   (setq recentf-max-saved-items 25))
 
 (use-package emacs
-:config
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-(global-set-key (kbd "M-z") 'zap-up-to-char)
-;; apropos sort by relevancy
-(setq apropos-sort-by-scores t))
+  :config
+  (global-set-key (kbd "C-x C-b") 'ibuffer)
+  (global-set-key (kbd "M-z") 'zap-up-to-char)
+  ;; apropos sort by relevancy
+  (setq apropos-sort-by-scores t))
 
 ;; create separate backup dir
 ;; write custom config in separate file
@@ -131,11 +131,11 @@ With optional \\[universal-argument] prefix, enable
   ;; edit buffer with 'E'
   (global-set-key (kbd "C-c b") 'counsel-switch-buffer-other-window))
 
-;; Deletes text under selection when insertion is made
+;; deletes text under selection when insertion is made
 (use-package delsel
   :hook (after-init-hook . delete-selection-mode))
 
-;; make Emacs prompts more tolerable
+;; make emacs prompts more tolerable
 (use-package emacs
   :config
   (setq echo-keystrokes 0.25)
@@ -283,17 +283,6 @@ This command can then be followed by the standard
   :hook ((dired-mode-hook . dired-hide-details-mode)
          (dired-mode-hook . hl-line-mode)))
 
-;; toggle to view sub-directories in dired
-;; (use-package dired-subtree
-;;   :ensure
-;;   :after dired
-;;   :config
-;;   (setq dired-subtree-use-backgrounds nil)
-;;   :bind (:map dired-mode-map
-;; 	      ("<tab>" . dired-subtree-toggle)
-;; 	      ("<C-tab>" . dired-subtree-cycle)
-;; 	      ("<S-iso-lefttab>" . dired-subtree-remove)))
-
 ;; preview mode for dired
 (use-package peep-dired
   :ensure
@@ -330,11 +319,11 @@ This command can then be followed by the standard
   ;; Use absolute numbers in narrowed buffers
   (setq display-line-numbers-widen t)
 
-  (define-minor-mode prot/display-line-numbers-mode
+  (define-minor-mode contrib/display-line-numbers-mode
     "Toggle `display-line-numbers-mode' and `hl-line-mode'."
     :init-value nil
     :global nil
-    (if prot/display-line-numbers-mode
+    (if contrib/display-line-numbers-mode
         (progn
           (display-line-numbers-mode 1)
           (hl-line-mode 1)
@@ -342,17 +331,17 @@ This command can then be followed by the standard
       (display-line-numbers-mode -1)
       (hl-line-mode -1)
       (setq-local truncate-lines nil)))
-  :bind ("<f7>" . prot/display-line-numbers-mode))
+  :bind ("<f7>" . contrib/display-line-numbers-mode))
 
 (use-package whitespace
   :config
-  (defun prot/toggle-invisibles ()
+  (defun contrib/toggle-invisibles ()
     "Toggles the display of indentation and space characters."
     (interactive)
     (if (bound-and-true-p whitespace-mode)
         (whitespace-mode -1)
       (whitespace-mode)))
-  :bind (("<f6>" . prot/toggle-invisibles)
+  :bind (("<f6>" . contrib/toggle-invisibles)
          ("C-c z" . delete-trailing-whitespace)))
 
 ;; spell checker  settings
@@ -542,6 +531,10 @@ This command can then be followed by the standard
 (use-package eshell
   :config
   :bind ("<s-return>" . eshell))
+
+(use-package esh-mode
+  :bind (:map eshell-mode-map
+	      ("M-k" . eshell-kill-input)))
 
 (use-package esh-module
   :config
