@@ -175,43 +175,7 @@ passing \\[universal-argument]."
         (forward-line -1)
         (ut/new-line-below indent))))
 
-  (defun ut/copy-line-or-region (&optional arg)
-    "Kill-save the current line or active region.
-With \\[universal-argument] duplicate the target instead.  When
-region is active, also apply context-aware indentation while
-duplicating."
-    (interactive "P")
-    (let* ((rbeg (region-beginning))
-           (rend (region-end))
-           (pbol (point-at-bol))
-           (peol (point-at-eol))
-           (indent (if (eq (or rbeg rend) pbol) nil arg)))
-      (if arg
-          (progn
-            (if (use-region-p)
-                (progn
-                  (copy-region-as-kill rbeg rend)
-                  (when (eq (point) rbeg)
-                    (exchange-point-and-mark))
-                  (ut/new-line-below indent))
-              (copy-region-as-kill pbol peol)
-              (ut/new-line-below))
-            (yank))
-        (copy-region-as-kill pbol peol)
-        (message "Current line copied"))))
-
-
-  (defun ut/yank-replace-line-or-region ()
-    "Replace line or region with latest kill.
-This command can then be followed by the standard
-`yank-pop' (default is bound to \\[yank-pop])."
-    (interactive)
-    (if (use-region-p)
-          (delete-region (region-beginning) (region-end))
-(delete-region (point-at-bol) (point-at-eol)))
-      (yank))
-
-  (defun ut/multi-line-next ()
+   (defun ut/multi-line-next ()
     "Move point 15 lines down."
     (interactive)
     (forward-line 15))
@@ -226,39 +190,7 @@ This command can then be followed by the standard
     (interactive)
     (kill-line 0))
 
-  ;; Based on `org--line-empty-p'.
-  (defmacro ut/line-p (name regexp)
-    "Make NAME function to match REGEXP on line n from point."
-    `(defun ,name (n)
-       (save-excursion
-         (and (not (bobp))
-	          (or (beginning-of-line n) t)
-	          (save-match-data
-	            (looking-at ,regexp))))))
-
-  (ut/line-p
-   ut/empty-line-p
-   "[\s\t]*$")
-
-  (ut/line-p
-   ut/indent-line-p
-   "^[\s\t]+")
-
-  (ut/line-p
-   ut/non-empty-line-p
-   "^.*$")
-
-  (ut/line-p
-   ut/text-list-line-p
-   "^\\([\s\t#*+]+\\|[0-9]+[).]+\\)")
-
-  (ut/line-p
-   ut/text-heading-line-p
-   "^[=-]+")
-
-  :bind (("C-S-w" . ut/copy-line-or-region)
-         ("C-S-y" . ut/yank-replace-line-or-region)
-         ("M-SPC" . cycle-spacing)
+   :bind (("M-SPC" . cycle-spacing)
          ("M-o" . delete-blank-lines)   ; alias for C-x C-o
          ("M-k" . ut/kill-line-backward)
          ("C-S-n" . ut/multi-line-next)
@@ -401,6 +333,11 @@ This command can then be followed by the standard
 ;; language server mode
 (use-package lsp-mode
   :ensure
+  :config
+  (setq lsp-enable-indentation nil)
+  (setq lsp-enable-on-type-formatting nil)
+  (setq lsp-before-save-edits nil)
+  (setq lsp-headerline-breadcrumb-enable nil)
   :hook ((c++-mode-hook . lsp)
 	 (c-mode-hook . lsp)
 	 (python-mode-hook . lsp))
@@ -506,7 +443,6 @@ This command can then be followed by the standard
 	("https://www.archlinux.org/feeds/news/" linux distro)
 	("https://ambrevar.xyz/atom.xml" emacs)
 	("https://protesilaos.com/codelog.xml" emacs)
-	("https://www.youtube.com/feeds/videos.xml?user=OmegaDungeon" linux youtube)
 	("https://www.youtube.com/feeds/videos.xml?channel_id=UCVls1GmFKf6WlTraIb_IaJg" linux youtube)
 	("https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA" luke youtube)
 	("https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" youtube)))
