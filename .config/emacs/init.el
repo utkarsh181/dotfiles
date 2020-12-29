@@ -535,9 +535,9 @@ passing \\[universal-argument]."
                             (font-lock-mode -1))))
 (use-package auth-source
   :config
-  ;; (setq auth-source '("~/.local/share/emacs/authinfo.gpg"))
   (setq user-mail-address "utkarsh190601@gmail.com")
-  (setq user-full-name "Utkarsh Singh"))
+  (setq user-full-name "Utkarsh Singh")
+  (setq mail-signature "Utkarsh Singh\n"))
 
 (use-package message
   :config
@@ -563,6 +563,22 @@ passing \\[universal-argument]."
   (setq notmuch-fcc-dirs
       '(("utkarsh190601@gmail.com" . "utkarsh190601@gmail.com/[Gmail].Sent +sent -inbox -unread")))
   (setq notmuch-archive-tags '("-inbox" "-unread" "+deleted")))
+
+
+(use-package emms
+  :ensure
+  :config
+  ;; Emms as standalone client
+  (emms-all)
+  (setq emms-player-list '(emms-player-mpv))
+  (setq emms-source-file-default-directory "~/Music/")
+
+  ;; Emms to work with mpd
+  (setq emms-player-mpd-server-name "localhost")
+  (setq emms-player-mpd-server-port "6600")
+  (add-to-list 'emms-info-functions 'emms-info-mpd)
+  (add-to-list 'emms-player-list 'emms-player-mpd)
+  (setq emms-player-mpd-music-directory "~/Music"))
 
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))
