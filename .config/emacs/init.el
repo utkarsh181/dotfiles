@@ -1,4 +1,4 @@
-;;; init.el --- Utkarsh Singh Emacs Configuration  -*- lexical-binding: t; -*-
+;;; init.el --- Utkarsh Singh Emacs Configuration  -*- lexical-binding:t -*-
 ;;; Commentary:
 
 ;; A bare-boned config template.
@@ -110,10 +110,10 @@ With optional \\[universal-argument] prefix, enable
 
 (use-package emacs
   :config
-  (global-set-key (kbd "C-x C-b") 'ibuffer)
-  (global-set-key (kbd "M-z") 'zap-up-to-char)
   ;; apropos sort by relevancy
-  (setq apropos-sort-by-scores t))
+  (setq apropos-sort-by-scores t)
+  :bind (("C-x C-b" . ibuffer)
+	 ("M-z" . zap-up-to-char)))
 
 ;; create separate backup dir
 ;; write custom config in separate file
@@ -124,13 +124,10 @@ With optional \\[universal-argument] prefix, enable
 
 ;; manage other buffer with ease
 (use-package emacs
-  :config
-  (global-set-key (kbd "C-c d") 'dired-other-window)
-  (global-set-key (kbd "C-c C-j") 'dired-jump-other-window)
-  (global-set-key (kbd "C-c f") 'find-file-other-window)
-  ;; edit buffer with 'E'
-  (global-set-key (kbd "C-c b") 'counsel-switch-buffer-other-window))
-
+  :bind (("C-c d" . dired-other-window)
+	 ("C-c C-j" . dired-jump-other-window)
+	 ("C-c f" . find-file-other-window)))
+  
 ;; deletes text under selection when insertion is made
 (use-package delsel
   :hook (after-init-hook . delete-selection-mode))
@@ -201,8 +198,7 @@ passing \\[universal-argument]."
 ;; increases the selected region by semantic units
 (use-package expand-region
   :ensure
-  :config
-  (global-set-key (kbd "C-=") 'er/expand-region))
+  :bind (("C-=" . er/expand-region)))
 
 ;; directory editor
 (use-package dired
@@ -308,8 +304,7 @@ passing \\[universal-argument]."
 ;; prettify headings and plain lists in Org mode
 (use-package org-superstar
   :ensure
-  :config
-  (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
+  :hook ((org-mode-hook . org-superstar-mode)))
 
 ;; text completion framework
 (use-package company
@@ -346,7 +341,7 @@ passing \\[universal-argument]."
 ;; elisp live documentation feedback
 (use-package eldoc
   :diminish
-  :config
+  :init
   (global-eldoc-mode 1))
 
 ;; manage how Emacs uniquely define identical-named files
@@ -364,18 +359,21 @@ passing \\[universal-argument]."
   :config
   (setq ivy-use-virtual-buffers t)
   (setq ivy-count-format "(%d/%d) ")
-  ;; (global-set-key (kbd "C-s") 'swiper-isearch)
-  (global-set-key (kbd "M-x") 'counsel-M-x)
-  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
-  (global-set-key (kbd "M-y") 'counsel-yank-pop)
-  (global-set-key (kbd "C-x b") 'ivy-switch-buffer)
-  (global-set-key (kbd "C-c v") 'ivy-push-view)
-  (global-set-key (kbd "C-c V") 'ivy-pop-view))
+  (setq counsel-switch-buffer-preview-virtual-buffers nil)
+  :bind (("M-x" . counsel-M-x)
+	 ("C-x C-f" . counsel-find-file)
+	 ("M-y" . counsel-yank-pop)
+	 ("C-x b" . ivy-switch-buffer)
+	 ("C-c b" . counsel-switch-buffer-other-window)
+	 ;; ("C-s" . swiper-isearch)
+	 ;; ("C-r" . nil)
+	 ("C-c v" . ivy-push-view)
+	 ("C-c V" . ivy-pop-view)))
 
 ;; present recency-bias in M-x command
 (use-package amx
   :ensure
-  :config
+  :init
   (amx-mode 1))
 
 ;; undo system for window management
@@ -406,21 +404,21 @@ passing \\[universal-argument]."
 ;; use the Emacsclient as $EDITOR
 (use-package with-editor
   :ensure
-  :config
-  (add-hook 'shell-mode-hook  'with-editor-export-editor)
-  (add-hook 'term-exec-hook   'with-editor-export-editor)
-  (add-hook 'eshell-mode-hook 'with-editor-export-editor))
+  :hook ((eshell-mode-hook . with-editor-export-editor)
+	 (shell-mode-hook . with-editor-export-editor)
+	 (term-mode-hook . with-editor-export-editor)))
 
 ;; better pdf experience inside emacs
 (use-package pdf-tools
   :ensure
-  :config
-  ;; initialise
+  :init
   (pdf-tools-install)
+  :config
   ;; open pdfs scaled to fit page
   (setq-default pdf-view-display-size 'fit-page)
   ;; swiper doesn't work in PDF-view mode
-  (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward))
+  :bind (:map pdf-view-mode-map
+	      ("C-s" . isearch-forward)))
 
 ;; save the last position in pdf-view mode
 (use-package saveplace-pdf-view
@@ -443,7 +441,6 @@ passing \\[universal-argument]."
 	("https://www.archlinux.org/feeds/news/" linux distro)
 	("https://ambrevar.xyz/atom.xml" emacs)
 	("https://protesilaos.com/codelog.xml" emacs)
-	("https://www.youtube.com/feeds/videos.xml?channel_id=UCVls1GmFKf6WlTraIb_IaJg" linux youtube)
 	("https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA" luke youtube)
 	("https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" youtube)))
   (defun elfeed-v-mpv (url)
@@ -460,17 +457,17 @@ passing \\[universal-argument]."
 	       do (elfeed-v-mpv it))
       (mapc #'elfeed-search-update-entry entries)
       (unless (use-region-p) (forward-line))))
-
-  (define-key elfeed-search-mode-map (kbd "v") 'elfeed-view-mpv))
+  :bind (:map elfeed-search-mode-map
+	      ("v" . elfeed-view-mpv)))
 
 ;; shell implemented in elisp
 (use-package eshell
   :config
   :bind ("<s-return>" . eshell))
 
-(use-package esh-mode
-  :bind (:map eshell-mode-map
-	      ("M-k" . eshell-kill-input)))
+;; (use-package esh-mode
+;;   :bind (:map eshell-mode-map
+;; 	      ("M-k" . eshell-kill-input)))
 
 (use-package esh-module
   :config
@@ -564,7 +561,7 @@ passing \\[universal-argument]."
       '(("utkarsh190601@gmail.com" . "utkarsh190601@gmail.com/[Gmail].Sent +sent -inbox -unread")))
   (setq notmuch-archive-tags '("-inbox" "-unread" "+deleted")))
 
-
+;; music client
 (use-package emms
   :ensure
   :config
