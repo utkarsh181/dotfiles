@@ -2,7 +2,7 @@ IMAPStore utkarsh190601@gmail.com-remote
 Host imap.gmail.com
 Port 993
 User utkarsh190601@gmail.com
-PassCmd "pass mw-utkarsh190601@gmail.com"
+PassCmd "pass email/accounts.google.com/utkarsh190601@gmail.com"
 AuthMechs LOGIN
 SSLType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt

@@ -2,7 +2,7 @@
 text/x-shellscript=text.desktop;
 x-scheme-handler/magnet=torrent.desktop;
 application/x-bittorrent=torrent.desktop;
-x-scheme-handler/mailto=mail.desktop;
+x-scheme-handler/mailto=xfce4-mail-reader.desktop
 text/plain=text.desktop;
 application/postscript=pdf.desktop;
 application/pdf=pdf.desktop;
@@ -34,6 +34,8 @@ image/svg+xml-compressed=org.gnome.eog.desktop
 image/vnd.wap.wbmp=org.gnome.eog.desktop
 image/x-icns=org.gnome.eog.desktop
 You're not 'Autistic.' You're normal.mp4=feh.desktop
+x-scheme-handler/http=xfce4-web-browser.desktop
+x-scheme-handler/https=xfce4-web-browser.desktop
 
 [Added Associations]
 application/x-bittorrent=deluge.desktop;
@@ -65,3 +67,7 @@ text/plain=libreoffice-writer.desktop;
 application/vnd.openxmlformats-officedocument.presentationml.presentation=emacs.desktop;
 application/x-tar=emacs.desktop;
 application/octet-stream=emacs.desktop;
+x-scheme-handler/http=xfce4-web-browser.desktop;
+x-scheme-handler/https=xfce4-web-browser.desktop;
+x-scheme-handler/mailto=xfce4-mail-reader.desktop;
+

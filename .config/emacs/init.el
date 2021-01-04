@@ -50,6 +50,7 @@
 (use-package modus-themes
   :ensure t
   :config
+  
   (defmacro contrib/format-sexp (sexp &rest objects)
     `(eval (read (format ,(format "%S" sexp) ,@objects))))
   (defvar contrib/modus-theme-after-load-hook nil
@@ -66,7 +67,8 @@ See `contrib/modus-operandi' or `contrib/modus-vivendi'.")
        (load-theme 'modus-%1$s t)
        (run-hooks 'contrib/modus-theme-after-load-hook))
      theme))
-  (defun contrib/modus-themes-toggle (&optional arg)
+
+  (defun contrib/modus-themes-toggle (arg)
     "Toggle between `contrib/modus-operandi' and `contrib/modus-vivendi'.
 With optional \\[universal-argument] prefix, enable
 `contrib/modus-themes-alt-mode' for the loaded theme."
@@ -81,6 +83,7 @@ With optional \\[universal-argument] prefix, enable
       (contrib/modus-operandi)
       (if (eq major-mode 'pdf-view-mode)
 	      (pdf-view-midnight-minor-mode 0))))
+
   :hook (after-init-hook . contrib/modus-vivendi)
   :bind ("<f5>" . contrib/modus-themes-toggle))
 
@@ -220,7 +223,7 @@ passing \\[universal-argument]."
   (setq peep-dired-ignored-extensions
         '("mkv" "webm" "mp4" "mp3" "ogg" "iso"))
   :bind (:map dired-mode-map
-              ("P" . peep-dired)))
+	      ("P" . peep-dired)))
 
 ;; use 'n' and 'p' to navigate in peep-dired mode
 (eval-after-load "peep-dired"
@@ -281,8 +284,8 @@ passing \\[universal-argument]."
 
 (use-package org
   :bind (:map org-mode-map
-              ("<C-return>" . nil)
-              ("<C-S-return>" . nil)))
+	      ("<C-return>" . nil)
+	      ("<C-S-return>" . nil)))
 
 ;; display column number in mode line
 (use-package emacs
@@ -305,6 +308,9 @@ passing \\[universal-argument]."
 (use-package org-superstar
   :ensure
   :hook ((org-mode-hook . org-superstar-mode)))
+
+(use-package abbrev
+  :bind ("C-x a u" . unexpand-abbrev))
 
 ;; text completion framework
 (use-package company
@@ -416,8 +422,7 @@ passing \\[universal-argument]."
   :config
   ;; open pdfs scaled to fit page
   (setq-default pdf-view-display-size 'fit-page)
-  ;; swiper doesn't work in PDF-view mode
-  :bind (:map pdf-view-mode-map
+    :bind (:map pdf-view-mode-map
 	      ("C-s" . isearch-forward)))
 
 ;; save the last position in pdf-view mode
@@ -443,6 +448,7 @@ passing \\[universal-argument]."
 	("https://protesilaos.com/codelog.xml" emacs)
 	("https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA" luke youtube)
 	("https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" youtube)))
+
   (defun elfeed-v-mpv (url)
     "Watch a video from URL in MPV"
     (async-shell-command (format "mpv '%s'" url)))
@@ -457,6 +463,7 @@ passing \\[universal-argument]."
 	       do (elfeed-v-mpv it))
       (mapc #'elfeed-search-update-entry entries)
       (unless (use-region-p) (forward-line))))
+
   :bind (:map elfeed-search-mode-map
 	      ("v" . elfeed-view-mpv)))
 
@@ -551,9 +558,8 @@ passing \\[universal-argument]."
       message-sendmail-extra-arguments '("--read-envelope-from")
       message-send-mail-function 'message-send-mail-with-sendmail))
 
-;; Emacs interface to notmuch
+;; email interface
 (use-package notmuch
-  :ensure
   :config
   (setq notmuch-search-oldest-first nil)
   (setq notmuch-fcc-dirs '("utkarsh190601@gmail.com" . "utkarsh190601@gmail.com/[Gmail].Sent +sent -inbox"))
@@ -576,6 +582,11 @@ passing \\[universal-argument]."
   (add-to-list 'emms-info-functions 'emms-info-mpd)
   (add-to-list 'emms-player-list 'emms-player-mpd)
   (setq emms-player-mpd-music-directory "~/Music"))
+
+(use-package gnus
+  :config
+  (setq gnus-select-method
+	'(nntp "news.gwene.org")))
 
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))
