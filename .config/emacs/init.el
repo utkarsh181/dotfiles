@@ -383,11 +383,10 @@ passing \\[universal-argument]."
   (amx-mode 1))
 
 ;; undo system for window management
-;; NOTE: dwm also uses <s-left/right> to shift monitors which is disabled by default
 (use-package winner
   :hook (after-init-hook . winner-mode)
-  :bind (("<s-right>" . winner-redo)
-         ("<s-left>" . winner-undo)))
+  :bind (("<C-right>" . winner-redo)
+         ("<C-left>" . winner-undo)))
 
 ;; use ctrl-super-vim_keys to move around windows
 (use-package windmove
