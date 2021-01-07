@@ -50,12 +50,14 @@
 (use-package modus-themes
   :ensure t
   :config
-  
+
   (defmacro contrib/format-sexp (sexp &rest objects)
     `(eval (read (format ,(format "%S" sexp) ,@objects))))
+
   (defvar contrib/modus-theme-after-load-hook nil
     "Hook that runs after loading a Modus theme.
 See `contrib/modus-operandi' or `contrib/modus-vivendi'.")
+
   (dolist (theme '("operandi" "vivendi"))
     (contrib/format-sexp
      (defun contrib/modus-%1$s ()
@@ -128,9 +130,8 @@ With optional \\[universal-argument] prefix, enable
 ;; manage other buffer with ease
 (use-package emacs
   :bind (("C-c d" . dired-other-window)
-	 ("C-c C-j" . dired-jump-other-window)
 	 ("C-c f" . find-file-other-window)))
-  
+
 ;; deletes text under selection when insertion is made
 (use-package delsel
   :hook (after-init-hook . delete-selection-mode))
@@ -205,22 +206,27 @@ passing \\[universal-argument]."
 
 ;; directory editor
 (use-package dired
-  :config
-  (setq dired-recursive-copies 'always)
-  (setq dired-recursive-deletes 'always)
-  (setq delete-by-moving-to-trash t)
-  (setq dired-listing-switches
+  :custom
+  (dired-recursive-copies 'always)
+  (dired-recursive-deletes 'always)
+  (delete-by-moving-to-trash t)
+  (dired-listing-switches
         "-AGFhlv --group-directories-first --time-style=long-iso")
   :hook ((dired-mode-hook . dired-hide-details-mode)
          (dired-mode-hook . hl-line-mode)))
+
+(use-package dired-x
+  :after dired
+  :bind (("C-x C-j" . dired-jump)
+	 ("C-c C-j" . dired-jump-other-window)))
 
 ;; preview mode for dired
 (use-package peep-dired
   :ensure
   :after dired
-  :config
-  (setq peep-dired-enable-on-directories nil)
-  (setq peep-dired-ignored-extensions
+  :custom
+  (peep-dired-enable-on-directories nil)
+  (peep-dired-ignored-extensions
         '("mkv" "webm" "mp4" "mp3" "ogg" "iso"))
   :bind (:map dired-mode-map
 	      ("P" . peep-dired)))
@@ -234,22 +240,17 @@ passing \\[universal-argument]."
 ;; make dired more colourful
 (use-package diredfl
   :ensure
-  :config
-  (setq diredfl-ignore-compressed-flag nil)
+  :custom
+  (diredfl-ignore-compressed-flag nil)
   :hook (dired-mode-hook . diredfl-mode))
 
 (use-package dired-aux
-  :config
-  (setq dired-create-destination-dirs 'ask)
-  (setq dired-vc-rename-file t))
+  :custom
+  (dired-create-destination-dirs 'ask)
+  (dired-vc-rename-file t))
 
 (use-package display-line-numbers
   :config
-  ;; Set absolute line numbers.  A value of "relative" is also useful.
-  (setq display-line-numbers-type t)
-  ;; Use absolute numbers in narrowed buffers
-  (setq display-line-numbers-widen t)
-
   (define-minor-mode contrib/display-line-numbers-mode
     "Toggle `display-line-numbers-mode' and `hl-line-mode'."
     :init-value nil
@@ -262,6 +263,11 @@ passing \\[universal-argument]."
       (display-line-numbers-mode -1)
       (hl-line-mode -1)
       (setq-local truncate-lines nil)))
+  :custom
+  ;; Set absolute line numbers.  A value of "relative" is also useful.
+  (display-line-numbers-type t)
+  ;; Use absolute numbers in narrowed buffers
+  (display-line-numbers-widen t)
   :bind ("<f7>" . contrib/display-line-numbers-mode))
 
 (use-package whitespace
@@ -277,8 +283,8 @@ passing \\[universal-argument]."
 
 ;; spell checker  settings
 (use-package flyspell
-  :config
-  (setq ispell-program-name "aspell")
+  :custom
+  (ispell-program-name "aspell")
   :hook ( (text-mode-hook . flyspell-mode)
 	  (prog-mode-hook . flyspell-prog-mode)))
 
@@ -296,13 +302,15 @@ passing \\[universal-argument]."
 (use-package autorevert
   :diminish
   :config
-  (setq auto-revert-verbose t)
-  (global-auto-revert-mode 1))
+  (global-auto-revert-mode 1)
+  :custom
+  (auto-revert-verbose t))
 
 ;; helps to keep mode line uncluttered
 (use-package minions
   :ensure
-  :config (minions-mode 1))
+  :config
+  (minions-mode 1))
 
 ;; prettify headings and plain lists in Org mode
 (use-package org-superstar
@@ -315,30 +323,30 @@ passing \\[universal-argument]."
 ;; text completion framework
 (use-package company
   :ensure
-  :config
-  (setq company-idle-delay 0.1)
-  (setq company-minimum-prefix-length 1)
+  :custom
+  (company-idle-delay 0.1)
+  (company-minimum-prefix-length 1)
   :hook ((prog-mode-hook . company-mode)
 	 ;; use <tab> to cycle through completion
 	 (prog-mode-hook . company-tng-mode)))
 
 (use-package flycheck
   :ensure
-  :config
-  (setq flycheck-python-pycompile-executable "python3")
+  :custom
+  (flycheck-python-pycompile-executable "python3")
   ;; (add-hook 'after-init-hook #'global-flycheck-mode)
   :hook (prog-mode-hook . flycheck-mode))
-
-(setq lsp-keymap-prefix "C-c l")
 
 ;; language server mode
 (use-package lsp-mode
   :ensure
-  :config
-  (setq lsp-enable-indentation nil)
-  (setq lsp-enable-on-type-formatting nil)
-  (setq lsp-before-save-edits nil)
-  (setq lsp-headerline-breadcrumb-enable nil)
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :custom
+  (lsp-enable-indentation nil)
+  (lsp-enable-on-type-formatting nil)
+  (lsp-before-save-edits nil)
+  (lsp-headerline-breadcrumb-enable nil)
   :hook ((c++-mode-hook . lsp)
 	 (c-mode-hook . lsp)
 	 (python-mode-hook . lsp))
@@ -347,7 +355,7 @@ passing \\[universal-argument]."
 ;; elisp live documentation feedback
 (use-package eldoc
   :diminish
-  :init
+  :config
   (global-eldoc-mode 1))
 
 ;; manage how Emacs uniquely define identical-named files
@@ -358,40 +366,48 @@ passing \\[universal-argument]."
   (setq uniquify-after-kill-buffer-p t))
 
 ;; narrowing framework
-(use-package counsel
-  :ensure
-  :init
-  (ivy-mode 1)
-  :config
-  (setq ivy-use-virtual-buffers t)
-  (setq ivy-count-format "(%d/%d) ")
-  (setq counsel-switch-buffer-preview-virtual-buffers nil)
-  :bind (("M-x" . counsel-M-x)
-	 ("C-x C-f" . counsel-find-file)
-	 ("M-y" . counsel-yank-pop)
-	 ("C-x b" . ivy-switch-buffer)
-	 ("C-c b" . counsel-switch-buffer-other-window)
-	 ;; ("C-s" . swiper-isearch)
-	 ;; ("C-r" . nil)
-	 ("C-c v" . ivy-push-view)
-	 ("C-c V" . ivy-pop-view)))
+;; (use-package counsel
+;;   :ensure
+;;   :init
+;;   (ivy-mode 1)
+;;   :config
+;;   (setq ivy-use-virtual-buffers t)
+;;   (setq ivy-count-format "(%d/%d) ")
+;;   (setq counsel-switch-buffer-preview-virtual-buffers nil)
+;;   :bind (("M-x" . counsel-M-x)
+;; 	 ("C-x C-f" . counsel-find-file)
+;; 	 ("M-y" . counsel-yank-pop)
+;; 	 ("C-x b" . ivy-switch-buffer)
+;; 	 ("C-c b" . counsel-switch-buffer-other-window)
+;; 	 ;; ("C-s" . swiper-isearch)
+;; 	 ;; ("C-r" . nil)
+;; 	 ("C-c v" . ivy-push-view)
+;; 	 ("C-c V" . ivy-pop-view)))
 
 ;; present recency-bias in M-x command
-(use-package amx
-  :ensure
-  :init
-  (amx-mode 1))
+;; (use-package amx
+;;   :ensure
+;;   :init
+;;   (amx-mode 1))
+
+(use-package icomplete
+  :config
+  (fido-mode 1)
+  :custom
+  (icomplete-compute-delay 0) ; 0.3
+  :bind (("C-c b" . switch-to-buffer-other-window)))
 
 ;; undo system for window management
 (use-package winner
-  :hook (after-init-hook . winner-mode)
+  :config
+  (winner-mode 1)
   :bind (("<C-right>" . winner-redo)
          ("<C-left>" . winner-undo)))
 
 ;; use ctrl-super-vim_keys to move around windows
 (use-package windmove
-  :config
-  (setq windmove-create-window nil)
+  :custom
+  (windmove-create-window nil)
   :bind (("C-s-k" . windmove-up)
          ("C-s-l" . windmove-right)
          ("C-s-j" . windmove-down)
@@ -418,10 +434,10 @@ passing \\[universal-argument]."
   :ensure
   :init
   (pdf-tools-install)
-  :config
+  :custom
   ;; open pdfs scaled to fit page
-  (setq-default pdf-view-display-size 'fit-page)
-    :bind (:map pdf-view-mode-map
+  (pdf-view-display-size 'fit-page)
+  :bind (:map pdf-view-mode-map
 	      ("C-s" . isearch-forward)))
 
 ;; save the last position in pdf-view mode
@@ -433,38 +449,20 @@ passing \\[universal-argument]."
 ;; rss and atom feed reader inside emacs
 (use-package elfeed
   :ensure
-  :config
-  (setq elfeed-use-curl t)
-  (setq elfeed-curl-max-connections 10)
-  (setq elfeed-db-directory "~/.config/emacs/elfeed/")
-  (setq elfeed-enclosure-default-dir "~/Downloads/")
-  (setq elfeed-search-clipboard-type 'CLIPBOARD)
-  (setq elfeed-feeds
+  :custom
+  (elfeed-use-curl t)
+  (elfeed-curl-max-connections 10)
+  (elfeed-db-directory "~/.config/emacs/elfeed/")
+  (elfeed-enclosure-default-dir "~/Downloads/")
+  (elfeed-search-clipboard-type 'CLIPBOARD)
+  (elfeed-feeds
       '(("http://lukesmith.xyz/rss.xml" luke)
 	("https://notrelated.libsyn.com/rss" luke)
 	("https://www.archlinux.org/feeds/news/" linux distro)
 	("https://ambrevar.xyz/atom.xml" emacs)
 	("https://protesilaos.com/codelog.xml" emacs)
 	("https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA" luke youtube)
-	("https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" youtube)))
-
-  (defun elfeed-v-mpv (url)
-    "Watch a video from URL in MPV"
-    (async-shell-command (format "mpv '%s'" url)))
-
-  (defun elfeed-view-mpv (&optional use-generic-p)
-    "Youtube-feed link"
-    (interactive "P")
-    (let ((entries (elfeed-search-selected)))
-      (cl-loop for entry in entries
-	       do (elfeed-untag entry 'unread)
-	       when (elfeed-entry-link entry)
-	       do (elfeed-v-mpv it))
-      (mapc #'elfeed-search-update-entry entries)
-      (unless (use-region-p) (forward-line))))
-
-  :bind (:map elfeed-search-mode-map
-	      ("v" . elfeed-view-mpv)))
+	("https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" youtube))))
 
 ;; shell implemented in elisp
 (use-package eshell
@@ -476,50 +474,50 @@ passing \\[universal-argument]."
 ;; 	      ("M-k" . eshell-kill-input)))
 
 (use-package esh-module
-  :config
-  (setq eshell-modules-list
-        '(eshell-alias
-          eshell-basic
-          eshell-cmpl
-          eshell-dirs
-          eshell-glob
-          eshell-hist
-          eshell-ls
-          eshell-pred
-          eshell-prompt
-          eshell-script
-          eshell-term
-          eshell-tramp
-          eshell-unix)))
+  :custom
+  (eshell-modules-list
+   '(eshell-alias
+     eshell-basic
+     eshell-cmpl
+     eshell-dirs
+     eshell-glob
+     eshell-hist
+     eshell-ls
+     eshell-pred
+     eshell-prompt
+     eshell-script
+     eshell-term
+     eshell-tramp
+     eshell-unix)))
 
 ;; cache password for 10 mins
 (use-package em-tramp
   :after esh-mode
-  :config
-  (setq password-cache t)
-  (setq password-cache-expiry 600))
+  :custom
+  (password-cache t)
+  (password-cache-expiry 600))
 
 ;; terminal emulator inside Emacs though eshell just works
 (use-package vterm
   :ensure
   :commands vterm
-  :config
-  (setq vterm-disable-bold nil)
-  (setq vterm-disable-inverse-video nil)
-  (setq vterm-disable-underline nil)
-  (setq vterm-kill-buffer-on-exit nil)
-  (setq vterm-max-scrollback 9999)
-  (setq vterm-shell "/bin/zsh")
-  (setq vterm-term-environment-variable "xterm-256color"))
+  :custom
+  (vterm-disable-bold nil)
+  (vterm-disable-inverse-video nil)
+  (vterm-disable-underline nil)
+  (vterm-kill-buffer-on-exit nil)
+  (vterm-max-scrollback 9999)
+  (vterm-shell "/bin/zsh")
+  (vterm-term-environment-variable "xterm-256color"))
 
 ;; built in process viewer inside Emacs
 (use-package proced
   :commands proced
-  :config
-  (setq proced-auto-update-flag t)
-  (setq proced-auto-update-interval 1)
-  (setq proced-descend t)
-  (setq proced-filter 'user))
+  :custom
+  (proced-auto-update-flag t)
+  (proced-auto-update-interval 1)
+  (proced-descend t)
+  (proced-filter 'user))
 
 ;; Emacs interface for pass(standard password manager)
 (use-package password-store
@@ -527,8 +525,8 @@ passing \\[universal-argument]."
   :commands (password-store-copy
              password-store-edit
              password-store-insert)
-  :config
-  (setq password-store-time-before-clipboard-restore 30))
+  :custom
+  (password-store-time-before-clipboard-restore 30))
 
 ;; local dictionary using sdcv
 (use-package sdcv
@@ -537,16 +535,16 @@ passing \\[universal-argument]."
   :hook (sdcv-mode-hook . (lambda ()
                             (font-lock-mode -1))))
 (use-package auth-source
-  :config
-  (setq user-mail-address "utkarsh190601@gmail.com")
-  (setq user-full-name "Utkarsh Singh")
-  (setq mail-signature "Utkarsh Singh\n"))
+  :custom
+  (user-mail-address "utkarsh190601@gmail.com")
+  (user-full-name "Utkarsh Singh")
+  (mail-signature "Utkarsh Singh\n"))
 
 (use-package message
-  :config
-  (setq mail-user-agent 'message-user-agent)
-  (setq message-kill-buffer-on-exit t)
-  (setq message-directory "~/.local/share/mail"))
+  :custom
+  (mail-user-agent 'message-user-agent)
+  (message-kill-buffer-on-exit t)
+  (message-directory "~/.local/share/mail"))
 
 ;; send mail from inside Emacs using smtp protocol
 (use-package smtpmail
@@ -559,33 +557,38 @@ passing \\[universal-argument]."
 
 ;; email interface
 (use-package notmuch
-  :config
-  (setq notmuch-search-oldest-first nil)
-  (setq notmuch-fcc-dirs '("utkarsh190601@gmail.com" . "utkarsh190601@gmail.com/[Gmail].Sent +sent -inbox"))
-  (setq notmuch-fcc-dirs
+  :custom
+  (notmuch-search-oldest-first nil)
+  (notmuch-fcc-dirs '("utkarsh190601@gmail.com" . "utkarsh190601@gmail.com/[Gmail].Sent +sent -inbox"))
+  (notmuch-fcc-dirs
       '(("utkarsh190601@gmail.com" . "utkarsh190601@gmail.com/[Gmail].Sent +sent -inbox -unread")))
-  (setq notmuch-archive-tags '("-inbox" "-unread" "+deleted")))
+  (notmuch-archive-tags '("-inbox" "-unread" "+deleted")))
 
 ;; music client
 (use-package emms
   :ensure
   :config
-  ;; Emms as standalone client
   (emms-all)
-  (setq emms-player-list '(emms-player-mpv))
-  (setq emms-source-file-default-directory "~/Music/")
+  :custom
+  ;; Emms as standalone client
+  (emms-player-list '(emms-player-mpv))
+  (emms-source-file-default-directory "~/Music/")
 
   ;; Emms to work with mpd
-  (setq emms-player-mpd-server-name "localhost")
-  (setq emms-player-mpd-server-port "6600")
+  (emms-player-mpd-server-name "localhost")
+  (emms-player-mpd-server-port "6600")
   (add-to-list 'emms-info-functions 'emms-info-mpd)
   (add-to-list 'emms-player-list 'emms-player-mpd)
-  (setq emms-player-mpd-music-directory "~/Music"))
+  (emms-player-mpd-music-directory "~/Music"))
 
 (use-package gnus
-  :config
-  (setq gnus-select-method
+  :custom
+  (gnus-select-method
 	'(nntp "news.gwene.org")))
+
+(use-package shr
+  :custom
+  (shr-use-colors nil))
 
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))
