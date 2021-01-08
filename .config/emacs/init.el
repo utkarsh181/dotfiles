@@ -50,7 +50,6 @@
 (use-package modus-themes
   :ensure t
   :config
-
   (defmacro contrib/format-sexp (sexp &rest objects)
     `(eval (read (format ,(format "%S" sexp) ,@objects))))
 
@@ -107,25 +106,25 @@ With optional \\[universal-argument] prefix, enable
 ;; built-in minor mode that keeps track of the files
 ;; you have opened, allowing you revisit them faster.
 (use-package recentf
-  :init
-  (recentf-mode 1)
   :config
-  (setq recentf-max-menu-items 25)
-  (setq recentf-max-saved-items 25))
+  (recentf-mode 1)
+  :custom
+  (recentf-max-menu-items 25)
+  (recentf-max-saved-items 25))
 
 (use-package emacs
-  :config
+  :custom
   ;; apropos sort by relevancy
-  (setq apropos-sort-by-scores t)
+  (apropos-sort-by-scores t)
   :bind (("C-x C-b" . ibuffer)
 	 ("M-z" . zap-up-to-char)))
 
 ;; create separate backup dir
 ;; write custom config in separate file
 (use-package emacs
-  :config
-  (setq backup-directory-alist '(("." . "~/.cache/emacs")))
-  (setq custom-file "~/.config/emacs/custom.el"))
+  :custom
+  (backup-directory-alist '(("." . "~/.cache/emacs")))
+  (custom-file "~/.config/emacs/custom.el"))
 
 ;; manage other buffer with ease
 (use-package emacs
@@ -134,12 +133,13 @@ With optional \\[universal-argument] prefix, enable
 
 ;; deletes text under selection when insertion is made
 (use-package delsel
-  :hook (after-init-hook . delete-selection-mode))
+  :config
+  (delete-selection-mode 1))
 
 ;; make emacs prompts more tolerable
 (use-package emacs
-  :config
-  (setq echo-keystrokes 0.25)
+  :custom
+  (echo-keystrokes 0.25)
   (defalias 'yes-or-no-p 'y-or-n-p)
   (put 'narrow-to-region 'disabled nil)
   (put 'upcase-region 'disabled nil)
@@ -360,42 +360,42 @@ passing \\[universal-argument]."
 
 ;; manage how Emacs uniquely define identical-named files
 (use-package uniquify
-  :config
-  (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
-  (setq uniquify-strip-common-suffix t)
-  (setq uniquify-after-kill-buffer-p t))
+  :custom
+  (uniquify-buffer-name-style 'post-forward-angle-brackets)
+  (uniquify-strip-common-suffix t)
+  (uniquify-after-kill-buffer-p t))
 
 ;; narrowing framework
-;; (use-package counsel
-;;   :ensure
-;;   :init
-;;   (ivy-mode 1)
-;;   :config
-;;   (setq ivy-use-virtual-buffers t)
-;;   (setq ivy-count-format "(%d/%d) ")
-;;   (setq counsel-switch-buffer-preview-virtual-buffers nil)
-;;   :bind (("M-x" . counsel-M-x)
-;; 	 ("C-x C-f" . counsel-find-file)
-;; 	 ("M-y" . counsel-yank-pop)
-;; 	 ("C-x b" . ivy-switch-buffer)
-;; 	 ("C-c b" . counsel-switch-buffer-other-window)
-;; 	 ;; ("C-s" . swiper-isearch)
-;; 	 ;; ("C-r" . nil)
-;; 	 ("C-c v" . ivy-push-view)
-;; 	 ("C-c V" . ivy-pop-view)))
+(use-package counsel
+  :ensure
+  :config
+  (ivy-mode 1)
+  :custom
+  (ivy-use-virtual-buffers t)
+  (ivy-count-format "(%d/%d) ")
+  (counsel-switch-buffer-preview-virtual-buffers nil)
+  :bind (("M-x" . counsel-M-x)
+	 ("C-x C-f" . counsel-find-file)
+	 ("M-y" . counsel-yank-pop)
+	 ("C-x b" . ivy-switch-buffer)
+	 ("C-c b" . counsel-switch-buffer-other-window)
+	 ;; ("C-s" . swiper-isearch)
+	 ;; ("C-r" . nil)
+	 ("C-c v" . ivy-push-view)
+	 ("C-c V" . ivy-pop-view)))
 
 ;; present recency-bias in M-x command
-;; (use-package amx
-;;   :ensure
-;;   :init
-;;   (amx-mode 1))
-
-(use-package icomplete
+(use-package amx
+  :ensure
   :config
-  (fido-mode 1)
-  :custom
-  (icomplete-compute-delay 0) ; 0.3
-  :bind (("C-c b" . switch-to-buffer-other-window)))
+  (amx-mode 1))
+
+;; (use-package icomplete
+;;   :config
+;;   (fido-mode 1)
+;;   :custom
+;;   (icomplete-compute-delay 0) ; 0.3
+;;   :bind (("C-c b" . switch-to-buffer-other-window)))
 
 ;; undo system for window management
 (use-package winner
