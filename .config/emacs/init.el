@@ -1,8 +1,5 @@
 ;;; init.el --- Utkarsh Singh Emacs Configuration  -*- lexical-binding:t -*-
 ;;; Commentary:
-
-;; A bare-boned config template.
-
 ;;; Code:
 
 ;; speed up startup
@@ -50,43 +47,43 @@
 (use-package modus-themes
   :ensure t
   :config
-  (defmacro contrib/format-sexp (sexp &rest objects)
+  (defmacro format-sexp (sexp &rest objects)
     `(eval (read (format ,(format "%S" sexp) ,@objects))))
 
-  (defvar contrib/modus-theme-after-load-hook nil
+  (defvar modus-theme-after-load-hook nil
     "Hook that runs after loading a Modus theme.
-See `contrib/modus-operandi' or `contrib/modus-vivendi'.")
+See `modus-operandi' or `modus-vivendi'.")
 
   (dolist (theme '("operandi" "vivendi"))
-    (contrib/format-sexp
-     (defun contrib/modus-%1$s ()
+    (format-sexp
+     (defun modus-%1$s ()
        (setq modus-%1$s-theme-slanted-constructs t
              modus-%1$s-theme-bold-constructs t
              modus-%1$s-theme-fringes nil ; {nil,'subtle,'intense}
              modus-%1$s-theme-mode-line '3d ; {nil,'3d,'moody}
 	     )
        (load-theme 'modus-%1$s t)
-       (run-hooks 'contrib/modus-theme-after-load-hook))
+       (run-hooks 'modus-theme-after-load-hook))
      theme))
 
-  (defun contrib/modus-themes-toggle (arg)
-    "Toggle between `contrib/modus-operandi' and `contrib/modus-vivendi'.
+  (defun modus-themes-toggle (arg)
+    "Toggle between `modus-operandi' and `modus-vivendi'.
 With optional \\[universal-argument] prefix, enable
-`contrib/modus-themes-alt-mode' for the loaded theme."
+`modus-themes-alt-mode' for the loaded theme."
     (interactive "P")
     (if (eq (car custom-enabled-themes) 'modus-operandi)
         (progn
           (disable-theme 'modus-operandi)
-          (contrib/modus-vivendi)
+          (modus-vivendi)
 	  (if (eq major-mode 'pdf-view-mode)
 	      (pdf-view-midnight-minor-mode 1)))
       (disable-theme 'modus-vivendi)
-      (contrib/modus-operandi)
+      (modus-operandi)
       (if (eq major-mode 'pdf-view-mode)
 	      (pdf-view-midnight-minor-mode 0))))
 
-  :hook (after-init-hook . contrib/modus-vivendi)
-  :bind ("<f5>" . contrib/modus-themes-toggle))
+  :hook (after-init-hook . modus-vivendi)
+  :bind ("<f5>" . modus-themes-toggle))
 
 ;; font settings
 (use-package emacs
@@ -150,10 +147,10 @@ With optional \\[universal-argument] prefix, enable
 ;; custom key bindings to reduce keystrokes for regular editing commands
 (use-package emacs
   :config
-  (defun ut/new-line-below (&optional arg)
+  (defun new-line-below (&optional arg)
     "Create an empty line below the current one.
 Move the point to the indented area.  Adapt indentation by
-passing \\[universal-argument].  Also see `ut/new-line-above'."
+passing \\[universal-argument].  Also see `new-line-above'."
     (interactive "P")
     (end-of-line)
     (if arg
@@ -161,7 +158,7 @@ passing \\[universal-argument].  Also see `ut/new-line-above'."
       (newline))
     (indent-according-to-mode))
 
-  (defun ut/new-line-above (&optional arg)
+  (defun new-line-above (&optional arg)
     "Create an empty line above the current one.
 Move the point to the absolute beginning.  Adapt indentation by
 passing \\[universal-argument]."
@@ -174,30 +171,30 @@ passing \\[universal-argument]."
             (newline)
             (forward-line -1))
         (forward-line -1)
-        (ut/new-line-below indent))))
+        (new-line-below indent))))
 
-   (defun ut/multi-line-next ()
+   (defun multi-line-next ()
     "Move point 15 lines down."
     (interactive)
     (forward-line 15))
 
-  (defun ut/multi-line-prev ()
+  (defun multi-line-prev ()
     "Move point 15 lines up."
     (interactive)
     (forward-line -15))
 
-  (defun ut/kill-line-backward ()
+  (defun kill-line-backward ()
     "Kill from point to the beginning of the line."
     (interactive)
     (kill-line 0))
 
    :bind (("M-SPC" . cycle-spacing)
          ("M-o" . delete-blank-lines)   ; alias for C-x C-o
-         ("M-k" . ut/kill-line-backward)
-         ("C-S-n" . ut/multi-line-next)
-         ("C-S-p" . ut/multi-line-prev)
-         ("<C-return>" . ut/new-line-below)
-         ("<C-S-return>" . ut/new-line-above)))
+         ("M-k" . kill-line-backward)
+         ("C-S-n" . multi-line-next)
+         ("C-S-p" . multi-line-prev)
+         ("<C-return>" . new-line-below)
+         ("<C-S-return>" . new-line-above)))
 
 ;; increases the selected region by semantic units
 (use-package expand-region
@@ -251,11 +248,11 @@ passing \\[universal-argument]."
 
 (use-package display-line-numbers
   :config
-  (define-minor-mode contrib/display-line-numbers-mode
+  (define-minor-mode display-line-numbers-mode
     "Toggle `display-line-numbers-mode' and `hl-line-mode'."
     :init-value nil
     :global nil
-    (if contrib/display-line-numbers-mode
+    (if display-line-numbers-mode
         (progn
           (display-line-numbers-mode 1)
           (hl-line-mode 1)
@@ -263,22 +260,23 @@ passing \\[universal-argument]."
       (display-line-numbers-mode -1)
       (hl-line-mode -1)
       (setq-local truncate-lines nil)))
+
   :custom
   ;; Set absolute line numbers.  A value of "relative" is also useful.
   (display-line-numbers-type t)
   ;; Use absolute numbers in narrowed buffers
   (display-line-numbers-widen t)
-  :bind ("<f7>" . contrib/display-line-numbers-mode))
+  :bind ("<f7>" . display-line-numbers-mode))
 
 (use-package whitespace
   :config
-  (defun contrib/toggle-invisibles ()
+  (defun toggle-invisibles ()
     "Toggles the display of indentation and space characters."
     (interactive)
     (if (bound-and-true-p whitespace-mode)
         (whitespace-mode -1)
       (whitespace-mode)))
-  :bind (("<f6>" . contrib/toggle-invisibles)
+  :bind (("<f6>" . toggle-invisibles)
          ("C-c z" . delete-trailing-whitespace)))
 
 ;; spell checker  settings
@@ -334,7 +332,6 @@ passing \\[universal-argument]."
   :ensure
   :custom
   (flycheck-python-pycompile-executable "python3")
-  ;; (add-hook 'after-init-hook #'global-flycheck-mode)
   :hook (prog-mode-hook . flycheck-mode))
 
 ;; language server mode
@@ -522,11 +519,11 @@ passing \\[universal-argument]."
 ;; Emacs interface for pass(standard password manager)
 (use-package password-store
   :ensure
+  :custom
+  (password-store-time-before-clipboard-restore 30)
   :commands (password-store-copy
              password-store-edit
-             password-store-insert)
-  :custom
-  (password-store-time-before-clipboard-restore 30))
+             password-store-insert))
 
 ;; local dictionary using sdcv
 (use-package sdcv
