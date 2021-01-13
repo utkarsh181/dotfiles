@@ -31,6 +31,8 @@
 (eval-when-compile
   (require 'use-package))
 
+(add-to-list 'load-path "/usr/share/emacs/site-lisp") ; for 28.0.1
+
 ;; disable GUI component
 (use-package emacs
   :config
@@ -45,45 +47,61 @@
 
 ;; theme settings
 (use-package modus-themes
-  :ensure t
+  :ensure
+  :init
+  ;; Add all your customizations prior to loading the themes
+  (setq modus-themes-slanted-constructs t
+        modus-themes-bold-constructs nil)
+
+  ;; Load the theme files before enabling a theme
+  (modus-themes-load-themes)
   :config
-  (defmacro format-sexp (sexp &rest objects)
-    `(eval (read (format ,(format "%S" sexp) ,@objects))))
-
-  (defvar modus-theme-after-load-hook nil
-    "Hook that runs after loading a Modus theme.
-See `modus-operandi' or `modus-vivendi'.")
-
-  (dolist (theme '("operandi" "vivendi"))
-    (format-sexp
-     (defun modus-%1$s ()
-       (setq modus-%1$s-theme-slanted-constructs t
-             modus-%1$s-theme-bold-constructs t
-             modus-%1$s-theme-fringes nil ; {nil,'subtle,'intense}
-             modus-%1$s-theme-mode-line '3d ; {nil,'3d,'moody}
-	     )
-       (load-theme 'modus-%1$s t)
-       (run-hooks 'modus-theme-after-load-hook))
-     theme))
-
-  (defun modus-themes-toggle (arg)
-    "Toggle between `modus-operandi' and `modus-vivendi'.
-With optional \\[universal-argument] prefix, enable
-`modus-themes-alt-mode' for the loaded theme."
-    (interactive "P")
-    (if (eq (car custom-enabled-themes) 'modus-operandi)
-        (progn
-          (disable-theme 'modus-operandi)
-          (modus-vivendi)
-	  (if (eq major-mode 'pdf-view-mode)
-	      (pdf-view-midnight-minor-mode 1)))
-      (disable-theme 'modus-vivendi)
-      (modus-operandi)
-      (if (eq major-mode 'pdf-view-mode)
-	      (pdf-view-midnight-minor-mode 0))))
-
-  :hook (after-init-hook . modus-vivendi)
+  (modus-themes-load-vivendi)
   :bind ("<f5>" . modus-themes-toggle))
+
+;; narrowing framework
+;; (use-package counsel
+;;   :ensure
+;;   :init
+;;   (ivy-mode 1)
+;;   (counsel-mode 1)
+;;   :custom
+;;   (ivy-use-virtual-buffers t)
+;;   (ivy-count-format "(%d/%d) ")
+;;   (counsel-switch-buffer-preview-virtual-buffers nil)
+;;   :bind (("C-x b" . ivy-switch-buffer)
+;; 	 ("C-c b" . counsel-switch-buffer-other-window)))
+
+;; present recency-bias in M-x command
+(use-package amx
+  :ensure
+  :config
+  (amx-mode 1))
+
+(use-package icomplete
+  :init
+  (fido-mode 1)
+  :custom
+  (icomplete-compute-delay 0) ; 0.3
+  :bind (("C-c b" . switch-to-buffer-other-window)))
+
+(use-package icomplete-vertical
+  :ensure
+  :demand
+  :custom
+  (completion-styles '(partial-completion substring))
+  (completion-category-overrides '((file (styles basic substring))))
+  (read-file-name-completion-ignore-case t)
+  (read-buffer-completion-ignore-case t)
+  (completion-ignore-case t)
+  :config
+  (icomplete-vertical-mode)
+  :bind (:map icomplete-minibuffer-map
+              ("<down>" . icomplete-forward-completions)
+              ("C-n" . icomplete-forward-completions)
+              ("<up>" . icomplete-backward-completions)
+              ("C-p" . icomplete-backward-completions)
+              ("C-v" . icomplete-vertical-toggle)))
 
 ;; font settings
 (use-package emacs
@@ -116,8 +134,6 @@ With optional \\[universal-argument] prefix, enable
   :bind (("C-x C-b" . ibuffer)
 	 ("M-z" . zap-up-to-char)))
 
-;; create separate backup dir
-;; write custom config in separate file
 (use-package emacs
   :custom
   (backup-directory-alist '(("." . "~/.cache/emacs")))
@@ -135,9 +151,10 @@ With optional \\[universal-argument] prefix, enable
 
 ;; make emacs prompts more tolerable
 (use-package emacs
+  :config
+  (defalias 'yes-or-no-p 'y-or-n-p)
   :custom
   (echo-keystrokes 0.25)
-  (defalias 'yes-or-no-p 'y-or-n-p)
   (put 'narrow-to-region 'disabled nil)
   (put 'upcase-region 'disabled nil)
   (put 'downcase-region 'disabled nil)
@@ -196,7 +213,7 @@ passing \\[universal-argument]."
          ("<C-return>" . new-line-below)
          ("<C-S-return>" . new-line-above)))
 
-;; increases the selected region by semantic units
+;; Increases The selected region by semantic units
 (use-package expand-region
   :ensure
   :bind (("C-=" . er/expand-region)))
@@ -224,15 +241,13 @@ passing \\[universal-argument]."
   :custom
   (peep-dired-enable-on-directories nil)
   (peep-dired-ignored-extensions
-        '("mkv" "webm" "mp4" "mp3" "ogg" "iso"))
+   '("mkv" "webm" "mp4" "mp3" "ogg" "iso"))
   :bind (:map dired-mode-map
-	      ("P" . peep-dired)))
-
-;; use 'n' and 'p' to navigate in peep-dired mode
-(eval-after-load "peep-dired"
-  '(progn
-     (define-key peep-dired-mode-map (kbd "n") 'peep-dired-next-file)
-     (define-key peep-dired-mode-map (kbd "p") 'peep-dired-prev-file)))
+	      ("P" . peep-dired)
+	      ;; use 'n' and 'p' to navigate in peep-dired mode
+	      :map peep-dired-mode-map
+	      ("n" . peep-dired-next-file)
+	      ("p" . peep-dired-prev-file)))
 
 ;; make dired more colourful
 (use-package diredfl
@@ -245,6 +260,15 @@ passing \\[universal-argument]."
   :custom
   (dired-create-destination-dirs 'ask)
   (dired-vc-rename-file t))
+
+(use-package isearch
+  :diminish
+  :custom
+  (isearch-lazy-count t)
+  (lazy-count-prefix-format nil)
+  (lazy-count-suffix-format " (%s/%s)")
+  :bind (:map isearch-mode-map
+	      ("C-g" . isearch-cancel)))
 
 (use-package display-line-numbers
   :config
@@ -287,6 +311,8 @@ passing \\[universal-argument]."
 	  (prog-mode-hook . flyspell-prog-mode)))
 
 (use-package org
+  :custom
+  (org-catch-invisible-edits 'show)
   :bind (:map org-mode-map
 	      ("<C-return>" . nil)
 	      ("<C-S-return>" . nil)))
@@ -311,9 +337,9 @@ passing \\[universal-argument]."
   (minions-mode 1))
 
 ;; prettify headings and plain lists in Org mode
-(use-package org-superstar
-  :ensure
-  :hook ((org-mode-hook . org-superstar-mode)))
+;; (use-package org-superstar
+;;   :ensure
+;;   :hook ((org-mode-hook . org-superstar-mode)))
 
 (use-package abbrev
   :bind ("C-x a u" . unexpand-abbrev))
@@ -362,41 +388,9 @@ passing \\[universal-argument]."
   (uniquify-strip-common-suffix t)
   (uniquify-after-kill-buffer-p t))
 
-;; narrowing framework
-(use-package counsel
-  :ensure
-  :config
-  (ivy-mode 1)
-  :custom
-  (ivy-use-virtual-buffers t)
-  (ivy-count-format "(%d/%d) ")
-  (counsel-switch-buffer-preview-virtual-buffers nil)
-  :bind (("M-x" . counsel-M-x)
-	 ("C-x C-f" . counsel-find-file)
-	 ("M-y" . counsel-yank-pop)
-	 ("C-x b" . ivy-switch-buffer)
-	 ("C-c b" . counsel-switch-buffer-other-window)
-	 ;; ("C-s" . swiper-isearch)
-	 ;; ("C-r" . nil)
-	 ("C-c v" . ivy-push-view)
-	 ("C-c V" . ivy-pop-view)))
-
-;; present recency-bias in M-x command
-(use-package amx
-  :ensure
-  :config
-  (amx-mode 1))
-
-;; (use-package icomplete
-;;   :config
-;;   (fido-mode 1)
-;;   :custom
-;;   (icomplete-compute-delay 0) ; 0.3
-;;   :bind (("C-c b" . switch-to-buffer-other-window)))
-
 ;; undo system for window management
 (use-package winner
-  :config
+  :init
   (winner-mode 1)
   :bind (("<C-right>" . winner-redo)
          ("<C-left>" . winner-undo)))
@@ -458,7 +452,7 @@ passing \\[universal-argument]."
 	("https://www.archlinux.org/feeds/news/" linux distro)
 	("https://ambrevar.xyz/atom.xml" emacs)
 	("https://protesilaos.com/codelog.xml" emacs)
-	("https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA" luke youtube)
+	("https://videos.lukesmith.xyz/feeds/videos.xml?accountId=3" luke video)
 	("https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" youtube))))
 
 ;; shell implemented in elisp
@@ -466,9 +460,9 @@ passing \\[universal-argument]."
   :config
   :bind ("<s-return>" . eshell))
 
-;; (use-package esh-mode
-;;   :bind (:map eshell-mode-map
-;; 	      ("M-k" . eshell-kill-input)))
+(use-package esh-mode
+  :bind (:map eshell-mode-map
+	      ("M-k" . eshell-kill-input)))
 
 (use-package esh-module
   :custom
@@ -531,7 +525,7 @@ passing \\[universal-argument]."
   ;; remove font-lock which causes awkward highlighting
   :hook (sdcv-mode-hook . (lambda ()
                             (font-lock-mode -1))))
-(use-package auth-source
+(use-package sendmail
   :custom
   (user-mail-address "utkarsh190601@gmail.com")
   (user-full-name "Utkarsh Singh")
@@ -540,17 +534,18 @@ passing \\[universal-argument]."
 (use-package message
   :custom
   (mail-user-agent 'message-user-agent)
+  (message-signature "Utkarsh Singh\n")
   (message-kill-buffer-on-exit t)
   (message-directory "~/.local/share/mail"))
 
 ;; send mail from inside Emacs using smtp protocol
 (use-package smtpmail
-  :config
-  (setq sendmail-program "/usr/bin/msmtp"
-      send-mail-function 'smtpmail-send-it
-      message-sendmail-f-is-evil t
-      message-sendmail-extra-arguments '("--read-envelope-from")
-      message-send-mail-function 'message-send-mail-with-sendmail))
+  :custom
+  (sendmail-program "/usr/bin/msmtp")
+  (send-mail-function 'smtpmail-send-it)
+  (message-sendmail-f-is-evil t)
+  (message-sendmail-extra-arguments '("--read-envelope-from"))
+  (message-send-mail-function 'message-send-mail-with-sendmail))
 
 ;; email interface
 (use-package notmuch
@@ -566,16 +561,16 @@ passing \\[universal-argument]."
   :ensure
   :config
   (emms-all)
+  (add-to-list 'emms-info-functions 'emms-info-mpd)
+  (add-to-list 'emms-player-list 'emms-player-mpd)
   :custom
-  ;; Emms as standalone client
+  ;; emms as standalone client
   (emms-player-list '(emms-player-mpv))
   (emms-source-file-default-directory "~/Music/")
 
-  ;; Emms to work with mpd
+  ;; emms to work with mpd
   (emms-player-mpd-server-name "localhost")
   (emms-player-mpd-server-port "6600")
-  (add-to-list 'emms-info-functions 'emms-info-mpd)
-  (add-to-list 'emms-player-list 'emms-player-mpd)
   (emms-player-mpd-music-directory "~/Music"))
 
 (use-package gnus
