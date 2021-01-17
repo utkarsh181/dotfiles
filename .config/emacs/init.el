@@ -73,35 +73,35 @@
 ;; 	 ("C-c b" . counsel-switch-buffer-other-window)))
 
 ;; present recency-bias in M-x command
-(use-package amx
-  :ensure
-  :config
-  (amx-mode 1))
+;; (use-package amx
+;;   :ensure
+;;   :config
+;;   (amx-mode 1))
 
-(use-package icomplete
-  :init
-  (fido-mode 1)
-  :custom
-  (icomplete-compute-delay 0) ; 0.3
-  :bind (("C-c b" . switch-to-buffer-other-window)))
+;; (use-package icomplete
+;;   :init
+;;   (fido-mode 1)
+;;   :custom
+;;   (icomplete-compute-delay 0) ; 0.3
+;;   :bind (("C-c b" . switch-to-buffer-other-window)))
 
-(use-package icomplete-vertical
-  :ensure
-  :demand
-  :custom
-  (completion-styles '(partial-completion substring))
-  (completion-category-overrides '((file (styles basic substring))))
-  (read-file-name-completion-ignore-case t)
-  (read-buffer-completion-ignore-case t)
-  (completion-ignore-case t)
-  :config
-  (icomplete-vertical-mode)
-  :bind (:map icomplete-minibuffer-map
-              ("<down>" . icomplete-forward-completions)
-              ("C-n" . icomplete-forward-completions)
-              ("<up>" . icomplete-backward-completions)
-              ("C-p" . icomplete-backward-completions)
-              ("C-v" . icomplete-vertical-toggle)))
+;; (use-package icomplete-vertical
+;;   :ensure
+;;   :demand
+;;   :custom
+;;   (completion-styles '(partial-completion substring))
+;;   (completion-category-overrides '((file (styles basic substring))))
+;;   (read-file-name-completion-ignore-case t)
+;;   (read-buffer-completion-ignore-case t)
+;;   (completion-ignore-case t)
+;;   :config
+;;   (icomplete-vertical-mode)
+;;   :bind (:map icomplete-minibuffer-map
+;;               ("<down>" . icomplete-forward-completions)
+;;               ("C-n" . icomplete-forward-completions)
+;;               ("<up>" . icomplete-backward-completions)
+;;               ("C-p" . icomplete-backward-completions)
+;;               ("C-v" . icomplete-vertical-toggle)))
 
 ;; font settings
 (use-package emacs
@@ -204,7 +204,6 @@ passing \\[universal-argument]."
     "Kill from point to the beginning of the line."
     (interactive)
     (kill-line 0))
-
    :bind (("M-SPC" . cycle-spacing)
          ("M-o" . delete-blank-lines)   ; alias for C-x C-o
          ("M-k" . kill-line-backward)
@@ -272,11 +271,11 @@ passing \\[universal-argument]."
 
 (use-package display-line-numbers
   :config
-  (define-minor-mode display-line-numbers-mode
+  (define-minor-mode line-number-and-hl-mode
     "Toggle `display-line-numbers-mode' and `hl-line-mode'."
     :init-value nil
     :global nil
-    (if display-line-numbers-mode
+    (if line-number-and-hl-mode
         (progn
           (display-line-numbers-mode 1)
           (hl-line-mode 1)
@@ -284,13 +283,12 @@ passing \\[universal-argument]."
       (display-line-numbers-mode -1)
       (hl-line-mode -1)
       (setq-local truncate-lines nil)))
-
   :custom
   ;; Set absolute line numbers.  A value of "relative" is also useful.
   (display-line-numbers-type t)
   ;; Use absolute numbers in narrowed buffers
   (display-line-numbers-widen t)
-  :bind ("<f7>" . display-line-numbers-mode))
+  :bind ("<f7>" . line-number-and-hl-mode))
 
 (use-package whitespace
   :config
@@ -307,8 +305,8 @@ passing \\[universal-argument]."
 (use-package flyspell
   :custom
   (ispell-program-name "aspell")
-  :hook ( (text-mode-hook . flyspell-mode)
-	  (prog-mode-hook . flyspell-prog-mode)))
+  :hook ((text-mode-hook . flyspell-mode)
+	 (prog-mode-hook . flyspell-prog-mode)))
 
 (use-package org
   :custom
@@ -335,11 +333,6 @@ passing \\[universal-argument]."
   :ensure
   :config
   (minions-mode 1))
-
-;; prettify headings and plain lists in Org mode
-;; (use-package org-superstar
-;;   :ensure
-;;   :hook ((org-mode-hook . org-superstar-mode)))
 
 (use-package abbrev
   :bind ("C-x a u" . unexpand-abbrev))
@@ -457,7 +450,8 @@ passing \\[universal-argument]."
 
 ;; shell implemented in elisp
 (use-package eshell
-  :config
+  :custom
+  (eshell-prefer-lisp-function t)
   :bind ("<s-return>" . eshell))
 
 (use-package esh-mode
@@ -465,21 +459,21 @@ passing \\[universal-argument]."
 	      ("M-k" . eshell-kill-input)))
 
 (use-package esh-module
-  :custom
-  (eshell-modules-list
-   '(eshell-alias
-     eshell-basic
-     eshell-cmpl
-     eshell-dirs
-     eshell-glob
-     eshell-hist
-     eshell-ls
-     eshell-pred
-     eshell-prompt
-     eshell-script
-     eshell-term
-     eshell-tramp
-     eshell-unix)))
+  :config
+  (setq eshell-modules-list
+        '(eshell-alias
+          eshell-basic
+          eshell-cmpl
+          eshell-dirs
+          eshell-glob
+          eshell-hist
+          eshell-ls
+          eshell-pred
+          eshell-prompt
+          eshell-script
+          eshell-term
+          eshell-tramp
+          eshell-unix)))
 
 ;; cache password for 10 mins
 (use-package em-tramp

@@ -9,6 +9,6 @@ host smtp.gmail.com
 port 587
 from utkarsh190601@gmail.com
 user utkarsh190601@gmail.com
-passwordeval "pass mw-utkarsh190601@gmail.com"
+passwordeval "pass email/accounts.google.com/utkarsh190601@gmail.com"
 
 
