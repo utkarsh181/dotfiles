@@ -110,12 +110,12 @@
 
 ;; auto-pair
 (use-package electric
-  :init
+  :config
   (electric-pair-mode 1))
 
 ;; parentheses highlighting
 (use-package paren
-  :init
+  :config
   (show-paren-mode 1))
 
 ;; built-in minor mode that keeps track of the files
@@ -446,6 +446,7 @@ passing \\[universal-argument]."
 	("https://ambrevar.xyz/atom.xml" emacs)
 	("https://protesilaos.com/codelog.xml" emacs)
 	("https://videos.lukesmith.xyz/feeds/videos.xml?accountId=3" luke video)
+	("https://www.youtube.com/feeds/videos.xml?channel_id=UCngn7SVujlvskHRvRKc1cTw" youtube bug_writer)
 	("https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" youtube))))
 
 ;; shell implemented in elisp
