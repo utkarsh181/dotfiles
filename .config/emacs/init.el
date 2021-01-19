@@ -2,20 +2,22 @@
 ;;; Commentary:
 ;;; Code:
 
-;; speed up startup
-(setq gc-cons-threshold (* 50 1000 1000))
+(setq straight-use-package-by-default nil)
 
-(setq inhibit-startup-screen t)
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-(require 'package)
-(setq package-enable-at-startup nil)
-(add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/"))
-(package-initialize)
-
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+(straight-use-package 'use-package)
 
 ;; configure `use-package' prior to loading it.
 (eval-and-compile
@@ -28,18 +30,13 @@
   ;; such as `describe-symbol'.
   (setq use-package-hook-name-suffix nil))
 
-(eval-when-compile
-  (require 'use-package))
-
 (add-to-list 'load-path "/usr/share/emacs/site-lisp") ; for 28.0.1
 
-;; disable GUI component
-(use-package emacs
-  :config
-  (scroll-bar-mode -1)
-  (tool-bar-mode -1)
-  (blink-cursor-mode -1)
-  (menu-bar-mode -1))
+(use-package straight-x)
+
+(use-package vc
+  :custom
+  (vc-follow-symlinks t))
 
 ;; to start Emacs server
 (use-package server
@@ -47,7 +44,7 @@
 
 ;; theme settings
 (use-package modus-themes
-  :ensure
+  :straight t
   :init
   ;; Add all your customizations prior to loading the themes
   (setq modus-themes-slanted-constructs t
@@ -59,49 +56,21 @@
   (modus-themes-load-vivendi)
   :bind ("<f5>" . modus-themes-toggle))
 
-;; narrowing framework
-;; (use-package counsel
-;;   :ensure
-;;   :init
-;;   (ivy-mode 1)
-;;   (counsel-mode 1)
-;;   :custom
-;;   (ivy-use-virtual-buffers t)
-;;   (ivy-count-format "(%d/%d) ")
-;;   (counsel-switch-buffer-preview-virtual-buffers nil)
-;;   :bind (("C-x b" . ivy-switch-buffer)
-;; 	 ("C-c b" . counsel-switch-buffer-other-window)))
+(use-package counsel
+  :straight t
+  :init
+  (ivy-mode 1)
+  (counsel-mode 1)
+  :custom
+  (ivy-use-virtual-buffers t)
+  (ivy-count-format "(%d/%d) ")
+  (counsel-switch-buffer-preview-virtual-buffers nil))
 
 ;; present recency-bias in M-x command
-;; (use-package amx
-;;   :ensure
-;;   :config
-;;   (amx-mode 1))
-
-;; (use-package icomplete
-;;   :init
-;;   (fido-mode 1)
-;;   :custom
-;;   (icomplete-compute-delay 0) ; 0.3
-;;   :bind (("C-c b" . switch-to-buffer-other-window)))
-
-;; (use-package icomplete-vertical
-;;   :ensure
-;;   :demand
-;;   :custom
-;;   (completion-styles '(partial-completion substring))
-;;   (completion-category-overrides '((file (styles basic substring))))
-;;   (read-file-name-completion-ignore-case t)
-;;   (read-buffer-completion-ignore-case t)
-;;   (completion-ignore-case t)
-;;   :config
-;;   (icomplete-vertical-mode)
-;;   :bind (:map icomplete-minibuffer-map
-;;               ("<down>" . icomplete-forward-completions)
-;;               ("C-n" . icomplete-forward-completions)
-;;               ("<up>" . icomplete-backward-completions)
-;;               ("C-p" . icomplete-backward-completions)
-;;               ("C-v" . icomplete-vertical-toggle)))
+(use-package amx
+  :straight t
+  :config
+  (amx-mode 1))
 
 ;; font settings
 (use-package emacs
@@ -142,7 +111,8 @@
 ;; manage other buffer with ease
 (use-package emacs
   :bind (("C-c d" . dired-other-window)
-	 ("C-c f" . find-file-other-window)))
+	 ("C-c f" . find-file-other-window)
+	 ("C-c b" . switch-to-buffer-other-window)))
 
 ;; deletes text under selection when insertion is made
 (use-package delsel
@@ -204,7 +174,7 @@ passing \\[universal-argument]."
     "Kill from point to the beginning of the line."
     (interactive)
     (kill-line 0))
-   :bind (("M-SPC" . cycle-spacing)
+   :bind (("M-SPC" . cycle-spacing)     ; activate widow menu in gnome-shell
          ("M-o" . delete-blank-lines)   ; alias for C-x C-o
          ("M-k" . kill-line-backward)
          ("C-S-n" . multi-line-next)
@@ -214,7 +184,7 @@ passing \\[universal-argument]."
 
 ;; Increases The selected region by semantic units
 (use-package expand-region
-  :ensure
+  :straight t
   :bind (("C-=" . er/expand-region)))
 
 ;; directory editor
@@ -235,7 +205,7 @@ passing \\[universal-argument]."
 
 ;; preview mode for dired
 (use-package peep-dired
-  :ensure
+  :straight t
   :after dired
   :custom
   (peep-dired-enable-on-directories nil)
@@ -250,7 +220,7 @@ passing \\[universal-argument]."
 
 ;; make dired more colourful
 (use-package diredfl
-  :ensure
+  :straight t
   :custom
   (diredfl-ignore-compressed-flag nil)
   :hook (dired-mode-hook . diredfl-mode))
@@ -330,7 +300,7 @@ passing \\[universal-argument]."
 
 ;; helps to keep mode line uncluttered
 (use-package minions
-  :ensure
+  :straight t
   :config
   (minions-mode 1))
 
@@ -339,7 +309,7 @@ passing \\[universal-argument]."
 
 ;; text completion framework
 (use-package company
-  :ensure
+  :straight t
   :custom
   (company-idle-delay 0.1)
   (company-minimum-prefix-length 1)
@@ -348,14 +318,14 @@ passing \\[universal-argument]."
 	 (prog-mode-hook . company-tng-mode)))
 
 (use-package flycheck
-  :ensure
+  :straight t
   :custom
   (flycheck-python-pycompile-executable "python3")
   :hook (prog-mode-hook . flycheck-mode))
 
 ;; language server mode
 (use-package lsp-mode
-  :ensure
+  :straight t
   :init
   (setq lsp-keymap-prefix "C-c l")
   :custom
@@ -404,18 +374,18 @@ passing \\[universal-argument]."
 
 ;; try package without installing!
 (use-package try
-  :ensure)
+  :straight t)
 
 ;; use the Emacsclient as $EDITOR
 (use-package with-editor
-  :ensure
+  :straight t
   :hook ((eshell-mode-hook . with-editor-export-editor)
 	 (shell-mode-hook . with-editor-export-editor)
 	 (term-mode-hook . with-editor-export-editor)))
 
 ;; better pdf experience inside emacs
 (use-package pdf-tools
-  :ensure
+  :straight t
   :init
   (pdf-tools-install)
   :custom
@@ -426,13 +396,13 @@ passing \\[universal-argument]."
 
 ;; save the last position in pdf-view mode
 (use-package saveplace-pdf-view
-  :ensure
+  :straight t
   :init
   (save-place-mode 1))
 
 ;; rss and atom feed reader inside emacs
 (use-package elfeed
-  :ensure
+  :straight t
   :custom
   (elfeed-use-curl t)
   (elfeed-curl-max-connections 10)
@@ -446,7 +416,7 @@ passing \\[universal-argument]."
 	("https://ambrevar.xyz/atom.xml" emacs)
 	("https://protesilaos.com/codelog.xml" emacs)
 	("https://videos.lukesmith.xyz/feeds/videos.xml?accountId=3" luke video)
-	("https://www.youtube.com/feeds/videos.xml?channel_id=UCngn7SVujlvskHRvRKc1cTw" youtube bug_writer)
+	("https://www.youtube.com/feeds/videos.xml?channel_id=UCngn7SVujlvskHRvRKc1cTw" youtube)
 	("https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" youtube))))
 
 ;; shell implemented in elisp
@@ -485,7 +455,7 @@ passing \\[universal-argument]."
 
 ;; terminal emulator inside Emacs though eshell just works
 (use-package vterm
-  :ensure
+  :straight t
   :commands vterm
   :custom
   (vterm-disable-bold nil)
@@ -507,7 +477,7 @@ passing \\[universal-argument]."
 
 ;; Emacs interface for pass(standard password manager)
 (use-package password-store
-  :ensure
+  :straight t
   :custom
   (password-store-time-before-clipboard-restore 30)
   :commands (password-store-copy
@@ -516,7 +486,7 @@ passing \\[universal-argument]."
 
 ;; local dictionary using sdcv
 (use-package sdcv
-  :ensure
+  :straight t
   ;; remove font-lock which causes awkward highlighting
   :hook (sdcv-mode-hook . (lambda ()
                             (font-lock-mode -1))))
@@ -553,7 +523,7 @@ passing \\[universal-argument]."
 
 ;; music client
 (use-package emms
-  :ensure
+  :straight t
   :config
   (emms-all)
   (add-to-list 'emms-info-functions 'emms-info-mpd)
