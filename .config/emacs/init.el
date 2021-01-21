@@ -2,8 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(setq straight-use-package-by-default nil)
-
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -30,17 +28,11 @@
   ;; such as `describe-symbol'.
   (setq use-package-hook-name-suffix nil))
 
-(add-to-list 'load-path "/usr/share/emacs/site-lisp") ; for 28.0.1
-
-(use-package straight-x)
-
-(use-package vc
-  :custom
-  (vc-follow-symlinks t))
-
-;; to start Emacs server
+;; to start emacs server
 (use-package server
-  :hook (after-init-hook . server-start))
+  :hook (after-init-hook . (lambda ()
+			     (unless (server-running-p)
+			       (server-start)))))
 
 ;; theme settings
 (use-package modus-themes
@@ -187,6 +179,10 @@ passing \\[universal-argument]."
   :straight t
   :bind (("C-=" . er/expand-region)))
 
+(use-package vc
+  :custom
+  (vc-follow-symlinks t))
+
 ;; directory editor
 (use-package dired
   :custom
@@ -281,9 +277,13 @@ passing \\[universal-argument]."
 (use-package org
   :custom
   (org-catch-invisible-edits 'show)
-  :bind (:map org-mode-map
-	      ("<C-return>" . nil)
-	      ("<C-S-return>" . nil)))
+  (org-log-done 'time)
+  :bind (("C-c l" . org-store-link) ; may conflict with lsp-key-prefix!
+	 ("C-c a" . org-agenda)
+	 ("C-c c" . org-capture)
+	 :map org-mode-map
+	 ("<C-return>" . nil)
+	 ("<C-S-return>" . nil)))
 
 ;; display column number in mode line
 (use-package emacs
@@ -321,13 +321,16 @@ passing \\[universal-argument]."
   :straight t
   :custom
   (flycheck-python-pycompile-executable "python3")
-  :hook (prog-mode-hook . flycheck-mode))
+  (flycheck-display-errors-function #'flycheck-display-error-messages-unless-error-list)
+  :hook ((c++-mode-hook . flycheck-mode)
+	 (c-mode-hook . flycheck-mode)
+	 (python-mode-hook . flycheck-mode)))
 
 ;; language server mode
 (use-package lsp-mode
   :straight t
   :init
-  (setq lsp-keymap-prefix "C-c l")
+  ;; (setq lsp-keymap-prefix "C-c l")
   :custom
   (lsp-enable-indentation nil)
   (lsp-enable-on-type-formatting nil)
@@ -514,6 +517,7 @@ passing \\[universal-argument]."
 
 ;; email interface
 (use-package notmuch
+  :load-path "/usr/share/emacs/site-lisp"
   :custom
   (notmuch-search-oldest-first nil)
   (notmuch-fcc-dirs '("utkarsh190601@gmail.com" . "utkarsh190601@gmail.com/[Gmail].Sent +sent -inbox"))
@@ -546,9 +550,6 @@ passing \\[universal-argument]."
 (use-package shr
   :custom
   (shr-use-colors nil))
-
-;; Make gc pauses faster by decreasing the threshold.
-(setq gc-cons-threshold (* 2 1000 1000))
 
 ;; End:
 ;;; init.el ends here
