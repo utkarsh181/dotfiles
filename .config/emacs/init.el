@@ -33,7 +33,6 @@
   :hook (after-init-hook . (lambda ()
 			     (unless (server-running-p)
 			       (server-start)))))
-
 ;; theme settings
 (use-package modus-themes
   :straight t
@@ -118,7 +117,6 @@
   :custom
   (echo-keystrokes 0.25)
   (put 'narrow-to-region 'disabled nil)
-  (put 'upcase-region 'disabled nil)
   (put 'downcase-region 'disabled nil)
   (put 'overwrite-mode 'disabled nil)
   (put 'dired-find-alternate-file 'disabled nil))
@@ -559,6 +557,15 @@ systematically send encrypted emails when possible."
   (notmuch-archive-tags '("-inbox" "-unread" "+deleted"))
   (notmuch-crypto-process-mime t))
 
+;; display unread mail in modeline
+(use-package notmuch-unread
+  :straight t
+  :config
+  (notmuch-unread-mode 0)
+  :custom
+  (notmuch-unread-update-interval 600)
+  (notmuch-unread-icon "📬"))
+
 ;; music client
 (use-package emms
   :straight t
@@ -587,3 +594,5 @@ systematically send encrypted emails when possible."
 
 ;; End:
 ;;; init.el ends here
+
+(put 'upcase-region 'disabled nil)
