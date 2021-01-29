@@ -116,6 +116,7 @@
   (defalias 'yes-or-no-p 'y-or-n-p)
   :custom
   (echo-keystrokes 0.25)
+  (put 'upcase-region 'disabled nil)
   (put 'narrow-to-region 'disabled nil)
   (put 'downcase-region 'disabled nil)
   (put 'overwrite-mode 'disabled nil)
@@ -420,6 +421,18 @@ passing \\[universal-argument]."
 	("https://www.youtube.com/feeds/videos.xml?channel_id=UCngn7SVujlvskHRvRKc1cTw" youtube)
 	("https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" youtube))))
 
+(use-package newsticker
+  :custom
+  (newsticker-url-list
+   '(("Luke's web" "http://lukesmith.xyz/rss.xml")
+     ("Notrelated" "https://notrelated.libsyn.com/rss")
+     ("Arch linux feeds" "https://www.archlinux.org/feeds/news/")
+     ("Ambrevar" "https://ambrevar.xyz/atom.xml")
+     ("Prot" "https://protesilaos.com/codelog.xml")
+     ("Luke's videos" "https://videos.lukesmith.xyz/feeds/videos.xml?accountId=3")
+     ("Mental outlaw" "https://www.youtube.com/feeds/videos.xml?channel_id=UCngn7SVujlvskHRvRKc1cTw")
+     ("Bug writer" "https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA"))))
+
 ;; shell implemented in elisp
 (use-package eshell
   :custom
@@ -561,7 +574,7 @@ systematically send encrypted emails when possible."
 (use-package notmuch-unread
   :straight t
   :config
-  (notmuch-unread-mode 0)
+  ;; (notmuch-unread-mode 1) ; this requires more testing
   :custom
   (notmuch-unread-update-interval 600)
   (notmuch-unread-icon "📬"))
@@ -594,5 +607,3 @@ systematically send encrypted emails when possible."
 
 ;; End:
 ;;; init.el ends here
-
-(put 'upcase-region 'disabled nil)
