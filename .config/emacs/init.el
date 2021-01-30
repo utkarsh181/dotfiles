@@ -2,20 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 5))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
+(require 'package)
 
-(straight-use-package 'use-package)
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/"))
 
 ;; configure `use-package' prior to loading it.
 (eval-and-compile
@@ -35,7 +25,7 @@
 			       (server-start)))))
 ;; theme settings
 (use-package modus-themes
-  :straight t
+  :ensure t
   :init
   ;; Add all your customizations prior to loading the themes
   (setq modus-themes-slanted-constructs t
@@ -48,7 +38,7 @@
   :bind ("<f5>" . modus-themes-toggle))
 
 (use-package counsel
-  :straight t
+  :ensure t
   :init
   (ivy-mode 1)
   (counsel-mode 1)
@@ -59,7 +49,7 @@
 
 ;; present recency-bias in M-x command
 (use-package amx
-  :straight t
+  :ensure t
   :config
   (amx-mode 1))
 
@@ -175,7 +165,7 @@ passing \\[universal-argument]."
 
 ;; Increases The selected region by semantic units
 (use-package expand-region
-  :straight t
+  :ensure t
   :bind (("C-=" . er/expand-region)))
 
 (use-package vc
@@ -200,7 +190,7 @@ passing \\[universal-argument]."
 
 ;; preview mode for dired
 (use-package peep-dired
-  :straight t
+  :ensure t
   :after dired
   :custom
   (peep-dired-enable-on-directories nil)
@@ -215,7 +205,7 @@ passing \\[universal-argument]."
 
 ;; make dired more colourful
 (use-package diredfl
-  :straight t
+  :ensure t
   :custom
   (diredfl-ignore-compressed-flag nil)
   :hook (dired-mode-hook . diredfl-mode))
@@ -299,7 +289,7 @@ passing \\[universal-argument]."
 
 ;; helps to keep mode line uncluttered
 (use-package minions
-  :straight t
+  :ensure t
   :config
   (minions-mode 1))
 
@@ -308,7 +298,7 @@ passing \\[universal-argument]."
 
 ;; text completion framework
 (use-package company
-  :straight t
+  :ensure t
   :custom
   (company-idle-delay 0.1)
   (company-minimum-prefix-length 1)
@@ -317,7 +307,7 @@ passing \\[universal-argument]."
 	 (prog-mode-hook . company-tng-mode)))
 
 (use-package flycheck
-  :straight t
+  :ensure t
   :custom
   (flycheck-python-pycompile-executable "python3")
   (flycheck-display-errors-function #'flycheck-display-error-messages-unless-error-list)
@@ -327,7 +317,7 @@ passing \\[universal-argument]."
 
 ;; language server mode
 (use-package lsp-mode
-  :straight t
+  :ensure t
   :init
   ;; (setq lsp-keymap-prefix "C-c l")
   :custom
@@ -376,18 +366,18 @@ passing \\[universal-argument]."
 
 ;; try package without installing!
 (use-package try
-  :straight t)
+  :ensure t)
 
 ;; use the Emacsclient as $EDITOR
 (use-package with-editor
-  :straight t
+  :ensure t
   :hook ((eshell-mode-hook . with-editor-export-editor)
 	 (shell-mode-hook . with-editor-export-editor)
 	 (term-mode-hook . with-editor-export-editor)))
 
 ;; better pdf experience inside emacs
 (use-package pdf-tools
-  :straight t
+  :ensure t
   :init
   (pdf-tools-install)
   :custom
@@ -398,13 +388,13 @@ passing \\[universal-argument]."
 
 ;; save the last position in pdf-view mode
 (use-package saveplace-pdf-view
-  :straight t
+  :ensure t
   :init
   (save-place-mode 1))
 
 ;; rss and atom feed reader inside emacs
 (use-package elfeed
-  :straight t
+  :ensure t
   :custom
   (elfeed-use-curl t)
   (elfeed-curl-max-connections 10)
@@ -421,17 +411,17 @@ passing \\[universal-argument]."
 	("https://www.youtube.com/feeds/videos.xml?channel_id=UCngn7SVujlvskHRvRKc1cTw" youtube)
 	("https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" youtube))))
 
-(use-package newsticker
-  :custom
-  (newsticker-url-list
-   '(("Luke's web" "http://lukesmith.xyz/rss.xml")
-     ("Notrelated" "https://notrelated.libsyn.com/rss")
-     ("Arch linux feeds" "https://www.archlinux.org/feeds/news/")
-     ("Ambrevar" "https://ambrevar.xyz/atom.xml")
-     ("Prot" "https://protesilaos.com/codelog.xml")
-     ("Luke's videos" "https://videos.lukesmith.xyz/feeds/videos.xml?accountId=3")
-     ("Mental outlaw" "https://www.youtube.com/feeds/videos.xml?channel_id=UCngn7SVujlvskHRvRKc1cTw")
-     ("Bug writer" "https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA"))))
+;; (use-package newsticker
+;;   :custom
+;;   (newsticker-url-list
+;;    '(("Luke's web" "http://lukesmith.xyz/rss.xml")
+;;      ("Notrelated" "https://notrelated.libsyn.com/rss")
+;;      ("Arch linux feeds" "https://www.archlinux.org/feeds/news/")
+;;      ("Ambrevar" "https://ambrevar.xyz/atom.xml")
+;;      ("Prot" "https://protesilaos.com/codelog.xml")
+;;      ("Luke's videos" "https://videos.lukesmith.xyz/feeds/videos.xml?accountId=3")
+;;      ("Mental outlaw" "https://www.youtube.com/feeds/videos.xml?channel_id=UCngn7SVujlvskHRvRKc1cTw")
+;;      ("Bug writer" "https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA"))))
 
 ;; shell implemented in elisp
 (use-package eshell
@@ -469,7 +459,7 @@ passing \\[universal-argument]."
 
 ;; terminal emulator inside Emacs though eshell just works
 (use-package vterm
-  :straight t
+  :ensure t
   :commands vterm
   :custom
   (vterm-disable-bold nil)
@@ -491,7 +481,7 @@ passing \\[universal-argument]."
 
 ;; Emacs interface for pass(standard password manager)
 (use-package password-store
-  :straight t
+  :ensure t
   :custom
   (password-store-time-before-clipboard-restore 30)
   :commands (password-store-copy
@@ -500,7 +490,7 @@ passing \\[universal-argument]."
 
 ;; local dictionary using sdcv
 (use-package sdcv
-  :straight t
+  :ensure t
   ;; remove font-lock which causes awkward highlighting
   :hook (sdcv-mode-hook . (lambda ()
                             (font-lock-mode -1))))
@@ -572,7 +562,7 @@ systematically send encrypted emails when possible."
 
 ;; display unread mail in modeline
 (use-package notmuch-unread
-  :straight t
+  :ensure t
   :config
   ;; (notmuch-unread-mode 1) ; this requires more testing
   :custom
@@ -581,7 +571,7 @@ systematically send encrypted emails when possible."
 
 ;; music client
 (use-package emms
-  :straight t
+  :ensure t
   :config
   (emms-all)
   (add-to-list 'emms-info-functions 'emms-info-mpd)
@@ -604,6 +594,10 @@ systematically send encrypted emails when possible."
 (use-package shr
   :custom
   (shr-use-colors nil))
+
+;; mount umount usb and android from emacs!
+;; (use-package mount-umount
+;;   :ensure)
 
 ;; End:
 ;;; init.el ends here
