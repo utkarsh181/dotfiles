@@ -3,9 +3,17 @@
 ;;; Code:
 
 (require 'package)
-
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
+(package-initialize)
+
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(custom-set-variables
+ '(use-package-enable-imenu-support t))
+
+(eval-when-compile (require 'use-package))
 
 ;; configure `use-package' prior to loading it.
 (eval-and-compile
@@ -17,6 +25,8 @@
   ;; This is to empower help commands with their contextual awareness,
   ;; such as `describe-symbol'.
   (setq use-package-hook-name-suffix nil))
+
+(add-to-list 'load-path "~/.config/emacs/lisp")
 
 ;; to start emacs server
 (use-package server
@@ -561,13 +571,12 @@ systematically send encrypted emails when possible."
   (notmuch-crypto-process-mime t))
 
 ;; display unread mail in modeline
-(use-package notmuch-unread
-  :ensure t
-  :config
-  ;; (notmuch-unread-mode 1) ; this requires more testing
-  :custom
-  (notmuch-unread-update-interval 600)
-  (notmuch-unread-icon "📬"))
+;; (use-package notmuch-unread
+;;   :config
+;;   ;; (notmuch-unread-mode 1) ; this requires more testing
+;;   :custom
+;;   (notmuch-unread-update-interval 600)
+;;   (notmuch-unread-icon "📬"))
 
 ;; music client
 (use-package emms
@@ -596,8 +605,7 @@ systematically send encrypted emails when possible."
   (shr-use-colors nil))
 
 ;; mount umount usb and android from emacs!
-;; (use-package mount-umount
-;;   :ensure)
+(use-package mount-umount)
 
 ;; End:
 ;;; init.el ends here
