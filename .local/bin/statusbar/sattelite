@@ -1,5 +1,0 @@
-#!/bin/sh
-
-notify-send "Extension for Wheather Module" "Loading Dopler Radar...
-Please Wait"
-mpv --no-osc --loop-file=inf "https://mausam.imd.gov.in/Satellite/Converted/IR1.gif" &>/dev/null
