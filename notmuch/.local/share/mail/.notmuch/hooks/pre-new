@@ -1,0 +1,3 @@
+#!/bin/bash
+
+# notmuch search --output=files utkarsh190601@gmail.com/[Gmail].INBOX and tag:spam | xargs mv -t ~/.local/share/mail/utkarsh190601@gmail.com/[Gmail].Trash/cur/
