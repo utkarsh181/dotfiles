@@ -3,6 +3,7 @@
 ;;; Code:
 
 (require 'package)
+(setq package-enable-at-startup nil)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
@@ -10,10 +11,6 @@
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
-(custom-set-variables
- '(use-package-enable-imenu-support t))
-
-(eval-when-compile (require 'use-package))
 
 ;; configure `use-package' prior to loading it.
 (eval-and-compile
@@ -25,6 +22,9 @@
   ;; This is to empower help commands with their contextual awareness,
   ;; such as `describe-symbol'.
   (setq use-package-hook-name-suffix nil))
+
+(eval-when-compile
+  (require 'use-package))
 
 (add-to-list 'load-path "~/.config/emacs/lisp")
 
