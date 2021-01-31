@@ -26,6 +26,7 @@
 (eval-when-compile
   (require 'use-package))
 
+;; my custom library
 (add-to-list 'load-path "~/.config/emacs/lisp")
 
 ;; to start emacs server
@@ -421,18 +422,6 @@ passing \\[universal-argument]."
 	("https://www.youtube.com/feeds/videos.xml?channel_id=UCngn7SVujlvskHRvRKc1cTw" youtube)
 	("https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" youtube))))
 
-;; (use-package newsticker
-;;   :custom
-;;   (newsticker-url-list
-;;    '(("Luke's web" "http://lukesmith.xyz/rss.xml")
-;;      ("Notrelated" "https://notrelated.libsyn.com/rss")
-;;      ("Arch linux feeds" "https://www.archlinux.org/feeds/news/")
-;;      ("Ambrevar" "https://ambrevar.xyz/atom.xml")
-;;      ("Prot" "https://protesilaos.com/codelog.xml")
-;;      ("Luke's videos" "https://videos.lukesmith.xyz/feeds/videos.xml?accountId=3")
-;;      ("Mental outlaw" "https://www.youtube.com/feeds/videos.xml?channel_id=UCngn7SVujlvskHRvRKc1cTw")
-;;      ("Bug writer" "https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA"))))
-
 ;; shell implemented in elisp
 (use-package eshell
   :custom
@@ -569,14 +558,6 @@ systematically send encrypted emails when possible."
       '(("utkarsh190601@gmail.com" . "utkarsh190601@gmail.com/[Gmail].Sent +sent -inbox -unread")))
   (notmuch-archive-tags '("-inbox" "-unread" "+deleted"))
   (notmuch-crypto-process-mime t))
-
-;; display unread mail in modeline
-;; (use-package notmuch-unread
-;;   :config
-;;   ;; (notmuch-unread-mode 1) ; this requires more testing
-;;   :custom
-;;   (notmuch-unread-update-interval 600)
-;;   (notmuch-unread-icon "📬"))
 
 ;; music client
 (use-package emms
