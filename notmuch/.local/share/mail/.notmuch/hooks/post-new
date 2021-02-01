@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# give delete tag to mail in trash folder
+# notmuch tag -inbox -unread -delete +deleted path:utkarsh190601@gmail.com/[Gmail].Trash/**
+
+# give spam tag to mail in spam folder
+# notmuch tag -inbox +spam  path:utkarsh190601@gmail.com/[Gmail].Spam/**
+
+# give sent tag to from given user id
+# it is only need when you manage mail using multiple client like GNUS, mobile-email-app
+notmuch tag -inbox -unread +sent from:utkarsh190601@gmail.com

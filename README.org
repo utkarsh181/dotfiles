@@ -1,0 +1,35 @@
+#+TITLE: .dotfiles
+
+* Introduction
+
+This repository contains my Emacs and other configurations for GNU/Linux.
+It is managed with the help of GNU Stow.  For example:
+
+#+BEGIN_SRC bash
+  $ git clone --depth 1 https://github.com/utkarsh181/dotfiles
+  $ cd dotfiles
+  $ stow -t "$HOME" -v emacs
+#+END_SRC
+
+The above will clone my dotfiles in =dotfiles=.  Then stow will produce
+a symlink of my Emacs files to your home directory.
+
+Other common =stow= operations are:
+
+#+BEGIN_SRC bash
+  # Re-install stow "package"
+  $ stow -t "$HOME" -R emacs
+
+  # Delete stow package
+  $ stow -t "$HOME" -D emacs
+#+END_SRC
+
+* Setup
+  
+I maintain [[https://github.com/utkarsh181/AEBS][AEBS]] which is used to deploy my dotfiles on Arch based
+distributions.
+
+* Copying
+
+Unless otherwise noted, all code herein is distributed under the terms
+of the GNU General Public License Version 3 or later.  

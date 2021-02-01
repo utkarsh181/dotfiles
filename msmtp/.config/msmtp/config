@@ -1,0 +1,14 @@
+defaults
+auth	on
+tls	on
+tls_trust_file	/etc/ssl/certs/ca-certificates.crt
+logfile /home/utkarsh/.config/msmtp/msmtp.log
+
+account utkarsh190601@gmail.com
+host smtp.gmail.com
+port 587
+from utkarsh190601@gmail.com
+user utkarsh190601@gmail.com
+passwordeval "pass email/accounts.google.com/utkarsh190601@gmail.com"
+
+
