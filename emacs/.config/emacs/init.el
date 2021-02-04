@@ -117,6 +117,7 @@
   (defalias 'yes-or-no-p 'y-or-n-p)
   :custom
   (echo-keystrokes 0.25)
+  (put 'upcase-region 'disabled nil)
   (put 'narrow-to-region 'disabled nil)
   (put 'downcase-region 'disabled nil)
   (put 'overwrite-mode 'disabled nil)
@@ -417,6 +418,7 @@ passing \\[universal-argument]."
 	("https://www.archlinux.org/feeds/news/" linux distro)
 	("https://ambrevar.xyz/atom.xml" emacs)
 	("https://protesilaos.com/codelog.xml" emacs)
+	("https://drewdevault.com/blog/index.xml" linux wayland)
 	("https://videos.lukesmith.xyz/feeds/videos.xml?accountId=3" luke video)
 	("https://www.youtube.com/feeds/videos.xml?channel_id=UCngn7SVujlvskHRvRKc1cTw" youtube)
 	("https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" youtube))))
@@ -591,4 +593,3 @@ systematically send encrypted emails when possible."
 
 ;; End:
 ;;; init.el ends here
-(put 'upcase-region 'disabled nil)
