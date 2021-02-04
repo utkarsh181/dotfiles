@@ -1,5 +1,30 @@
-;;; init.el --- Utkarsh Singh Emacs Configuration  -*- lexical-binding:t -*-
+;;; init.el --- Personal configuration file -*- lexical-binding: t -*-
+
+;; Copyright (c) 2019-2021  Utkarsh Singh <utkarsh190601@gmail.com>
+
+;; Author: Utkarsh Singh <utkarsh190601@gmail.com>
+;; Version: 0.1.0
+;; Package-Requires: ((emacs "27.1"))
+
+;; This file is NOT part of GNU Emacs.
+
+;; This file is free software: you can redistribute it and/or modify it
+;; under the terms of the GNU General Public License as published by the
+;; Free Software Foundation, either version 3 of the License, or (at
+;; your option) any later version.
+;;
+;; This file is distributed in the hope that it will be useful, but
+;; WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <http://www.gnu.org/licenses/>.
+
 ;;; Commentary:
+
+;; See my dotfiles: https://github.com/utkarsh181/dotfiles
+
 ;;; Code:
 
 (require 'package)
@@ -27,7 +52,7 @@
   (require 'use-package))
 
 ;; my custom library
-(add-to-list 'load-path "~/.config/emacs/lisp")
+(add-to-list 'load-path (concat user-emacs-directory "lisp/"))
 
 ;; to start emacs server
 (use-package server
@@ -124,55 +149,15 @@
   (put 'dired-find-alternate-file 'disabled nil))
 
 ;; custom key bindings to reduce keystrokes for regular editing commands
-(use-package emacs
+(use-package utkarsh-lisp
   :config
-  (defun new-line-below (&optional arg)
-    "Create an empty line below the current one.
-Move the point to the indented area.  Adapt indentation by
-passing \\[universal-argument].  Also see `new-line-above'."
-    (interactive "P")
-    (end-of-line)
-    (if arg
-        (newline-and-indent)
-      (newline))
-    (indent-according-to-mode))
-
-  (defun new-line-above (&optional arg)
-    "Create an empty line above the current one.
-Move the point to the absolute beginning.  Adapt indentation by
-passing \\[universal-argument]."
-    (interactive "P")
-    (let ((indent (if arg arg nil)))
-      (if (or (bobp)
-              (line-number-at-pos 1))
-          (progn
-            (beginning-of-line)
-            (newline)
-            (forward-line -1))
-        (forward-line -1)
-        (new-line-below indent))))
-
-   (defun multi-line-next ()
-    "Move point 15 lines down."
-    (interactive)
-    (forward-line 15))
-
-  (defun multi-line-prev ()
-    "Move point 15 lines up."
-    (interactive)
-    (forward-line -15))
-
-  (defun kill-line-backward ()
-    "Kill from point to the beginning of the line."
-    (interactive)
-    (kill-line 0))
-   :bind (("M-SPC" . cycle-spacing)     ; activate widow menu in gnome-shell
+  :bind (("M-SPC" . cycle-spacing)     ; activate widow menu in gnome-shell
          ("M-o" . delete-blank-lines)   ; alias for C-x C-o
-         ("M-k" . kill-line-backward)
-         ("C-S-n" . multi-line-next)
-         ("C-S-p" . multi-line-prev)
-         ("<C-return>" . new-line-below)
-         ("<C-S-return>" . new-line-above)))
+         ("M-k" . utkarsh-kill-line-backward)
+         ("C-S-n" . utkarsh-multi-line-next)
+         ("C-S-p" . utkarsh-multi-line-prev)
+         ("<C-return>" . utkarsh-new-line-below)
+         ("<C-S-return>" . utkarsh-new-line-above)))
 
 ;; Increases The selected region by semantic units
 (use-package expand-region
