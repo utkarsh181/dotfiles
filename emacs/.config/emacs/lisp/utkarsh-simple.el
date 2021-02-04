@@ -1,8 +1,8 @@
 ;;; prot-simple.el --- Common commands for my dotemacs -*- lexical-binding: t -*-
 
-;; Copyright (C) 2020-2021  Utkarsh Singh
+;; Copyright (c) 2020-2021  Utkarsh Singh <utkarsh190601@gmail.com>
 
-;; Author: Utkarsh Singh
+;; Author: Utkarsh Singh <utkarsh190601@gmail.com>
 ;; Version: 0.1.0
 ;; Package-Requires: ((emacs "27.1"))
 
