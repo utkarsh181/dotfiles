@@ -36,7 +36,6 @@ export ANDROID_AVD_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/android/"
 export ANDROID_EMULATOR_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/android/"
 export ADB_VENDOR_KEY="${XDG_CONFIG_HOME-$HOME/.config}/android"
 export ASPELL_CONF="per-conf $XDG_CONFIG_HOME/aspell/aspell.conf; personal $XDG_CONFIG_HOME/aspell/en.pws; repl $XDG_CONFIG_HOME/aspell/en.prepl"
-export PYTHONSTARTUP="${XDG_CONFIG_HOME:-$HOME/.config}/python/config"
 
 # Other program settings:
 export DICS="/usr/share/stardict/dic/"
