@@ -59,6 +59,19 @@
   :hook (after-init-hook . (lambda ()
 			     (unless (server-running-p)
 			       (server-start)))))
+
+;; basic settings
+(use-package emacs
+  :config
+  (defalias 'yes-or-no-p 'y-or-n-p)
+  :custom
+  (echo-keystrokes 0.25)
+  (put 'narrow-to-region 'disabled nil)
+  (put 'overwrite-mode 'disabled nil)
+  (put 'dired-find-alternate-file 'disabled nil)
+  (put 'downcase-region 'disabled nil)
+  (put 'upcase-region 'disabled nil))
+
 ;; theme settings
 (use-package modus-themes
   :ensure t
@@ -73,6 +86,7 @@
   (modus-themes-load-vivendi)
   :bind ("<f5>" . modus-themes-toggle))
 
+;; narrowing framework
 (use-package counsel
   :ensure t
   :init
@@ -123,7 +137,7 @@
 (use-package emacs
   :custom
   (backup-directory-alist '(("." . "~/.cache/emacs")))
-  (custom-file "~/.config/emacs/custom.el"))
+  (custom-file (concat user-emacs-directory "custom.el")))
 
 ;; manage other buffer with ease
 (use-package emacs
@@ -136,20 +150,8 @@
   :config
   (delete-selection-mode 1))
 
-;; make emacs prompts more tolerable
-(use-package emacs
-  :config
-  (defalias 'yes-or-no-p 'y-or-n-p)
-  :custom
-  (echo-keystrokes 0.25)
-  (put 'upcase-region 'disabled nil)
-  (put 'narrow-to-region 'disabled nil)
-  (put 'downcase-region 'disabled nil)
-  (put 'overwrite-mode 'disabled nil)
-  (put 'dired-find-alternate-file 'disabled nil))
-
 ;; custom key bindings to reduce keystrokes for regular editing commands
-(use-package utkarsh-lisp
+(use-package utkarsh-simple
   :config
   :bind (("M-SPC" . cycle-spacing)     ; activate widow menu in gnome-shell
          ("M-o" . delete-blank-lines)   ; alias for C-x C-o
@@ -164,6 +166,7 @@
   :ensure t
   :bind (("C-=" . er/expand-region)))
 
+;; control version-control from Emacs
 (use-package vc
   :custom
   (vc-follow-symlinks t))
@@ -235,9 +238,9 @@
       (hl-line-mode -1)
       (setq-local truncate-lines nil)))
   :custom
-  ;; Set absolute line numbers.  A value of "relative" is also useful.
+  ;; set absolute line numbers
   (display-line-numbers-type t)
-  ;; Use absolute numbers in narrowed buffers
+  ;; use absolute numbers in narrowed buffers
   (display-line-numbers-widen t)
   :bind ("<f7>" . line-number-and-hl-mode))
 
@@ -394,19 +397,15 @@
   :custom
   (elfeed-use-curl t)
   (elfeed-curl-max-connections 10)
-  (elfeed-db-directory "~/.config/emacs/elfeed/")
+  (elfeed-db-directory (concat user-emacs-directory "elfeed/"))
   (elfeed-enclosure-default-dir "~/Downloads/")
   (elfeed-search-clipboard-type 'CLIPBOARD)
-  (elfeed-feeds
-      '(("http://lukesmith.xyz/rss.xml" luke)
-	("https://notrelated.libsyn.com/rss" luke)
-	("https://www.archlinux.org/feeds/news/" linux distro)
-	("https://ambrevar.xyz/atom.xml" emacs)
-	("https://protesilaos.com/codelog.xml" emacs)
-	("https://drewdevault.com/blog/index.xml" linux wayland)
-	("https://videos.lukesmith.xyz/feeds/videos.xml?accountId=3" luke video)
-	("https://www.youtube.com/feeds/videos.xml?channel_id=UCngn7SVujlvskHRvRKc1cTw" youtube)
-	("https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" youtube))))
+  (elfeed-show-truncate-long-urls t)
+  (elfeed-show-unique-buffers t))
+
+;; store feed in gpg encrypted file
+(use-package utkarsh-elfeed
+  :hook (elfeed-search-mode-hook . utkarsh-elfeed-load-feeds))
 
 ;; shell implemented in elisp
 (use-package eshell
@@ -489,7 +488,6 @@
   :config
   (defun message-recipients ()
     "Return a list of all recipients in the message, looking at TO, CC and BCC.
-
 Each recipient is in the format of `mail-extract-address-components'."
     (mapcan (lambda (header)
               (let ((header-value (message-fetch-field header)))
@@ -511,7 +509,6 @@ Each recipient is in the format of `mail-extract-address-components'."
 
   (defun message-sign-encrypt-if-all-keys-available ()
     "Add MML tag to encrypt message when there is a key for each recipient.
-
 Consider adding this function to `message-send-hook' to
 systematically send encrypted emails when possible."
     (when (message-all-epg-keys-available-p)
@@ -576,5 +573,10 @@ systematically send encrypted emails when possible."
 ;; mount umount usb and android from emacs!
 (use-package mount-umount)
 
+(use-package cc-mode
+  :custom
+  (c-default-style '((c++-mode . "stroustrup"))))
+
 ;; End:
 ;;; init.el ends here
+
