@@ -404,12 +404,7 @@
   (elfeed-enclosure-default-dir "~/Downloads/")
   (elfeed-search-clipboard-type 'CLIPBOARD)
   (elfeed-show-truncate-long-urls t)
-  (elfeed-show-unique-buffers t)
-  :bind (:map elfeed-search-mode-map
-	      ("v" . utkarsh-elfeed-mpv-dwim)
-	      :map elfeed-show-mode-map
-	      ("v" . utkarsh-elfeed-mpv-dwim)
-	      ("e" . utkarsh-elfeed-show-eww)))
+  (elfeed-show-unique-buffers t))
 
 ;; store feed in gpg encrypted file
 (use-package utkarsh-elfeed
