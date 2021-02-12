@@ -1,5 +1,13 @@
 ;;; mount-umount.el --- Mount and umount usb and android from Emacs! -*- lexical-binding:t -*-
 
+;; Copyright (C) 2021  Utkarsh Singh
+
+;; Author: Utkarsh Singh <utkarsh190601@gmail.com>
+;; Version: 0.1.0
+;; Package-Requires: ((emacs "27.1"))
+
+;; This file is NOT part of GNU Emacs.
+
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation, either version 3 of the License, or (at
