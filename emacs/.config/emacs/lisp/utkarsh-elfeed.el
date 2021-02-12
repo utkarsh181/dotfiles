@@ -23,7 +23,8 @@
 
 ;;; Commentary:
 ;;
-;; Extensions for Elfeed, intended for use in my Emacs setup:
+;; Most of this file is takes from Prot's dotfiles.
+;; Extensions for Elfeed, intended for use in my Emacs setup.
 
 ;;; Code:
 
@@ -31,15 +32,66 @@
 (when (featurep 'elfeed)
   (require 'elfeed))
 
-(defcustom prot-elfeed-feeds-file (concat user-emacs-directory "feeds.el.gpg")
+(defgroup utkarsh-elfeed ()
+  "Personal extension for Elfeed"
+  :group 'elfeed)
+
+(defcustom utkarsh-elfeed-feeds-file (concat user-emacs-directory "feeds.el.gpg")
   "Path to file with `elfeed-feeds'."
   :type 'string
-  :group 'prot-elfeed)
+  :group 'utkarsh-elfeed)
 
 (defun utkarsh-elfeed-load-feeds ()
   "Load file containing the `elfeed-feeds' list.
 Add this to `elfeed-search-mode-hook'."
-  (let ((feeds prot-elfeed-feeds-file))
+  (let ((feeds utkarsh-elfeed-feeds-file))
     (if (file-exists-p feeds)
         (load-file feeds)
       (user-error "Missing feeds' file"))))
+
+(defun utkarsh-elfeed-show-eww (&optional link)
+  "Browse current entry's link or optional LINK in `eww'.
+
+Only show the readable part once the website loads.  This can
+fail on poorly-designed websites."
+  (interactive)
+  (let* ((entry (if (eq major-mode 'elfeed-show-mode)
+                    elfeed-show-entry
+                  (elfeed-search-selected :ignore-region)))
+         (link (or link (elfeed-entry-link entry))))
+    (eww link)
+    (add-hook 'eww-after-render-hook 'eww-readable nil t)))
+
+(defvar utkarsh-elfeed-mpv-buffer-name "*utkarsh-elfeed-mpv-output*"
+  "Name of buffer holding Elfeed MPV output.")
+
+(defun utkarsh-elfeed--get-mpv-buffer ()
+  "Prepare `utkarsh-elfeed-mpv-buffer-name' buffer."
+  (let ((buf (get-buffer utkarsh-elfeed-mpv-buffer-name))
+        (inhibit-read-only t))
+    (with-current-buffer buf
+      (erase-buffer))))
+
+(declare-function elfeed-entry-enclosures "elfeed")
+
+(defun utkarsh-elfeed-mpv-dwim ()
+  "Play entry link with the external MPV program.
+When there is an audio enclosure (assumed to be a podcast), play
+just the audio.  Else spawn a video player at a resolution that
+accounts for the current monitor's width."
+  (interactive)
+  (let* ((entry (if (eq major-mode 'elfeed-show-mode)
+                    elfeed-show-entry
+                  (elfeed-search-selected :ignore-region)))
+         (link (concat "'" (elfeed-entry-link entry) "'"))
+         (enclosure (elt (car (elfeed-entry-enclosures entry)) 0)) ; fragile?
+         (audio "--no-video")
+         (video "--ytdl-format=bestvideo+bestaudio/best")
+         (buf (pop-to-buffer utkarsh-elfeed-mpv-buffer-name)))
+    (utkarsh-elfeed--get-mpv-buffer)
+    (if enclosure
+        (progn
+          (async-shell-command (format "mpv %s %s" audio enclosure) buf)
+          (message "Launching MPV for %s" enclosure))
+      (async-shell-command (format "mpv %s %s" video link) buf)
+      (message "Launching MPV for %s" link))))
