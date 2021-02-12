@@ -64,13 +64,12 @@
 (use-package emacs
   :config
   (defalias 'yes-or-no-p 'y-or-n-p)
-  :custom
-  (echo-keystrokes 0.25)
   (put 'narrow-to-region 'disabled nil)
   (put 'overwrite-mode 'disabled nil)
   (put 'dired-find-alternate-file 'disabled nil)
-  (put 'downcase-region 'disabled nil)
-  (put 'upcase-region 'disabled nil))
+  (put 'upcase-region 'disabled nil)
+  :custom
+  (echo-keystrokes 0.25))
 
 ;; theme settings
 (use-package modus-themes
@@ -155,6 +154,7 @@
   :config
   :bind (("M-SPC" . cycle-spacing)     ; activate widow menu in gnome-shell
          ("M-o" . delete-blank-lines)   ; alias for C-x C-o
+	 ("M-=" . count-words)
          ("M-k" . utkarsh-kill-line-backward)
          ("C-S-n" . utkarsh-multi-line-next)
          ("C-S-p" . utkarsh-multi-line-prev)
@@ -217,6 +217,9 @@
 (use-package isearch
   :diminish
   :custom
+  (search-whitespace-regexp ".*?")
+  (isearch-lax-whitespace t)
+  (isearch-regexp-lax-whitespace nil)
   (isearch-lazy-count t)
   (lazy-count-prefix-format nil)
   (lazy-count-suffix-format " (%s/%s)")
@@ -580,3 +583,4 @@ systematically send encrypted emails when possible."
 ;; End:
 ;;; init.el ends here
 
+(put 'downcase-region 'disabled nil)
