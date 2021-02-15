@@ -1,6 +1,6 @@
 ;;; init.el --- Personal configuration file -*- lexical-binding: t -*-
 
-;; Copyright (c) 2019-2021  Utkarsh Singh <utkarsh190601@gmail.com>
+;; Copyright (c) 2020-2021  Utkarsh Singh <utkarsh190601@gmail.com>
 
 ;; Author: Utkarsh Singh <utkarsh190601@gmail.com>
 ;; Version: 0.1.0
@@ -32,6 +32,7 @@
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
+(add-hook 'package-menu-mode-hook #'hl-line-mode)
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -105,6 +106,7 @@
 ;; font settings
 (use-package emacs
   :config
+  (set-face-font 'default "DejaVu Sans Mono-11")
   (set-fontset-font t nil "Noto Color Emoji" nil 'append))
 
 ;; auto-pair
@@ -563,7 +565,6 @@ systematically send encrypted emails when possible."
   ;; emms as standalone client
   (emms-player-list '(emms-player-mpv))
   (emms-source-file-default-directory "~/Music/")
-
   ;; emms to work with mpd
   (emms-player-mpd-server-name "localhost")
   (emms-player-mpd-server-port "6600")
@@ -578,12 +579,8 @@ systematically send encrypted emails when possible."
   :custom
   (shr-use-colors nil))
 
-;; mount umount usb and android from emacs!
+;; mount umount usb and android from Emacs!
 (use-package mount-umount)
-
-(use-package cc-mode
-  :custom
-  (c-default-style '((c++-mode . "stroustrup"))))
 
 ;; End:
 ;;; init.el ends here
