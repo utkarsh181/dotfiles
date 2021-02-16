@@ -68,6 +68,7 @@
   (put 'narrow-to-region 'disabled nil)
   (put 'overwrite-mode 'disabled nil)
   (put 'dired-find-alternate-file 'disabled nil)
+  (put 'downcase-region 'disabled nil)
   (put 'upcase-region 'disabled nil)
   :custom
   (echo-keystrokes 0.25))
@@ -106,7 +107,8 @@
 ;; font settings
 (use-package emacs
   :config
-  (set-face-font 'default "DejaVu Sans Mono-11")
+  (add-to-list 'default-frame-alist
+                       '(font . "DejaVu Sans Mono-11"))
   (set-fontset-font t nil "Noto Color Emoji" nil 'append))
 
 ;; auto-pair
@@ -584,5 +586,3 @@ systematically send encrypted emails when possible."
 
 ;; End:
 ;;; init.el ends here
-
-(put 'downcase-region 'disabled nil)
