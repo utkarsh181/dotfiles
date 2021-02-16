@@ -88,10 +88,12 @@ accounts for the current monitor's width."
          (audio "--no-video")
          (video "--ytdl-format=bestvideo+bestaudio/best")
          (buf (pop-to-buffer utkarsh-elfeed-mpv-buffer-name)))
+    (elfeed-untag entry 'unread)
     (utkarsh-elfeed--get-mpv-buffer)
     (if enclosure
         (progn
           (async-shell-command (format "mpv %s %s" audio enclosure) buf)
           (message "Launching MPV for %s" enclosure))
       (async-shell-command (format "mpv %s %s" video link) buf)
-      (message "Launching MPV for %s" link))))
+      (message "Launching MPV for %s" link))
+    (elfeed-search-update entry)))
