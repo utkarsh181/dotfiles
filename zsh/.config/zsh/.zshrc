@@ -4,10 +4,10 @@ PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magent
 setopt autocd		# Automatically cd into typed directory.
 stty stop undef		# Disable ctrl-s to freeze terminal.
 
-# History in cache directory:
+# History in cache directory and create if doesn't exit:
 HISTSIZE=100000
 SAVEHIST=100000
-HISTFILE=~/.cache/zsh/history
+[ -d ~/.cache/zsh ] || mkdir ~/.cache/zsh ; HISTFILE=~/.cache/zsh/history
 
 # Load aliases and shortcuts if existent.
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shortcutrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shortcutrc"
