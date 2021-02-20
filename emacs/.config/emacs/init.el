@@ -87,6 +87,11 @@
   (modus-themes-load-vivendi)
   :bind ("<f5>" . modus-themes-toggle))
 
+;; font setting
+(use-package emacs
+  :config
+  (set-face-attribute 'default nil :family "DejaVu Sans Mono" :height 105))
+
 ;; narrowing framework
 (use-package counsel
   :ensure t
@@ -107,8 +112,6 @@
 ;; font settings
 (use-package emacs
   :config
-  (add-to-list 'default-frame-alist
-                       '(font . "DejaVu Sans Mono-11"))
   (set-fontset-font t nil "Noto Color Emoji" nil 'append))
 
 ;; auto-pair
@@ -302,6 +305,9 @@
 (use-package abbrev
   :bind ("C-x a u" . unexpand-abbrev))
 
+(use-package go-mode
+  :ensure t)
+
 ;; text completion framework
 (use-package company
   :ensure t
@@ -342,12 +348,19 @@
   :config
   (global-eldoc-mode 1))
 
-;; manage how Emacs uniquely define identical-named files
+;; manage buffer with identically-named files
 (use-package uniquify
   :custom
   (uniquify-buffer-name-style 'post-forward-angle-brackets)
   (uniquify-strip-common-suffix t)
   (uniquify-after-kill-buffer-p t))
+
+(use-package window
+  :custom
+  (display-buffer-alist
+   '(("\\*.*\\([^E]eshell\\|shell\\|v?term\\).*"
+      (display-buffer-reuse-mode-window display-buffer-at-bottom)
+      (window-height . 0.2)))))
 
 ;; undo system for window management
 (use-package winner
@@ -381,7 +394,7 @@
 	 (shell-mode-hook . with-editor-export-editor)
 	 (term-mode-hook . with-editor-export-editor)))
 
-;; better pdf experience inside emacs
+;; better pdf experience
 (use-package pdf-tools
   :ensure t
   :init
@@ -398,7 +411,7 @@
   :init
   (save-place-mode 1))
 
-;; rss and atom feed reader inside emacs
+;; rss and atom feed reader
 (use-package elfeed
   :ensure t
   :custom
@@ -543,9 +556,7 @@ systematically send encrypted emails when possible."
   (message-sendmail-extra-arguments '("--read-envelope-from"))
   (message-send-mail-function 'message-send-mail-with-sendmail))
 
-;; manage mail inside emacs
-;; with powerful search features and
-;; effective tag sorting
+;; manage mail with powerful search features and effective tag sorting
 (use-package notmuch
   :load-path "/usr/share/emacs/site-lisp"
   :custom
@@ -564,6 +575,7 @@ systematically send encrypted emails when possible."
   (add-to-list 'emms-info-functions 'emms-info-mpd)
   (add-to-list 'emms-player-list 'emms-player-mpd)
   :custom
+  (emms-playlist-buffer-name "*Music*")
   ;; emms as standalone client
   (emms-player-list '(emms-player-mpv))
   (emms-source-file-default-directory "~/Music/")
@@ -583,6 +595,9 @@ systematically send encrypted emails when possible."
 
 ;; mount umount usb and android from Emacs!
 (use-package mount-umount)
+
+;; edit time table in plain text
+(use-package org-time-table)
 
 ;; End:
 ;;; init.el ends here
