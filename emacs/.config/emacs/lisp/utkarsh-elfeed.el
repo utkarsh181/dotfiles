@@ -84,16 +84,9 @@ accounts for the current monitor's width."
                     elfeed-show-entry
                   (elfeed-search-selected :ignore-region)))
          (link (concat "'" (elfeed-entry-link entry) "'"))
-         (enclosure (elt (car (elfeed-entry-enclosures entry)) 0)) ; fragile?
-         (audio "--no-video")
-         (video "--ytdl-format=bestvideo+bestaudio/best")
          (buf (pop-to-buffer utkarsh-elfeed-mpv-buffer-name)))
     (elfeed-untag entry 'unread)
+    (elfeed-search-update-entry entry)
     (utkarsh-elfeed--get-mpv-buffer)
-    (if enclosure
-        (progn
-          (async-shell-command (format "mpv %s %s" audio enclosure) buf)
-          (message "Launching MPV for %s" enclosure))
-      (async-shell-command (format "mpv %s %s" video link) buf)
-      (message "Launching MPV for %s" link))
-    (elfeed-search-update entry)))
+    (async-shell-command (format "mpv %s" link) buf)
+    (message "Launching MPV for %s" link)))
