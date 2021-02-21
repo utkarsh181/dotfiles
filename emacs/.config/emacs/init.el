@@ -510,42 +510,11 @@
   (mail-signature "Utkarsh Singh\n"))
 
 (use-package message
-  :config
-  (defun message-recipients ()
-    "Return a list of all recipients in the message, looking at TO, CC and BCC.
-Each recipient is in the format of `mail-extract-address-components'."
-    (mapcan (lambda (header)
-              (let ((header-value (message-fetch-field header)))
-		(and
-		 header-value
-		 (mail-extract-address-components header-value t))))
-            '("To" "Cc" "Bcc")))
-
-  (defun message-all-epg-keys-available-p ()
-    "Return non-nil if the pgp keyring has a public key for each recipient."
-    (require 'epa)
-    (let ((context (epg-make-context epa-protocol)))
-      (catch 'break
-	(dolist (recipient (message-recipients))
-          (let ((recipient-email (cadr recipient)))
-            (when (and recipient-email (not (epg-list-keys context recipient-email)))
-              (throw 'break nil))))
-	t)))
-
-  (defun message-sign-encrypt-if-all-keys-available ()
-    "Add MML tag to encrypt message when there is a key for each recipient.
-Consider adding this function to `message-send-hook' to
-systematically send encrypted emails when possible."
-    (when (message-all-epg-keys-available-p)
-      (mml-secure-message-sign-encrypt)))
   :custom
   (mail-user-agent 'message-user-agent)
   (message-signature "Utkarsh Singh\n")
   (message-kill-buffer-on-exit t)
-  (message-directory "~/.local/share/mail")
-  (mml-secure-openpgp-sign-with-sender t)
-  :hook ((message-setup-hook . mml-secure-message-sign-pgpmime)
-	 (message-send-hook . message-sign-encrypt-if-all-keys-available)))
+  (message-directory "~/.local/share/mail"))
 
 ;; send mail from inside Emacs using smtp protocol
 (use-package smtpmail
@@ -556,6 +525,41 @@ systematically send encrypted emails when possible."
   (message-sendmail-extra-arguments '("--read-envelope-from"))
   (message-send-mail-function 'message-send-mail-with-sendmail))
 
+;; sign and encrypt emails
+;; (use-package emacs
+;;   :config
+;;   (defun message-recipients ()
+;;     "Return a list of all recipients in the message, looking at TO, CC and BCC.
+;;   Each recipient is in the format of `mail-extract-address-components'."
+;;     (mapcan (lambda (header)
+;;               (let ((header-value (message-fetch-field header)))
+;; 		(and
+;; 		 header-value
+;; 		 (mail-extract-address-components header-value t))))
+;;             '("To" "Cc" "Bcc")))
+
+;;   (defun message-all-epg-keys-available-p ()
+;;     "Return non-nil if the pgp keyring has a public key for each recipient."
+;;     (require 'epa)
+;;     (let ((context (epg-make-context epa-protocol)))
+;;       (catch 'break
+;; 	(dolist (recipient (message-recipients))
+;;           (let ((recipient-email (cadr recipient)))
+;;             (when (and recipient-email (not (epg-list-keys context recipient-email)))
+;;               (throw 'break nil))))
+;; 	t)))
+
+;;   (defun message-sign-encrypt-if-all-keys-available ()
+;;     "Add MML tag to encrypt message when there is a key for each recipient.
+;;   Consider adding this function to `message-send-hook' to
+;;   systematically send encrypted emails when possible."
+;;     (when (message-all-epg-keys-available-p)
+;;       (mml-secure-message-sign-encrypt)))
+;;   :custom
+;;   (mml-secure-openpgp-sign-with-sender t)
+;;   :hook ((message-setup-hook . mml-secure-message-sign-pgpmime)
+;; 	 (message-send-hook . message-sign-encrypt-if-all-keys-available)))
+
 ;; manage mail with powerful search features and effective tag sorting
 (use-package notmuch
   :load-path "/usr/share/emacs/site-lisp"
@@ -565,6 +569,7 @@ systematically send encrypted emails when possible."
   (notmuch-fcc-dirs
       '(("utkarsh190601@gmail.com" . "utkarsh190601@gmail.com/[Gmail].Sent +sent -inbox -unread")))
   (notmuch-archive-tags '("-inbox" "-unread" "+deleted"))
+  (notmuch-draft-tags '("-inbox" "-unread" "+draft"))
   (notmuch-crypto-process-mime t))
 
 ;; music client
