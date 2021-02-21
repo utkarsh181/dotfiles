@@ -38,6 +38,7 @@ export ADB_VENDOR_KEY="${XDG_CONFIG_HOME-$HOME/.config}/android"
 export ASPELL_CONF="per-conf $XDG_CONFIG_HOME/aspell/aspell.conf; personal $XDG_CONFIG_HOME/aspell/en.pws; repl $XDG_CONFIG_HOME/aspell/en.prepl"
 
 # Other program settings:
+export GOBIN="$HOME/.local/bin"
 export DICS="/usr/share/stardict/dic/"
 export SUDO_ASKPASS="$HOME/.local/bin/menopause"
 export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
