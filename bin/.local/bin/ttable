@@ -1,1 +1,59 @@
-/home/utkarsh/Documents/prog/python/ttable
+#!/usr/bin/env python3
+
+import csv
+import argparse
+
+weekday = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat']
+
+# check if list day is empty
+def empty_day(day):
+    for i in day:
+        if i != '':
+            return False
+    return True
+
+# parse table file infile for class_name
+# and store result in outfile
+def parse_table(infile, outfile, class_name):
+    class_name = class_name.lower()
+
+    # open input and output csv files
+    with open(infile, newline='') as istream, open(outfile, 'w', newline='') as ostream:
+        in_csv = csv.reader(istream)
+        out_csv = csv.writer(ostream)
+
+        # write header number of lines to output csv
+        for i in range(2):
+            row = in_csv.__next__()
+            out_csv.writerow(row)
+
+        week_counter = 0
+
+        # iterate over in_csv while writing relevant information to out_csv
+        for i in in_csv:
+            for j in range(len(i)):
+                tmp = i[j].lower()
+
+                # don't remove week names
+                if week_counter < len(weekday) and tmp == weekday[week_counter]:
+                    week_counter += 1
+
+                # remove entries which don't have class_name
+                elif tmp != '' and tmp.find(class_name) == -1:
+                    i[j] = ''
+
+            # if day is not empty the write it to out_csv
+            if not empty_day(i):
+                out_csv.writerow(i)
+
+# parse command line arguments
+def parse_args():
+    arglist = []
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-i', '--input', required=True, help='input file')
+    parser.add_argument('-o', '--output', required=True, help='output file')
+    parser.add_argument('-c', '--class_name', required=True, help='class name')
+    return vars(parser.parse_args())
+
+args = parse_args()
+parse_table(args['input'], args['output'], args['class_name'])
