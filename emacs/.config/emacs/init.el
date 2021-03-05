@@ -305,9 +305,6 @@
 (use-package abbrev
   :bind ("C-x a u" . unexpand-abbrev))
 
-(use-package go-mode
-  :ensure t)
-
 ;; text completion framework
 (use-package company
   :ensure t
@@ -355,13 +352,6 @@
   (uniquify-strip-common-suffix t)
   (uniquify-after-kill-buffer-p t))
 
-(use-package window
-  :custom
-  (display-buffer-alist
-   '(("\\*.*\\([^E]eshell\\|shell\\|v?term\\).*"
-      (display-buffer-reuse-mode-window display-buffer-at-bottom)
-      (window-height . 0.2)))))
-
 ;; undo system for window management
 (use-package winner
   :init
@@ -403,7 +393,9 @@
   ;; open pdfs scaled to fit page
   (pdf-view-display-size 'fit-page)
   :bind (:map pdf-view-mode-map
-	      ("C-s" . isearch-forward)))
+	      ("C-s" . isearch-forward)
+	      ("<left>" . pdf-view-previous-page-command)
+	      ("<right>" . pdf-view-next-page-command)))
 
 ;; save the last position in pdf-view mode
 (use-package saveplace-pdf-view
@@ -421,21 +413,23 @@
   (elfeed-enclosure-default-dir "~/Downloads/")
   (elfeed-search-clipboard-type 'CLIPBOARD)
   (elfeed-show-truncate-long-urls t)
-  (elfeed-show-unique-buffers t)
+  (elfeed-show-unique-buffers t))
+
+;; store feed in gpg encrypted file
+(use-package utkarsh-elfeed
+  :hook (elfeed-search-mode-hook . utkarsh-elfeed-load-feeds)
   :bind (:map elfeed-search-mode-map
 	      ("v" . utkarsh-elfeed-mpv-dwim)
 	      :map elfeed-show-mode-map
 	      ("v" . utkarsh-elfeed-mpv-dwim)
 	      ("e" . utkarsh-elfeed-show-eww)))
 
-;; store feed in gpg encrypted file
-(use-package utkarsh-elfeed
-  :hook (elfeed-search-mode-hook . utkarsh-elfeed-load-feeds))
-
 ;; shell implemented in elisp
 (use-package eshell
   :custom
   (eshell-prefer-lisp-function t)
+  :config
+  (setenv "PAGER" "cat") ; solves issues, such as with 'git log' and the default 'less'
   :bind ("<s-return>" . eshell))
 
 (use-package esh-mode
@@ -476,7 +470,7 @@
   (vterm-disable-underline nil)
   (vterm-kill-buffer-on-exit nil)
   (vterm-max-scrollback 9999)
-  (vterm-shell "/bin/zsh")
+  (vterm-shell "/bin/bash")
   (vterm-term-environment-variable "xterm-256color"))
 
 ;; built in process viewer inside Emacs
@@ -597,6 +591,11 @@
 (use-package shr
   :custom
   (shr-use-colors nil))
+
+(use-package cc-mode
+  :custom
+  (c-default-style '((c-mode . "k&r")
+		     (c++-mode . "stroustrup"))))
 
 ;; mount umount usb and android from Emacs!
 (use-package mount-umount)
