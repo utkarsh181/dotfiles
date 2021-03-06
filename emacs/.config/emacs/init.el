@@ -429,8 +429,10 @@
   :custom
   (eshell-prefer-lisp-function t)
   :config
-  (setenv "PAGER" "cat") ; solves issues, such as with 'git log' and the default 'less'
-  :bind ("<s-return>" . eshell))
+   ; solves issues, such as with 'git log' and the default 'less'
+  (setenv "PAGER" "cat")
+  :bind ("s-<return>" . eshell))
+
 
 (use-package esh-mode
   :bind (:map eshell-mode-map
@@ -463,7 +465,6 @@
 ;; terminal emulator inside Emacs though eshell just works
 (use-package vterm
   :ensure t
-  :commands vterm
   :custom
   (vterm-disable-bold nil)
   (vterm-disable-inverse-video nil)
@@ -472,6 +473,9 @@
   (vterm-max-scrollback 9999)
   (vterm-shell "/bin/bash")
   (vterm-term-environment-variable "xterm-256color"))
+
+(use-package utkarsh-vterm
+  :bind ("<s-S-return>" . utkarsh-vterm))
 
 ;; built in process viewer inside Emacs
 (use-package proced
