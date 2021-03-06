@@ -8,10 +8,9 @@
 # screen) and so they are needed there. To prevent doubling up commands, I
 # source them here with the line below.
 
-. ~/.xprofile
+# . ~/.xprofile
 
-# Your default LARBS WM is determined in your `~/.profile` on login.  Here we
-# run the proper command to run when the graphical environment starts.
+exec startxfce4
 
-ssh-agent dwm
+
 
