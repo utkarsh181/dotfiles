@@ -15,8 +15,8 @@ Flatten .
 
 Channel utkarsh190601@gmail.com
 Expunge Both
-Master :utkarsh190601@gmail.com-remote:
-Slave :utkarsh190601@gmail.com-local:
+Far :utkarsh190601@gmail.com-remote:
+Near :utkarsh190601@gmail.com-local:
 Patterns * !"[Gmail]/All Mail"
 Create Both
 SyncState *
