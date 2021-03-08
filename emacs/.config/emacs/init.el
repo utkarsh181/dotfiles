@@ -77,11 +77,8 @@
 (use-package modus-themes
   :ensure t
   :init
-  ;; Add all your customizations prior to loading the themes
-  (setq modus-themes-slanted-constructs t
-        modus-themes-bold-constructs nil)
-
-  ;; Load the theme files before enabling a theme
+  (setq modus-themes-slanted-constructs t)
+  (setq modus-themes-bold-constructs nil)
   (modus-themes-load-themes)
   :config
   (modus-themes-load-vivendi)
@@ -472,10 +469,8 @@
   (vterm-kill-buffer-on-exit nil)
   (vterm-max-scrollback 9999)
   (vterm-shell "/bin/bash")
-  (vterm-term-environment-variable "xterm-256color"))
-
-(use-package utkarsh-vterm
-  :bind ("<s-S-return>" . utkarsh-vterm))
+  (vterm-term-environment-variable "xterm-256color")
+  :bind ("<s-S-return>" . vterm))
 
 ;; built in process viewer inside Emacs
 (use-package proced
